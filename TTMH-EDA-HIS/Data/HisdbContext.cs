@@ -325,7 +325,11 @@ public partial class HisdbContext : DbContext
         });
 
         modelBuilder.Entity<Employee>().HasData(
-            new Employee { EmployeeId="", EmployeeName="", Account="", Password=""}    
+            new Employee { EmployeeId = "D1001", EmployeeName = "YuDaLu", Account = "D1001", Password = "D1001" },
+            new Employee { EmployeeId = "D1002", EmployeeName = "鍾伊惠", Account = "D1002", Password = "D1002" },
+            new Employee { EmployeeId = "D1003", EmployeeName = "連智健", Account = "D1003", Password = "D1003" },
+            new Employee { EmployeeId = "D1004", EmployeeName = "盧昱達", Account = "D1004", Password = "D1004" },
+            new Employee { EmployeeId = "D1005", EmployeeName = "林廣學", Account = "D1005", Password = "D1005" }
         );
         modelBuilder.Entity<Doctor>().HasData(
             new Doctor { DoctorId="", DepartmentName=""}    
