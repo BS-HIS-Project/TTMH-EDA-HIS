@@ -367,6 +367,8 @@ public partial class HisdbContext : DbContext
         modelBuilder.Entity<Detail>().HasData(
             new Detail { DetId="", Registration=150, MedicalCost=500, Payable=650, CasId="", PatientId="" }
         );
+
+        // 
         OnModelCreatingPartial(modelBuilder);
     }
 
