@@ -368,7 +368,7 @@ public partial class HisdbContext : DbContext
             new Detail { DetId="", Registration=150, MedicalCost=500, Payable=650, CasId="", PatientId="" }
         );
 
-        // // // //
+        // 我是阿惠
         OnModelCreatingPartial(modelBuilder);
     }
 
