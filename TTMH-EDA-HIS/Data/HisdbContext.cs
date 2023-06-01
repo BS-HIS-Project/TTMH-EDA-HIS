@@ -42,10 +42,6 @@ public partial class HisdbContext : DbContext
 
     public virtual DbSet<RoutesOfAdminstration> RoutesOfAdminstrations { get; set; }
 
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-    //        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=HISDB;TrustServerCertificate=true;MultipleActiveResultSets=true;Trusted_Connection=True;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cashier>(entity =>
@@ -402,14 +398,13 @@ public partial class HisdbContext : DbContext
         );
         modelBuilder.Entity<Detail>().HasData(
             // DET + NOWDATE + 診間號 + (繳費條碼)序號
-            new Detail { DetId="DET20230530001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634" },
+            new Detail { DetId= "DET20230530001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634" },
             new Detail { DetId= "DET20230530001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955" },
             new Detail { DetId= "DET20230530001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997" },
             new Detail { DetId= "DET20230530001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112" },
             new Detail { DetId= "DET20230530001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071" }
         );
 
-        
         OnModelCreatingPartial(modelBuilder);
     }
 
