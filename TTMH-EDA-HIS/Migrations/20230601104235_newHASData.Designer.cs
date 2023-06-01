@@ -12,7 +12,7 @@ using TTMH_EDA_HIS.Data;
 namespace TTMH_EDA_HIS.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    [Migration("20230601071828_newHASData")]
+    [Migration("20230601104235_newHASData")]
     partial class newHASData
     {
         /// <inheritdoc />
