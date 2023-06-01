@@ -325,49 +325,91 @@ public partial class HisdbContext : DbContext
         });
 
         modelBuilder.Entity<Employee>().HasData(
-            new Employee { EmployeeId = "D1001", EmployeeName = "YuDaLu", Account = "D1001", Password = "D1001" },
-            new Employee { EmployeeId = "D1002", EmployeeName = "鍾伊惠", Account = "D1002", Password = "D1002" },
-            new Employee { EmployeeId = "D1003", EmployeeName = "連智健", Account = "D1003", Password = "D1003" },
-            new Employee { EmployeeId = "D1004", EmployeeName = "盧昱達", Account = "D1004", Password = "D1004" },
-            new Employee { EmployeeId = "D1005", EmployeeName = "林廣學", Account = "D1005", Password = "D1005" }
+            new Employee { EmployeeId = "D11201001", EmployeeName = "YuDaLu", Account = "D1001", Password = "D1001" },
+            new Employee { EmployeeId = "P11201001", EmployeeName = "鍾伊惠", Account = "P1002", Password = "P1002" },
+            new Employee { EmployeeId = "D11201002", EmployeeName = "連智健", Account = "D1003", Password = "D1003" },
+            new Employee { EmployeeId = "C11201001", EmployeeName = "盧昱達", Account = "C1004", Password = "C1004" },
+            new Employee { EmployeeId = "P11201002", EmployeeName = "林廣學", Account = "P1005", Password = "P1005" },
+            new Employee { EmployeeId = "C11201002", EmployeeName = "Althea", Account = "C1006", Password = "C1006" }
         );
         modelBuilder.Entity<Doctor>().HasData(
-            new Doctor { DoctorId="", DepartmentName=""}    
+            new Doctor { DoctorId="D11201001", DepartmentName="心臟內科"},    
+            new Doctor { DoctorId="D11201002", DepartmentName="心臟內科"}     
         );
         modelBuilder.Entity<Pharmacist>().HasData(
-            new Pharmacist { PhaId="" }
+            new Pharmacist { PhaId="P11201001" },
+            new Pharmacist { PhaId="P11201002" }
         );
         modelBuilder.Entity<Cashier>().HasData(
-            new Cashier { CasId="" }
+            new Cashier { CasId="C11201001" },
+            new Cashier { CasId="C11201002" }
         );
         modelBuilder.Entity<DoctorsPatientsChart>().HasData(
-            new DoctorsPatientsChart { DoctorId="", PatientId="", ChaId="" }
+            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "A118992634", ChaId= "CHA20230531001001" },
+            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "O101929955", ChaId= "CHA20230531001002" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "H255590997", ChaId= "CHA20230531001003" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "L198058112", ChaId= "CHA20230531001004" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA20230531001005" }
         );
         modelBuilder.Entity<Patient>().HasData(
-            new Patient { PatientId="", Nhicard="", CaseHistory="", PatientName="", BirthDate= new DateTime(1999/06/07), Gender="", Blood="", Address="", Mobile="" }
+            // PAT + NOWDATE + 診間號 + (病患)序號
+            new Patient { PatientId="A118992634", Nhicard="000012345678", CaseHistory="PAT20160610001001", PatientName= "水戶黃門", BirthDate= new DateTime(1999/06/07), Gender="1", Blood="A", Address="台北市", Mobile="0912345678" },
+            new Patient { PatientId="O101929955", Nhicard="080009699912", CaseHistory="PAT20160610001002", PatientName="海綿寶寶", BirthDate= new DateTime(1997/05/26), Gender="1", Blood="A", Address="新竹市", Mobile="0965478932" },
+            new Patient { PatientId="H255590997", Nhicard="123456789011", CaseHistory="PAT20161225001003", PatientName="晨曦", BirthDate= new DateTime(1997/08/13), Gender="2", Blood="AB", Address="桃園市", Mobile="0955664477" },
+            new Patient { PatientId="L198058112", Nhicard="647519785134", CaseHistory="PAT20170526001004", PatientName="野原新之助", BirthDate= new DateTime(1992/12/22), Gender="1", Blood="O", Address="台中市", Mobile="0964973125" },
+            new Patient { PatientId="S257920071", Nhicard="715687493157", CaseHistory="PAT20170811001005", PatientName= "橘子", BirthDate= new DateTime(2000/02/29), Gender="2", Blood="O", Address="高雄市", Mobile="0997919395" }
         );
         modelBuilder.Entity<Chart>().HasData(
-            new Chart { ChaId="", DepartmentName="", Vdate=new DateTime(2023/05/30), Subject="", Object="" }
+            // CHA + NOWDATE + 診間號 + (就診號)序號
+            new Chart { ChaId="CHA20230530001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023/05/30), Subject="胸悶", Object="心臟病" },
+            new Chart { ChaId="CHA20230530001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023/05/30), Subject="心跳好像一直不規律，呼吸不過來", Object="心臟病" },
+            new Chart { ChaId="CHA20230530001003", DepartmentName= "心臟內科", Vdate=new DateTime(2023/05/30), Subject="頭痛、噁心、冒冷汗", Object="心臟病" },
+            new Chart { ChaId="CHA20230530001004", DepartmentName= "心臟內科", Vdate=new DateTime(2023/05/30), Subject="呼吸急促、胸悶", Object="心臟病" },
+            new Chart { ChaId="CHA20230530001005", DepartmentName= "心臟內科", Vdate=new DateTime(2023/05/30), Subject="心臟很痛", Object="心臟病" }
         );
         modelBuilder.Entity<Prescription>().HasData(
-            new Prescription { PresNo="", DrugDate=new DateTime(2023/05/30), PhaId="", PatientId="" }
+            // PRE + NOWDATE + 診間號 + (領藥號)序號
+            new Prescription { PresNo="PRE20230530001001", DrugDate=new DateTime(2023/05/30), PhaId= "P11201001", PatientId= "A118992634" },
+            new Prescription { PresNo= "PRE20230530001002", DrugDate=new DateTime(2023/05/30), PhaId= "P11201001", PatientId= "O101929955" },
+            new Prescription { PresNo= "PRE20230530001003", DrugDate=new DateTime(2023/05/30), PhaId= "P11201001", PatientId= "H255590997" },
+            new Prescription { PresNo= "PRE20230530001004", DrugDate=new DateTime(2023/05/30), PhaId= "P11201001", PatientId= "L198058112" },
+            new Prescription { PresNo= "PRE20230530001005", DrugDate=new DateTime(2023/05/30), PhaId= "P11201001", PatientId= "S257920071" }
         );
         modelBuilder.Entity<Dosage>().HasData(
-            new Dosage { DosId="", Direction="" }
+            new Dosage { DosId = "BIAH", Direction = "每天早,晚(飯前)及睡前1次" },
+            new Dosage { DosId="BIDP", Direction= "需要時早,晚(飯後)1次" },
+            new Dosage { DosId="QN", Direction= "每晚1次" },
+            new Dosage { DosId="PRN", Direction= "需要時使用" },
+            new Dosage { DosId="ORDER", Direction= "依照醫師指示" }
         );
         modelBuilder.Entity<Drug>().HasData(
-            new Drug { DrugId="", Atccode="", Nhicode="", DrugName="", GenericName="", UnitPrice=240, Dcontent="", Appearance="", ClinicalUses="", SuggestedUsage="", AdverseReactions="", WarningPrecautions="", PointOfHealthEducation="", StorageConditions="", OtherInstructions="", ProcessingMethod="", Roaid=""  }
+            //參照童綜合醫院心臟相關藥品查詢
+            new Drug { DrugId= "046404", Atccode= "C07AG02", Nhicode= "AC46404100", DrugName= "Syntrend", GenericName= "Carvedilol", UnitPrice=240, Dcontent= "25mg/tab", Appearance= "白色圓形錠,Syntrend,S｜Y", ClinicalUses= "高血壓、鬱血性心臟衰竭", SuggestedUsage= "治療的期間︰服用 Carvedilol需長期性的治療。不應突然停止治療而應以星期為間隔逐漸減少治療，此對併有冠狀心臟疾病的病人尤其重要", AdverseReactions= "暈眩、頭痛，通常是輕微的且尤其於治療的初期", WarningPrecautions= "無資料", PointOfHealthEducation= "1.懷孕或計劃懷孕、氣喘或其他肺臟疾病、糖尿病、甲狀腺機能亢進，請先告訴醫師。 2.不要自行改變劑量或停藥。 3.請定時測量脈搏，低於醫師所訂標準請即就醫。 4.服用後可能發生頭暈、低血壓，小心跌倒。 5.糖尿病病人請注意，此藥可能會影響血糖值，掩蓋低血糖現象，應小心監測血糖。", StorageConditions= "室溫保存", OtherInstructions= "隨餐或餐後立即服用", ProcessingMethod= "無資料", Roaid= "PO" },
+            new Drug { DrugId= "009554", Atccode= "C01AA05", Nhicode= "BC09554100", DrugName= "Digoxin", GenericName= "Digoxin", UnitPrice=240, Dcontent= "0.25mg/tab", Appearance= "白色圓扁形錠, |D025", ClinicalUses= "心臟衰竭、心律不整", SuggestedUsage= "對於輕度心衰竭的病人，應每天給藥 0.25~0.75mg，共一星期，接著給予一適當的維持劑量，達到毛地黃化的速度可和緩些", AdverseReactions= "疲憊、頭痛、顏面神經痛、精神沮喪、幻覺、困倦、低血壓、視力障礙、厭食、嘔吐、腹瀉、發汗、吞嚥困難", WarningPrecautions= "無資料", PointOfHealthEducation= "1.不要自行改變劑量或停藥。 2.定期量血壓和心跳。 3.服用後可能發生頭暈、低血壓，小心跌倒。 4.定期監測藥物血中濃度與血鉀濃度。 5.服藥期間若發生虛弱無力、心跳太慢，意識混亂等應即刻就醫。 6.避免高麩飲食。", StorageConditions= "室溫陰涼乾燥處保存", OtherInstructions= "無資料", ProcessingMethod= "無資料", Roaid= "PO" },
+            new Drug { DrugId= "021757", Atccode= "L04AA06", Nhicode= "BC20999100", DrugName= "Cellcept", GenericName= "Mycophenolate Mofetil", UnitPrice=240, Dcontent= "250mg/cap", Appearance= "橘 | 淺藍膠囊,CellCept 250,Roche", ClinicalUses= "預防或緩解腎臟移植之急性器官排斥、預防心臟和肝臟移植之急性器官排斥", SuggestedUsage= "口服給藥在腎臟、心臟和肝臟移植後應儘速給予 CellCept的起始劑量", AdverseReactions= "便秘、腹瀉、頭痛、噁心、無力等", WarningPrecautions= "整粒吞服, 勿嚼碎；孕婦禁用；服藥後可能嗜睡或眩暈", PointOfHealthEducation= "1.服用本藥會使您抵抗力較弱，請經常洗手並避免接觸有傳染性疾病如感冒的親友。 2.接種任何疫苗之前請先諮詢你的醫生。 3.此藥可能使您皮膚對光較敏感，外出時請做好防曬工作。 4.告訴牙醫、外科醫生和其他醫生您在使用本藥物。 5.不要同時與含有鎂或鋁的制酸劑一起服用。 6.若有高血壓，每日定時測量血壓、脈搏並列入記錄，提供醫師參考。 7.如果膠囊已經打開或破裂，不要接觸內含的藥物。如果已經接觸到藥物或藥物跑進眼睛，請立即洗手或洗眼睛。 8.建議具有生育能力的女性在服用期間及停藥6周內採取有效避孕措施且請勿授乳。有性行為的男性在服用期間及停藥90天內採取有效避孕措施且不應捐獻精液。", StorageConditions= "儲存於30℃以下避光處", OtherInstructions= "空腹時服用。不應膠囊打開或弄碎", ProcessingMethod= "無資料", Roaid= "PO" },
+            new Drug { DrugId= "026672", Atccode= "C09DX04", Nhicode= "BC26671100", DrugName= "Entresto", GenericName= "Sacubitril and Valsartan", UnitPrice=240, Dcontent= "100mg/tab", Appearance= "淺黃橢圓形錠,NVR,L1", ClinicalUses= "治療慢性心臟衰竭", SuggestedUsage= "不建議重度肝功能不全患者使用此藥物" , AdverseReactions= "低血壓、高血鉀、頭暈、腎衰竭、血管性水腫等", WarningPrecautions= "孕婦禁用；服藥後可能有姿態性低血壓；", PointOfHealthEducation= "1.預備懷孕、已懷孕或授乳應先告訴醫師。 2.不要自行改變劑量或停藥。 3.定期量血壓和心跳。 4.服用後可能發生頭暈、低血壓，小心跌倒。 5.如長期使用含高鉀的飲食(如低鈉鹽、香蕉、柑橘類高鉀水果），須先請教醫師。", StorageConditions= "儲存於30℃以下避光處", OtherInstructions= "可與食物併服或是空腹服用", ProcessingMethod= "無資料", Roaid= "PO" },
+            new Drug { DrugId= "026173", Atccode= "C02KX01", Nhicode= "BC26173100", DrugName= "Tracleer", GenericName= "Bosentan Monohydrate", UnitPrice=240, Dcontent= "62.5mg/tab", Appearance= "橘白色圓凸錠,62.5", ClinicalUses= "治療因先天性心臟病續發WHO Class III 肺動脈高血壓", SuggestedUsage= "腎功能受損者不需要調整劑量。接受血液透析治療之病人，亦無需調整劑量", AdverseReactions= "呼吸道感染、頭痛、水腫、昏厥、低血壓、心悸、貧血等", WarningPrecautions= "無資料", PointOfHealthEducation= "1.除非醫師指示，請勿任意停藥。 2.漏服一劑，請在想起時立即服用，切勿依次服用 2劑藥物。", StorageConditions= "儲存於30℃以下避光處", OtherInstructions= "每日服用1-2次，請於每日固定時間服用", ProcessingMethod= "無資料", Roaid= "PO" }
         );
         modelBuilder.Entity<ChartsDrugsDosage>().HasData(
-            new ChartsDrugsDosage { ChaId="", DrugId="", DosId="", Days=3, Total=9, Remark="" }
+            new ChartsDrugsDosage { ChaId= "CHA20230530001001", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA20230530001002", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA20230530001003", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA20230530001004", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA20230530001005", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" }
         );
         modelBuilder.Entity<RoutesOfAdminstration>().HasData(
-            new RoutesOfAdminstration { Roaid="", BodyParts="" }
+            new RoutesOfAdminstration { Roaid="PO", BodyParts="口服" }
         );
         modelBuilder.Entity<Detail>().HasData(
-            new Detail { DetId="", Registration=150, MedicalCost=500, Payable=650, CasId="", PatientId="" }
+            // DET + NOWDATE + 診間號 + (繳費條碼)序號
+            new Detail { DetId="DET20230530001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634" },
+            new Detail { DetId= "DET20230530001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955" },
+            new Detail { DetId= "DET20230530001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997" },
+            new Detail { DetId= "DET20230530001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112" },
+            new Detail { DetId= "DET20230530001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071" }
         );
 
+        
         OnModelCreatingPartial(modelBuilder);
     }
 
