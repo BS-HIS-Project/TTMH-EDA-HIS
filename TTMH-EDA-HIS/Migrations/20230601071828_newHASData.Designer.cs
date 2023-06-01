@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TTMH_EDA_HIS.Data;
 
@@ -11,9 +12,11 @@ using TTMH_EDA_HIS.Data;
 namespace TTMH_EDA_HIS.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    partial class HisdbContextModelSnapshot : ModelSnapshot
+    [Migration("20230601071828_newHASData")]
+    partial class newHASData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
