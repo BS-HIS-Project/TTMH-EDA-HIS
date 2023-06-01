@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Servers\" />
   </ItemGroup>
 
 </Project>
