@@ -1,22 +1,117 @@
+
+/* MVC Default--------------------------------------------------------------------------------*/
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    background-color: #044849;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #044849;
+}
+
+/* Boorstrap Edit--------------------------------------------------------------------------------*/
+
+.btn-primary {
+    background-color: #0FC2C0 !important;
+}
+
+.bg-primary {
+    background-color: #0CABAB !important;
+}
+
+.text-primary {
+    color: #044849 !important;
+}
+
+/* Project Edit-----------------------------------------------------------------------------------*/
+
+.ED-input-text1 {
+    background-color: #0FC2C0;
+    font-size: 40px;
+    color: white;
+    border: 0px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 85%;
+}
+
+.ED-input-button1 {
+    background-color: #4443a3;
+    border-radius: 10px;
+    border: 0px solid;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    width: 85%;
+}
+
+.ED-input-button2:hover {
+    background-color: #008F8C;
+}
+
+.ED-input-button2:focus {
+    background-color: #0CABAB;
+}
+
+.ED-hr {
+    border-top: 7px solid #046161;
+}
+
+.ED-A4_paper {
+    width: 1240px;
+    height: 1754px;
+    padding: 15px 15px 30px 30px;
+    background-color: white;
+}
+
+.ED-A2_paper {
+    width: 1790px;
+    height: 1240px;
+    padding: 40px 70px;
+    background-color: white;
+}
+
+.ED-bigger-title1 {
+    font-size: 75px;
+    color: #044849;
+    font-weight: bold;
+}
+
+.ED-bigger-title2 {
+    font-size: 50px;
+    color: #044849;
+    font-weight: bold;
+}
+
+.ED-bigger-title3 {
+    font-size: 35px;
+    color: #044849;
+    font-weight: bold;
+}
+
+.ED-bigger-context {
+    color: #044849;
+    font-size: 33px;
+    font-weight: bold;
+}
+
+.ED-Form-Prescription-border {
+    border: #009895 solid 6px;
+    border-radius: 3%;
+    padding: 20px 35px;
 }

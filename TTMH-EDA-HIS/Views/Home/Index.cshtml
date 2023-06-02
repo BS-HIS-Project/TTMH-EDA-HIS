@@ -1,8 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_LayoutEmpty";
 }
+@section CSS{
+    <style>
+        @@media (max-width:1400px) {
+            .ED-media-1 {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            .ED-media-2 {
+                display: flex;
+                justify-content: center;
+            }
+
+            .ED-media-3 {
+                width: 230px;
+            }
+        }
+    </style>
+}
+<div class="container-xl d-flex" style="height:900px;">
+    <div class="my-auto" style="width:100%;">
+        <div class="row justify-content-center">
+            <div class="col-3 ED-media-1">
+                <img src="~/img/Logo.webp" alt="Logo" width="300px" height="300px">
+            </div>
+            <div class="col-9 my-auto ED-media-1">
+                <h1 class="h1 text-white" style="font-size: 130px;">童綜合醫院HIS</h1>
+            </div>
+        </div>
+        <div class="row mt-5 ED-media-2">
+            <a class="col-2 mx-auto btn btn-primary fs-1 ED-media-3 ED-input-button2" asp-controller="Account" asp-action="Index" role="button">
+                進入系統
+            </a>
+        </div>
+    </div>
 </div>

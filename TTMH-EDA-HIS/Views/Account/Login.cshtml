@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutEmpty";
+}
+@section CSS{
+    <style>
+        @@media (max-width:1400px) {
+            .ED-media-1 {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+}
+<div class="container-xl">
+    <div class="mx-auto" style="margin-top: 75px;">
+        <div class="row d-flex justify-content-between">
+            <div class="col-5 ED-media-1">
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <img src="~/img/Logo.webp" alt="Logo" width="500px" height="500px">
+                    </div>
+                </div>
+                <div class="row">
+                    <h1 class="h1 text-white text-center" style="font-size: 70px;">童綜合醫院HIS</h1>
+                </div>
+            </div>
+            <div class="col-6 ED-media-1">
+                <div class="border d-flex align-items-center justify-content-center" style="border:#008F8C solid 4px !important;border-radius: 10px;height:100%;">
+                    <div class="col">
+                        <form action="">
+                            <div class="row form-group">
+                                <input type="text" class="ED-input-text1 mx-auto my-3 form-control" placeholder="帳號" aria-label="帳號" />
+                            </div>
+                            <div class="row form-group">
+                                <input type="password" class="ED-input-text1 mx-auto my-3 form-control" placeholder="密碼" aria-label="密碼" />
+                            </div>
+                            <div class="row form-group">
+                                <input type="submit" value="登入" class="ED-input-button1 mx-auto my-2" />
+                            </div>
+                        </form>
+                        <div class="row">
+                            <a href="" class="h4 text-white text-center" style="font-weight: 300;text-decoration: none;">忘記密碼</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
