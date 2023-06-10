@@ -24,7 +24,12 @@
                     "topic": "my-topic",
                     //"key":"",
                     //"partition,
-                    "message": "Fuck You"
+                    "message": {
+                        "Key1":"Value",
+                        "Key2": "Value",
+                        "Key3": "Value",
+                        "Key4": "Value",
+                    }
                 })
             }).then(
                 (response) => {
@@ -64,20 +69,14 @@
             <div class="ED-media-1 me-5 col-4" style="height:550px;">
                 <div class="ED-Badge-1 col-3 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5">
                     SJ
-                    <textarea class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">
-
-                        
-
+                    <textarea class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">@Model.Subject
                     </textarea>
                 </div>
             </div>
             <div class="ED-media-1 col-4" style="height:550px;">
                 <div class="ED-Badge-1 col-3 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5">
                     OJ
-                    <textarea class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">
-
-                        
-
+                    <textarea class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">@Model.Object
                     </textarea>
                 </div>
             </div>
@@ -131,10 +130,10 @@
                             @i.DosID
                         </td>
                         <td>
-                            @*@i.Direction*@
+                            @*@i.Freq  add later after migration*@
                         </td>
                         <td>
-                            @*@i.SuggestedUsage*@
+                            @i.BodyParts
                         </td>
                         <td>
                             @i.Days

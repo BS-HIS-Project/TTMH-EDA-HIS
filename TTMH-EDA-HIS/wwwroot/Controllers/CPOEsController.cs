@@ -20,7 +20,7 @@ namespace TTMH_EDA_HIS.Controllers
         {
             return RedirectToAction("ChartList");
         }
-        [HttpGet("[action]/{id?}")]
+        [HttpGet("[controller]/[action]/{id?}")]
         public async Task<IActionResult> ChartList(int id)
         {
             int iid=0;
@@ -38,6 +38,7 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsChartListViewModel vm = new CPOEsChartListViewModel();  
             vm.Patients = await _context.Patients.Skip(id).Take(6).ToListAsync();
             vm.content = "";
+            ViewData["UseButtonGp"] = true;
             ViewData["previous"]=iid-1;
             ViewData["pg1"]=iid;
             ViewData["pg2"]=iid+1;
@@ -49,6 +50,10 @@ namespace TTMH_EDA_HIS.Controllers
         [HttpPost]
         public async Task<IActionResult> ChartList(CPOEsChartListViewModel vm)
         {
+            if(vm.content==null || vm.content == "")
+            {
+                return RedirectToAction("ChartList");
+            }
             List<Patient> result=await(
                 from i in _context.Patients
                 where (
@@ -59,6 +64,7 @@ namespace TTMH_EDA_HIS.Controllers
             ).ToListAsync();
             vm.Patients = result;
             vm.content = "";
+            ViewData["UseButtonGp"] = false;
             return View(vm);
         }
         [HttpGet]
@@ -83,15 +89,16 @@ namespace TTMH_EDA_HIS.Controllers
                 List<ChartsDrugsDosage>? cdds = await (from i in _context.ChartsDrugsDosages where i.ChaId == dpc.ChaId select i).ToListAsync();
                 foreach(var i in cdds)
                 {
-                    Drug drug = await _context.Drugs.FirstOrDefaultAsync(x => x.DrugId == i.DrugId);
-                    Dosage dosage = await _context.Dosages.FirstOrDefaultAsync(x => x.DosId == i.DosId);
+                    Drug drug = await _context.Drugs.FindAsync(i.DrugId);
+                    Dosage dosage = await _context.Dosages.FindAsync(i.DosId);
+                    RoutesOfAdminstration? roa= await _context.RoutesOfAdminstrations.FindAsync(drug.Roaid);
                     drugs.Add(new CPOEsPatientDetailsViewModel.DrugTableTD()
                     {
                         DrugID = drug.DrugId,
                         DrugName = drug.DrugName,
                         DosID = dosage.DosId,
-                        Direction = dosage.Direction,
-                        SuggestedUsage = drug.SuggestedUsage,
+                        Freq = "",  //Add later after Migration
+                        BodyParts = roa.BodyParts,
                         Days = i.Days.ToString(),
                         Total = i.Total.ToString(),
                         Remark = i.Remark
@@ -118,6 +125,8 @@ namespace TTMH_EDA_HIS.Controllers
                     Age= age.ToString(),
                     DoctorName=employee.EmployeeName,
                     VDate=$"{chart.Vdate.Year.ToString()}年{chart.Vdate.Month.ToString()}月{chart.Vdate.Day.ToString()}日",
+                    Subject=chart.Subject,
+                    Object=chart.Object,
                     drugList=drugs
                 };
                 return View(vm);
