@@ -1,0 +1,136 @@
+﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
+@{
+}
+@section Script{
+    <style>
+        @@media (max-width:1650px) {
+                .ED-media-1{
+                    margin-top: 30px;
+                    width:100% !important;
+                }
+            }
+    </style>
+}
+<div class="row">
+    <div class="container-lg col-11 py-4">
+        <div class="row p-3 d-flex justify-content-between">
+            <div class="ED-media-1 py-3 row me-5 bg-secondary rounded-4" style="width:450px;height:550px;">
+                <div class="col-5">
+                    <p class="h4 text-white lh-lg text-end">病例編號</p>
+                    <p class="h4 text-white lh-lg text-end">病患姓名</p>
+                    <p class="h4 text-white lh-lg text-end">性別</p>
+                    <p class="h4 text-white lh-lg text-end">出生年月日</p>
+                    <p class="h4 text-white lh-lg text-end">年齡</p>
+                    <p class="h4 text-white lh-lg text-end">看診醫生</p>
+                    <p class="h4 text-white lh-lg text-end">看診日期</p>
+                </div>
+                <div class="col-7">
+                    <p class="h4 text-white lh-lg">@Model.CaseHistory</p>
+                    <p class="h4 text-white lh-lg">@Model.PatientName</p>
+                    <p class="h4 text-white lh-lg">@Model.Gender</p>
+                    <p class="h4 text-white lh-lg">@Model.BirthDate</p>
+                    <p class="h4 text-white lh-lg">@Model.Age</p>
+                    <p class="h4 text-white lh-lg">@Model.DoctorName</p>
+                    <p class="h4 text-white lh-lg">@Model.VDate</p>
+                </div>
+            </div>
+            <div class="ED-media-1 me-5 col-4" style="height:550px;">
+                <div class="ED-Badge-1 col-3 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5">
+                    SJ
+                    <textarea class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">
+
+                        
+
+                    </textarea>
+                </div>
+            </div>
+            <div class="ED-media-1 col-4" style="height:550px;">
+                <div class="ED-Badge-1 col-3 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5">
+                    OJ
+                    <textarea class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">
+
+                        
+
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container-lg col-11 py-4 ED-BadgeTablePosition-2" style="height:700px">
+        <div class="ED-Badge-2 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5" style="width:160px;">開藥</div>
+        <table class="ED-BadgesTable-2">
+            <thead>
+                <tr>
+                    <th class="text-white ED-Font-Size-2 col-2 bg-primary ps-5 text-start py-2" style="border-top-left-radius:25px;">
+                        藥品編號
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col-2 bg-primary py-2 text-start">
+                        藥品名稱
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        日劑
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        次量
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        用法
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        天數
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        總量
+                    </th>
+                    <th class="text-white ED-Font-Size-2 col bg-primary py-2 text-start" style="border-top-right-radius:25px;">
+                        註
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="ED-tbody-ColorInterval">
+                @foreach(TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel.DrugTableTD i in Model.drugList)
+                {
+                    <tr>
+                        <td>
+                            @i.DrugID
+                        </td>
+                        <td>
+                            @i.DrugName
+                        </td>
+                        <td>
+                            @i.DosID
+                        </td>
+                        <td>
+                            @*@i.Direction*@
+                        </td>
+                        <td>
+                            @*@i.SuggestedUsage*@
+                        </td>
+                        <td>
+                            @i.Days
+                        </td>
+                        <td>
+                            @i.Total
+                        </td>
+                        <td>
+                            @i.Remark
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="row">
+    <div class="container-lg col-11 py-4 d-flex justify-content-end">
+        <div class="col-2 d-flex justify-content-end">
+            <button class="ED-input-button1 btn">
+                送出
+            </button>
+        </div>
+    </div>
+</div>

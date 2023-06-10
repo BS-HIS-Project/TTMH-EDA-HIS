@@ -1,0 +1,25 @@
+﻿namespace TTMH_EDA_HIS.ViewModels
+{
+    public class CPOEsPatientDetailsViewModel
+    {
+        public class DrugTableTD
+        {
+            public string? DrugID { get; set; }
+            public string? DrugName { get; set; }
+            public string? DosID { get; set; }
+            public string? Direction { get; set; }
+            public string? SuggestedUsage { get; set; }
+            public string? Days { get; set; }
+            public string? Total { get; set; }
+            public string? Remark { get; set; }
+        }
+        public string? CaseHistory { get; set; }
+        public string? PatientName { get; set; }
+        public string? Gender { get; set; }
+        public string? BirthDate { get; set; }
+        public string? Age { get; set; }
+        public string? DoctorName { get; set; }
+        public string? VDate { get; set; }
+        public List<DrugTableTD> drugList { get; set; }
+    }
+}

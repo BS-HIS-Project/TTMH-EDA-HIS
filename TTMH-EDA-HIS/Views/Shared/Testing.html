@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - TTMH_EDA_HIS</title>
+        <link rel="stylesheet" href="./../../wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./../../wwwroot/TTMH_EDA_HIS.styles.css" asp-append-version="true" />
+        <link rel="stylesheet" href="./../../wwwroot/css/site.css" asp-append-version="true" />
+        <!--Section CSS-->
+        <style>
+            .bd1{
+                border:3px solid blue;
+            }
+            .bd2{
+                border:3px solid red;
+            }
+            .bd3{
+                border:3px solid green;
+            }
+            .bd4{
+                border:3px solid yellow;
+            }
+            @media (max-width:1650px) {
+                .ED-media-1{
+                    margin-top: 30px;
+                    width:100% !important;
+                }
+            }
+
+        </style>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="width:100px;height:100px">
+                        <span class="navbar-toggler-icon" style="width:fit-content;height:70px;">
+                            <img src="./../../wwwroot/img/Logo.webp" class="img-fluid" alt="Logo">
+                        </span>
+                    </button>
+                    <img src="./../../wwwroot/img/Logo.webp" class="img-fluid ED-Nav-Logo" alt="Logo" width="60px">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                        <div class="d-flex">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item px-4">
+                                    <a class="nav-link h2 text-white" href="#">Doctor</a>
+                                </li>
+                                <li class="nav-item px-4">
+                                    <a class="nav-link h2 text-white" href="#">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main role="main" class="row">
+            <!---------------------------------------------------------------------------------------------------------------------->
+            <div class="row">
+                <div class="container-lg col-11 py-4">
+                    <div class="row p-3 d-flex justify-content-between">
+                        <div class="ED-media-1 py-3 row me-5 bg-secondary rounded-4" style="width:400px;height:550px;">
+                            <div class="col-6">
+                                <p class="h2 text-white lh-base text-end">病例編號</p>
+                                <p class="h2 text-white lh-base text-end">病患姓名</p>
+                                <p class="h2 text-white lh-base text-end">性別</p>
+                                <p class="h2 text-white lh-base text-end">出生年月日</p>
+                                <p class="h2 text-white lh-base text-end">年齡</p>
+                                <p class="h2 text-white lh-base text-end">看診醫生</p>
+                                <p class="h2 text-white lh-base text-end">看診日期</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="h2 text-white lh-base">WW</p>
+                                <p class="h2 text-white lh-base">WW</p>
+                                <p class="h2 text-white lh-base">WW</p>
+                                <p class="h2 text-white lh-base">WW</p>
+                                <p class="h2 text-white lh-base">WW</p>
+                                <p class="h2 text-white lh-base">WW</p>
+                                <p class="h2 text-white lh-base">WW</p>
+                            </div>
+                        </div>
+                        <div class="ED-media-1 me-5 col-4" style="height:550px;">
+                            <div class="ED-Badge-1 col-3 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5">SJ
+                                <div class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">
+                                
+                                    TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ED-media-1 col-4" style="height:550px;">
+                            <div class="ED-Badge-1 col-3 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5">OJ
+                                <div class="ED-BadgesContent-1 rounded-4 bg-third p-3 ED-Font-Size-2 text-start text-black" style="height:490px;">
+                                    
+                                    TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="container-lg col-11 py-4 ED-BadgeTablePosition-2" style="height:630px">
+                    <div class="ED-Badge-2 bg-secondary rounded-4 h2 text-white text-center pt-2 pb-5" style="width:160px;">開藥</div>
+                    <table class="ED-BadgesTable-2">
+                        <thead >
+                            <tr>
+                                <th class="text-white ED-Font-Size-2 col-2 bg-primary ps-5 text-start py-2" style="border-top-left-radius:25px;">
+                                    藥品編號
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col-2 bg-primary py-2 text-start">
+                                    藥品名稱
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                                    日劑
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                                    次量
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                                    用法
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                                    天數
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                                    總量
+                                </th>
+                                <th class="text-white ED-Font-Size-2 col bg-primary py-2 text-start" style="border-top-right-radius:25px;">
+                                    註
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="ED-tbody-ColorInterval">
+                            <tr>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                                <td>
+                                    text
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="container-lg col-11">
+                    <div class="row">
+                        <div class="btn-group mx-auto" style="width:300px">
+                            <a href="#" class="btn btn-primary text-secondary">上一頁</a>
+                            <a href="#" class="btn btn-primary active" aria-current="page">1</a>
+                            <a href="#" class="btn btn-primary text-secondary">2</a>
+                            <a href="#" class="btn btn-primary text-secondary">3</a>
+                            <a href="#" class="btn btn-primary text-secondary">下一頁</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container-lg col-11 py-4 d-flex justify-content-end">
+                    <div class="col-2 d-flex justify-content-end">
+                        <button class="ED-input-button1 btn">
+                            送出
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!---------------------------------------------------------------------------------------------------------------------->
+        </main>
+
+        <footer class="border-top footer text-muted">
+
+        </footer>
+        <script src="./../../wwwroot/lib/jquery/dist/jquery.min.js"></script>
+        <script src="./../../wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="./../../wwwroot/js/site.js" asp-append-version="true"></script>
+        <!--Section Script-->
+        <script>
+            
+
+
+
+        </script>
+    </body>
+</html>
