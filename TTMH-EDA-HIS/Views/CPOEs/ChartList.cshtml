@@ -1,14 +1,14 @@
-﻿@model List<Patient>
+﻿@model TTMH_EDA_HIS.ViewModels.CPOEsChartListViewModel
 @{
 }
 <div class="row">
     <div class="container-lg col-11 py-4">
-        <form action="" method="post" class="d-flex row">
+        <form asp-action="ChartList" method="post" class="d-flex row">
             <div class="form-group col-11" method="post">
-                <input type="text" class="form-control ED-Font-Size-1">
+                <input type="text" asp-for="content" class="form-control ED-Font-Size-1">
             </div>
             <div class="form-group col-1 d-flex justify-content-center">
-                <input type="submit" value="查詢" class="btn btn-primary ED-Font-Size-1" data-bs-toggle="button">
+                <input type="submit" value="查詢" class="btn btn-primary ED-Font-Size-1">
             </div>
         </form>
     </div>
@@ -20,7 +20,7 @@
                 <th class="text-white ED-bigger-title3 col-2 bg-secondary ps-5 py-2 rounded-4-top-left">
                     編號
                 </th>
-                <th class="text-white ED-bigger-title3 col-2 bg-secondary py-2">
+                <th class="text-white ED-bigger-title3 col-3 bg-secondary py-2">
                     病歷編號
                 </th>
                 <th class="text-white ED-bigger-title3 col-2 bg-secondary py-2">
@@ -29,14 +29,14 @@
                 <th class="text-white ED-bigger-title3 col-2 bg-secondary py-2">
                     性別
                 </th>
-                <th class="text-white ED-bigger-title3 col-2 bg-secondary py-3">
+                <th class="text-white ED-bigger-title3 col-1 bg-secondary py-3">
                 </th>
                 <th class="text-white ED-bigger-title3 col bg-secondary py-2 rounded-4-top-right">
                 </th>
             </tr>
         </thead>
         <tbody class="ED-tbody-ColorInterval ED-tbody-Lasttd-RightSide">
-            @foreach(Patient i in Model)
+            @foreach(Patient i in Model.Patients)
             {
                 <tr>
                     <td>

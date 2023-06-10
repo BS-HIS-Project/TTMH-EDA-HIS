@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using TTMH_EDA_HIS.Data;
 using TTMH_EDA_HIS.Models;
 using TTMH_EDA_HIS.ViewModels;
@@ -34,13 +35,31 @@ namespace TTMH_EDA_HIS.Controllers
                 id *= 6;
                 id -= 6;
             }
-            List<Patient?> result = await _context.Patients.Skip(id).Take(6).ToListAsync();
+            CPOEsChartListViewModel vm = new CPOEsChartListViewModel();  
+            vm.Patients = await _context.Patients.Skip(id).Take(6).ToListAsync();
+            vm.content = "";
             ViewData["previous"]=iid-1;
             ViewData["pg1"]=iid;
             ViewData["pg2"]=iid+1;
             ViewData["pg3"]=iid+2;
             ViewData["next"]=iid+1;
-            return View(result);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChartList(CPOEsChartListViewModel vm)
+        {
+            List<Patient> result=await(
+                from i in _context.Patients
+                where (
+                    i.PatientId==vm.content ||
+                    i.PatientName==vm.content ||
+                    i.CaseHistory==vm.content
+                ) select i
+            ).ToListAsync();
+            vm.Patients = result;
+            vm.content = "";
+            return View(vm);
         }
         [HttpGet]
         public async Task<IActionResult> PatientDetails(string id)
@@ -106,3 +125,4 @@ namespace TTMH_EDA_HIS.Controllers
         }
     }
 }
+

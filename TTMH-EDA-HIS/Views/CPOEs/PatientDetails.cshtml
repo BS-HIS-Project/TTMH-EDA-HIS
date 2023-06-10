@@ -1,15 +1,42 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
 @{
 }
-@section Script{
+@section CSS{
     <style>
-        @@media (max-width:1650px) {
+        @@media (max-width:1780px) {
                 .ED-media-1{
                     margin-top: 30px;
                     width:100% !important;
                 }
             }
     </style>
+}
+@section Script{
+    <script>
+        document.getElementById("Post").addEventListener("click", () => {
+            fetch("http://server.nicklu89.com:7777/api/KafkaProducer", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    "topic": "my-topic",
+                    //"key":"",
+                    //"partition,
+                    "message": "Fuck You"
+                })
+            }).then(
+                (response) => {
+                    return response.text();
+                }
+            ).then(
+                (result) => {
+                    window.alert(result);
+                }
+            );
+        });
+    </script>
 }
 <div class="row">
     <div class="container-lg col-11 py-4">
@@ -122,13 +149,12 @@
                 }
             </tbody>
         </table>
-
     </div>
 </div>
 <div class="row">
     <div class="container-lg col-11 py-4 d-flex justify-content-end">
         <div class="col-2 d-flex justify-content-end">
-            <button class="ED-input-button1 btn">
+            <button id="Post" class="ED-input-button1 btn">
                 送出
             </button>
         </div>
