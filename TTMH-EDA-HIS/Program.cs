@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TTMH_EDA_HIS.Data;
+using HISDB.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration.GetConnectionString("HISDBContext");

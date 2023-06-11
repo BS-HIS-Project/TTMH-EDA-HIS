@@ -34,4 +34,8 @@
     <Folder Include="Servers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HISDB\HISDB.csproj" />
+  </ItemGroup>
+
 </Project>
