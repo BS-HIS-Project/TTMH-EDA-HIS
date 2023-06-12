@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
-namespace HISDB;
+namespace HISDB.Models;
 
 public partial class Detail
 {

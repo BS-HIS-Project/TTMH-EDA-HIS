@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace HISDB;
+namespace HISDB.Models;
 
 public partial class Patient
 {
