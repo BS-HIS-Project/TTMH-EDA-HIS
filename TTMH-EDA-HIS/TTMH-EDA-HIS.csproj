@@ -10,6 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Controllers\AccountController.cs" />
+    <Content Include="Controllers\ChartsController.cs" />
+    <Content Include="Controllers\CPOEsController.cs" />
+    <Content Include="Controllers\HomeController.cs" />
+    <Content Include="Controllers\PharmacyController.cs" />
+    <Content Include="Controllers\WeatherForecastController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
