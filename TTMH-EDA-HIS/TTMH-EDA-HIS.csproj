@@ -10,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\**" />
+    <Compile Remove="Servers\**" />
+    <Content Remove="Helpers\**" />
+    <Content Remove="Servers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <EmbeddedResource Remove="Servers\**" />
+    <None Remove="Helpers\**" />
+    <None Remove="Servers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Controllers\AccountController.cs" />
     <Content Include="Controllers\ChartsController.cs" />
     <Content Include="Controllers\CPOEsController.cs" />
@@ -38,8 +49,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Servers\" />
   </ItemGroup>
 
   <ItemGroup>

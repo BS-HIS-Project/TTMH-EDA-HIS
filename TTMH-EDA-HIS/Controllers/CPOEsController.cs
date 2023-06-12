@@ -2,9 +2,10 @@
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using TTMH_EDA_HIS.Data;
-using TTMH_EDA_HIS.Models;
+using HISDB.Data;
+using HISDB.Models;
 using TTMH_EDA_HIS.ViewModels;
+using HISDB;
 
 namespace TTMH_EDA_HIS.Controllers
 {
