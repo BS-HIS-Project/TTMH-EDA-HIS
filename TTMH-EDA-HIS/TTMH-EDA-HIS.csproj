@@ -26,7 +26,6 @@
     <Content Include="Controllers\CPOEsController.cs" />
     <Content Include="Controllers\HomeController.cs" />
     <Content Include="Controllers\PharmacyController.cs" />
-    <Content Include="Controllers\WeatherForecastController.cs" />
   </ItemGroup>
 
   <ItemGroup>

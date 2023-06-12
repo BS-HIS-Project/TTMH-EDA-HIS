@@ -57,7 +57,7 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.CasId).HasName("PK__Cashiers__6B6EF2C78E8D5CE5");
 
             entity.Property(e => e.CasId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("CasID");
 
@@ -71,10 +71,10 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.ChaId).HasName("PK__Charts__97A59C75CBFB1D4C");
 
             entity.Property(e => e.ChaId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("ChaID");
-            entity.Property(e => e.DepartmentName).HasMaxLength(20);
+            entity.Property(e => e.DepartmentName).HasMaxLength(100);
             entity.Property(e => e.Vdate)
                 .HasColumnType("datetime")
                 .HasColumnName("VDate");
@@ -87,15 +87,15 @@ public partial class HisdbContext : DbContext
             entity.ToTable("Charts_Drugs_Dosages");
 
             entity.Property(e => e.ChaId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("ChaID");
             entity.Property(e => e.DrugId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DrugID");
             entity.Property(e => e.DosId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DosID");
 
@@ -117,16 +117,16 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.DetId).HasName("PK__Details__D8957AFCE2D73766");
 
             entity.Property(e => e.DetId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DetID");
             entity.Property(e => e.CasId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("CasID");
             entity.Property(e => e.MedicalCost).HasColumnType("decimal(20, 0)");
             entity.Property(e => e.PatientId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("PatientID");
             entity.Property(e => e.Payable).HasColumnType("decimal(20, 0)");
@@ -146,10 +146,10 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.DoctorId).HasName("PK__Doctors__2DC00EDF9BB9663C");
 
             entity.Property(e => e.DoctorId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DoctorID");
-            entity.Property(e => e.DepartmentName).HasMaxLength(20);
+            entity.Property(e => e.DepartmentName).HasMaxLength(100);
 
             entity.HasOne(d => d.DoctorNavigation).WithOne(p => p.Doctor)
                 .HasForeignKey<Doctor>(d => d.DoctorId)
@@ -163,15 +163,15 @@ public partial class HisdbContext : DbContext
             entity.ToTable("Doctors_Patients_Charts");
 
             entity.Property(e => e.DoctorId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DoctorID");
             entity.Property(e => e.PatientId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("PatientID");
             entity.Property(e => e.ChaId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("ChaID");
 
@@ -193,7 +193,7 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.DosId).HasName("PK__Dosages__4DFE76ACB6EE094D");
 
             entity.Property(e => e.DosId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DosID");
         });
@@ -203,11 +203,11 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.DrugId).HasName("PK__Drugs__908D66F6408F425E");
 
             entity.Property(e => e.DrugId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DrugID");
             entity.Property(e => e.Atccode)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("ATCCode");
             entity.Property(e => e.Dcontent)
@@ -216,11 +216,11 @@ public partial class HisdbContext : DbContext
             entity.Property(e => e.DrugName).IsUnicode(false);
             entity.Property(e => e.GenericName).IsUnicode(false);
             entity.Property(e => e.Nhicode)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("NHICode");
             entity.Property(e => e.Roaid)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("ROAID");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(20, 0)");
@@ -236,15 +236,15 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04FF1CB77EC3F");
 
             entity.Property(e => e.EmployeeId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("EmployeeID");
             entity.Property(e => e.Account)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.EmployeeName).HasMaxLength(50);
             entity.Property(e => e.Password)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             
         });
@@ -254,7 +254,7 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.PatientId).HasName("PK__Patients__970EC346C8B25736");
 
             entity.Property(e => e.PatientId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("PatientID");
             entity.Property(e => e.BirthDate).HasColumnType("datetime");
@@ -262,16 +262,16 @@ public partial class HisdbContext : DbContext
                 .HasMaxLength(3)
                 .IsUnicode(false);
             entity.Property(e => e.CaseHistory)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Gender)
                 .HasMaxLength(3)
                 .IsUnicode(false);
             entity.Property(e => e.Mobile)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Nhicard)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("NHICard");
             entity.Property(e => e.PatientName).HasMaxLength(50);
@@ -282,7 +282,7 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.PhaId).HasName("PK__Pharmaci__5D18076B51E8930B");
 
             entity.Property(e => e.PhaId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("PhaID");
 
@@ -296,15 +296,15 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.PresNo).HasName("PK__Prescrip__1401F7AF47170057");
 
             entity.Property(e => e.PresNo)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.DrugDate).HasColumnType("datetime");
             entity.Property(e => e.PatientId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("PatientID");
             entity.Property(e => e.PhaId)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("PhaID");
 
@@ -322,10 +322,10 @@ public partial class HisdbContext : DbContext
             entity.HasKey(e => e.Roaid).HasName("PK__RoutesOf__84E1649C98E0E0F3");
 
             entity.Property(e => e.Roaid)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("ROAID");
-            entity.Property(e => e.BodyParts).HasMaxLength(20);
+            entity.Property(e => e.BodyParts).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Employee>().HasData(
