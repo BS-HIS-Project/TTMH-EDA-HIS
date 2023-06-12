@@ -1,0 +1,73 @@
+﻿@using TTMH_EDA_HIS.Models;
+@model IEnumerable<PresViewModel>
+
+@{
+    ViewData["Title"] = " Details";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PresId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.chId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatsName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.docsName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vdate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PresId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.chId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatsName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.birthday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.docsName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vdate)
+                </td>
+                <td>
+                    @*<a class="btn btn-primary" asp-area="" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-warning" asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-area="" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
