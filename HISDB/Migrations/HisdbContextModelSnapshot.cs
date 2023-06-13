@@ -33,7 +33,7 @@ namespace HISDB.Migrations
                     b.HasKey("CasId")
                         .HasName("PK__Cashiers__6B6EF2C78E8D5CE5");
 
-                    b.ToTable("Cashiers");
+                    b.ToTable("Cashiers", (string)null);
 
                     b.HasData(
                         new
@@ -74,7 +74,7 @@ namespace HISDB.Migrations
                     b.HasKey("ChaId")
                         .HasName("PK__Charts__97A59C75CBFB1D4C");
 
-                    b.ToTable("Charts");
+                    b.ToTable("Charts", (string)null);
 
                     b.HasData(
                         new
@@ -243,7 +243,7 @@ namespace HISDB.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Details");
+                    b.ToTable("Details", (string)null);
 
                     b.HasData(
                         new
@@ -309,7 +309,7 @@ namespace HISDB.Migrations
                     b.HasKey("DoctorId")
                         .HasName("PK__Doctors__2DC00EDF9BB9663C");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
 
                     b.HasData(
                         new
@@ -401,7 +401,7 @@ namespace HISDB.Migrations
                     b.HasKey("DosId")
                         .HasName("PK__Dosages__4DFE76ACB6EE094D");
 
-                    b.ToTable("Dosages");
+                    b.ToTable("Dosages", (string)null);
 
                     b.HasData(
                         new
@@ -513,7 +513,7 @@ namespace HISDB.Migrations
 
                     b.HasIndex("Roaid");
 
-                    b.ToTable("Drugs");
+                    b.ToTable("Drugs", (string)null);
 
                     b.HasData(
                         new
@@ -646,7 +646,7 @@ namespace HISDB.Migrations
                     b.HasKey("EmployeeId")
                         .HasName("PK__Employee__7AD04FF1CB77EC3F");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
 
                     b.HasData(
                         new
@@ -745,7 +745,7 @@ namespace HISDB.Migrations
                     b.HasKey("PatientId")
                         .HasName("PK__Patients__970EC346C8B25736");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
 
                     b.HasData(
                         new
@@ -821,7 +821,7 @@ namespace HISDB.Migrations
                     b.HasKey("PhaId")
                         .HasName("PK__Pharmaci__5D18076B51E8930B");
 
-                    b.ToTable("Pharmacists");
+                    b.ToTable("Pharmacists", (string)null);
 
                     b.HasData(
                         new
@@ -865,7 +865,7 @@ namespace HISDB.Migrations
 
                     b.HasIndex("PhaId");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescriptions", (string)null);
 
                     b.HasData(
                         new
@@ -921,7 +921,7 @@ namespace HISDB.Migrations
                     b.HasKey("Roaid")
                         .HasName("PK__RoutesOf__84E1649C98E0E0F3");
 
-                    b.ToTable("RoutesOfAdminstrations");
+                    b.ToTable("RoutesOfAdminstrations", (string)null);
 
                     b.HasData(
                         new

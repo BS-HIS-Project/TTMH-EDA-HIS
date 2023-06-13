@@ -70,7 +70,7 @@ namespace TTMH_EDA_HIS.Controllers
                 join chas in _context.Charts on dpcs.ChaId equals chas.ChaId //就診
                 join docs in _context.Doctors on dpcs.DoctorId equals docs.DoctorId //醫生
                 join emps in _context.Employees on docs.DoctorId equals emps.EmployeeId //員工
-                where pres.PresNo == "PRE20230530001001"
+                where pres.PresNo == "PRE2023053013001001"
                 select new PresViewModel
                 {
                     PresId = pres.PresNo, //領藥號
