@@ -1,6 +1,7 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.CPOEsChartListViewModel
 @{
 }
+
 <div class="row">
     <div class="container-lg col-11 py-4">
         <form asp-action="ChartList" asp-route-id="" method="post" class="d-flex row">
@@ -63,17 +64,17 @@
         </tbody>
     </table>
 </div>
-@if ((bool)ViewData["UseButtonGp"])
+@if (Model.UseButtonGp)
 {
     <div class="row">
         <div class="container-lg col-11 py-4">
             <div class="row">
                 <div class="btn-group mx-auto" style="width:300px">
-                    <a asp-route-id="@ViewData["previous"]" class="btn btn-primary text-secondary">上一頁</a>
-                    <a asp-route-id="@ViewData["pg1"]" class="btn btn-primary active" aria-current="page">@ViewData["pg1"]</a>
-                    <a asp-route-id="@ViewData["pg2"]" class="btn btn-primary text-secondary">@ViewData["pg2"]</a>
-                    <a asp-route-id="@ViewData["pg3"]" class="btn btn-primary text-secondary">@ViewData["pg3"]</a>
-                    <a asp-route-id="@ViewData["next"]" class="btn btn-primary text-secondary">下一頁</a>
+                    <a asp-route-id="@Model.previous_page" class="btn btn-primary text-secondary">上一頁</a>
+                    <a asp-route-id="@Model.page1" class="btn btn-primary active" aria-current="page">@Model.page1</a>
+                    <a asp-route-id="@Model.page2" class="btn btn-primary text-secondary">@Model.page2</a>
+                    <a asp-route-id="@Model.page3" class="btn btn-primary text-secondary">@Model.page3</a>
+                    <a asp-route-id="@Model.next_page" class="btn btn-primary text-secondary">下一頁</a>
                 </div>
             </div>
         </div>

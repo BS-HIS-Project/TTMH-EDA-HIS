@@ -24,27 +24,27 @@ namespace TTMH_EDA_HIS.Controllers
         [HttpGet("[controller]/[action]/{id?}")]
         public async Task<IActionResult> ChartList(int id)
         {
-            int iid=0;
+            int page=0;
             if (id<=1)
             {
-                iid = 1;
+                page = 1;
                 id = 0;
             }
             else
             {
-                iid = id;
+                page = id;
                 id *= 6;
                 id -= 6;
             }
             CPOEsChartListViewModel vm = new CPOEsChartListViewModel();  
             vm.Patients = await _context.Patients.Skip(id).Take(6).ToListAsync();
             vm.content = "";
-            ViewData["UseButtonGp"] = true;
-            ViewData["previous"]=iid-1;
-            ViewData["pg1"]=iid;
-            ViewData["pg2"]=iid+1;
-            ViewData["pg3"]=iid+2;
-            ViewData["next"]=iid+1;
+            vm.UseButtonGp = true;
+            vm.previous_page=page-1;
+            vm.page1=page;
+            vm.page2=page+1;
+            vm.page3=page+2;
+            vm.next_page=page+1;
             return View(vm);
         }
 
@@ -58,14 +58,14 @@ namespace TTMH_EDA_HIS.Controllers
             List<Patient> result=await(
                 from i in _context.Patients
                 where (
-                    i.PatientId==vm.content ||
-                    i.PatientName==vm.content ||
-                    i.CaseHistory==vm.content
+                    i.PatientId.Contains(vm.content) ||
+                    i.PatientName.Contains(vm.content) ||
+                    i.CaseHistory.Contains(vm.content)
                 ) select i
             ).ToListAsync();
             vm.Patients = result;
             vm.content = "";
-            ViewData["UseButtonGp"] = false;
+            vm.UseButtonGp = false;
             return View(vm);
         }
         [HttpGet]
@@ -86,14 +86,14 @@ namespace TTMH_EDA_HIS.Controllers
                 Employee? employee = await _context.Employees.FindAsync(dpc.DoctorId);
                 Chart? chart = await _context.Charts.FindAsync(dpc.ChaId);
 
-                List<CPOEsPatientDetailsViewModel.DrugTableTD> drugs = new List<CPOEsPatientDetailsViewModel.DrugTableTD>();
+                List<DrugTableTD> drugs = new List<DrugTableTD>();
                 List<ChartsDrugsDosage>? cdds = await (from i in _context.ChartsDrugsDosages where i.ChaId == dpc.ChaId select i).ToListAsync();
                 foreach(var i in cdds)
                 {
                     Drug drug = await _context.Drugs.FindAsync(i.DrugId);
                     Dosage dosage = await _context.Dosages.FindAsync(i.DosId);
                     RoutesOfAdminstration? roa= await _context.RoutesOfAdminstrations.FindAsync(drug.Roaid);
-                    drugs.Add(new CPOEsPatientDetailsViewModel.DrugTableTD()
+                    drugs.Add(new DrugTableTD()
                     {
                         DrugID = drug.DrugId,
                         DrugName = drug.DrugName,
