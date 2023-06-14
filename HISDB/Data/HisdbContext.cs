@@ -99,18 +99,6 @@ public partial class HisdbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DosID");
-
-            entity.HasOne(d => d.Cha).WithMany(p => p.ChartsDrugsDosages)
-                .HasForeignKey(d => d.ChaId)
-                .HasConstraintName("FK_Charts_Drugs_Dosages_Charts");
-
-            entity.HasOne(d => d.Dos).WithOne(p => p.ChartsDrugsDosage)
-                .HasForeignKey<Dosage>(d => d.DosId)
-                .HasConstraintName("FK_Charts_Drugs_Dosages_Dosages");
-
-            entity.HasOne(d => d.Drug).WithMany(p => p.ChartsDrugsDosages)
-                .HasForeignKey(d => d.DrugId)
-                .HasConstraintName("FK_Charts_Drugs_Dosages_Drugs");
         });
 
         modelBuilder.Entity<Detail>(entity =>
@@ -351,11 +339,11 @@ public partial class HisdbContext : DbContext
             new Cashier { CasId="C11201002" }
         );
         modelBuilder.Entity<DoctorsPatientsChart>().HasData(
-            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "A118992634", ChaId= "CHA202305301301001" },
-            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "O101929955", ChaId= "CHA202305301301002" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "H255590997", ChaId= "CHA202305301301003" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "L198058112", ChaId= "CHA202305301301004" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA202305301301005" }
+            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "A118992634", ChaId= "CHA2023053013001001" },
+            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "O101929955", ChaId= "CHA2023053013001002" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "H255590997", ChaId= "CHA2023053013001003" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "L198058112", ChaId= "CHA2023053013001004" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA2023053013001005" }
         );
         modelBuilder.Entity<Patient>().HasData(
             // PAT + NOWDATE + 小時 + 診間號 + (病患)序號

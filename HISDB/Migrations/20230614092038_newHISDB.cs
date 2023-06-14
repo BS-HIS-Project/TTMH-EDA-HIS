@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HISDB.Migrations
 {
     /// <inheritdoc />
-    public partial class Chat20ChangeTo100 : Migration
+    public partial class newHISDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +33,8 @@ namespace HISDB.Migrations
                 columns: table => new
                 {
                     DosID = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    Direction = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Direction = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Freq = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,13 +203,13 @@ namespace HISDB.Migrations
                 name: "Doctors_Patients_Charts",
                 columns: table => new
                 {
-                    DoctorID = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     PatientID = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    ChaID = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false)
+                    ChaID = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    DoctorID = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Doctors___20274777D9BDA64F", x => new { x.DoctorID, x.PatientID, x.ChaID });
+                    table.PrimaryKey("PK__Doctors___20274777D9BDA64F", x => new { x.PatientID, x.ChaID });
                     table.ForeignKey(
                         name: "FK_Doctors_Patients_Charts_Charts",
                         column: x => x.ChaID,
@@ -268,21 +269,21 @@ namespace HISDB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Charts_D__43E0B46C2967DE43", x => new { x.ChaID, x.DrugID, x.DosID });
+                    table.PrimaryKey("PK__Charts_D__43E0B46C2967DE43", x => new { x.ChaID, x.DrugID });
                     table.ForeignKey(
-                        name: "FK_Charts_Drugs_Dosages_Charts",
+                        name: "FK_Charts_Drugs_Dosages_Charts_ChaID",
                         column: x => x.ChaID,
                         principalTable: "Charts",
                         principalColumn: "ChaID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Charts_Drugs_Dosages_Dosages",
+                        name: "FK_Charts_Drugs_Dosages_Dosages_DosID",
                         column: x => x.DosID,
                         principalTable: "Dosages",
                         principalColumn: "DosID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Charts_Drugs_Dosages_Drugs",
+                        name: "FK_Charts_Drugs_Dosages_Drugs_DrugID",
                         column: x => x.DrugID,
                         principalTable: "Drugs",
                         principalColumn: "DrugID",
@@ -294,23 +295,27 @@ namespace HISDB.Migrations
                 columns: new[] { "ChaID", "DepartmentName", "Object", "Subject", "VDate" },
                 values: new object[,]
                 {
-                    { "CHA20230530001001", "心臟內科", "心臟病", "胸悶", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "CHA20230530001002", "心臟內科", "心臟病", "心跳好像一直不規律，呼吸不過來", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "CHA20230530001003", "心臟內科", "心臟病", "頭痛、噁心、冒冷汗", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "CHA20230530001004", "心臟內科", "心臟病", "呼吸急促、胸悶", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "CHA20230530001005", "心臟內科", "心臟病", "心臟很痛", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { "CHA2023053013001001", "心臟內科", "心臟病", "胸悶", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "CHA2023053013001002", "心臟內科", "心臟病", "心跳好像一直不規律，呼吸不過來", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "CHA2023053013001003", "心臟內科", "心臟病", "頭痛、噁心、冒冷汗", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "CHA2023053013001004", "心臟內科", "心臟病", "呼吸急促、胸悶", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "CHA2023053013001005", "心臟內科", "心臟病", "心臟很痛", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "CHA2023061313001006", "心臟內科", "", "", new DateTime(2023, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "CHA2023061313001007", "心臟內科", "", "", new DateTime(2023, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Dosages",
-                columns: new[] { "DosID", "Direction" },
+                columns: new[] { "DosID", "Direction", "Freq" },
                 values: new object[,]
                 {
-                    { "BIAH", "每天早,晚(飯前)及睡前1次" },
-                    { "BIDP", "需要時早,晚(飯後)1次" },
-                    { "ORDER", "依照醫師指示" },
-                    { "PRN", "需要時使用" },
-                    { "QN", "每晚1次" }
+                    { "BID", "每天兩次，通常在早晚(飯後)", 2 },
+                    { "HS", "睡前服用", 1 },
+                    { "Q4H", "每隔四小時使用一次", 6 },
+                    { "Q6H", "每隔六小時使用一次", 4 },
+                    { "QD", "每日服用一次，通常在早上(飯後)，服用時間請根據醫生指示", 1 },
+                    { "QID", "每日四次，通常是早、中、晚(飯後)加上睡前共四次", 4 },
+                    { "TID", "每日三次，通常會配合早中晚吃飯時間(飯後)", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -331,11 +336,11 @@ namespace HISDB.Migrations
                 columns: new[] { "PatientID", "Address", "BirthDate", "Blood", "CaseHistory", "Gender", "Mobile", "NHICard", "PatientName" },
                 values: new object[,]
                 {
-                    { "A118992634", "台北市", new DateTime(1999, 6, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "A", "PAT20160610001001", "1", "0912345678", "000012345678", "水戶黃門" },
-                    { "H255590997", "桃園市", new DateTime(1997, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "AB", "PAT20161225001003", "2", "0955664477", "123456789011", "晨曦" },
-                    { "L198058112", "台中市", new DateTime(1992, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "O", "PAT20170526001004", "1", "0964973125", "647519785134", "野原新之助" },
-                    { "O101929955", "新竹市", new DateTime(1997, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "A", "PAT20160610001002", "1", "0965478932", "080009699912", "海綿寶寶" },
-                    { "S257920071", "高雄市", new DateTime(2000, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "O", "PAT20170811001005", "2", "0997919395", "715687493157", "橘子" }
+                    { "A118992634", "台北市", new DateTime(1999, 6, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "A", "PAT2016061013001001", "1", "0912345678", "000012345678", "水戶黃門" },
+                    { "H255590997", "桃園市", new DateTime(1997, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "AB", "PAT2016122513001003", "2", "0955664477", "123456789011", "晨曦" },
+                    { "L198058112", "台中市", new DateTime(1992, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "O", "PAT2017052613001004", "1", "0964973125", "647519785134", "野原新之助" },
+                    { "O101929955", "新竹市", new DateTime(1997, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "A", "PAT2016061013001002", "1", "0965478932", "080009699912", "海綿寶寶" },
+                    { "S257920071", "高雄市", new DateTime(2000, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "O", "PAT2017081113001005", "2", "0997919395", "715687493157", "橘子" }
                 });
 
             migrationBuilder.InsertData(
@@ -384,14 +389,14 @@ namespace HISDB.Migrations
 
             migrationBuilder.InsertData(
                 table: "Charts_Drugs_Dosages",
-                columns: new[] { "ChaID", "DosID", "DrugID", "Days", "Remark", "Total" },
+                columns: new[] { "ChaID", "DrugID", "Days", "DosID", "Remark", "Total" },
                 values: new object[,]
                 {
-                    { "CHA20230530001001", "ORDER", "046404", 3, "無", 9 },
-                    { "CHA20230530001002", "ORDER", "046404", 3, "無", 9 },
-                    { "CHA20230530001003", "ORDER", "046404", 3, "無", 9 },
-                    { "CHA20230530001004", "ORDER", "046404", 3, "無", 9 },
-                    { "CHA20230530001005", "ORDER", "046404", 3, "無", 9 }
+                    { "CHA2023053013001001", "046404", 3, "QD", "無", 9 },
+                    { "CHA2023053013001002", "046404", 3, "BID", "無", 9 },
+                    { "CHA2023053013001003", "046404", 3, "QID", "無", 9 },
+                    { "CHA2023053013001004", "046404", 3, "Q4H", "無", 9 },
+                    { "CHA2023053013001005", "046404", 3, "HS", "無", 9 }
                 });
 
             migrationBuilder.InsertData(
@@ -399,23 +404,23 @@ namespace HISDB.Migrations
                 columns: new[] { "DetID", "CasID", "MedicalCost", "PatientID", "Payable", "Registration" },
                 values: new object[,]
                 {
-                    { "DET20230530001001", "C11201001", 500m, "A118992634", 650m, 150m },
-                    { "DET20230530001002", "C11201001", 500m, "O101929955", 650m, 150m },
-                    { "DET20230530001003", "C11201001", 500m, "H255590997", 650m, 150m },
-                    { "DET20230530001004", "C11201001", 500m, "L198058112", 650m, 150m },
-                    { "DET20230530001005", "C11201001", 500m, "S257920071", 650m, 150m }
+                    { "DET2023053013001001", "C11201001", 500m, "A118992634", 650m, 150m },
+                    { "DET2023053013001002", "C11201001", 500m, "O101929955", 650m, 150m },
+                    { "DET2023053013001003", "C11201001", 500m, "H255590997", 650m, 150m },
+                    { "DET2023053013001004", "C11201001", 500m, "L198058112", 650m, 150m },
+                    { "DET2023053013001005", "C11201001", 500m, "S257920071", 650m, 150m }
                 });
 
             migrationBuilder.InsertData(
                 table: "Doctors_Patients_Charts",
-                columns: new[] { "ChaID", "DoctorID", "PatientID" },
+                columns: new[] { "ChaID", "PatientID", "DoctorID" },
                 values: new object[,]
                 {
-                    { "CHA20230530001001", "D11201001", "A118992634" },
-                    { "CHA20230530001002", "D11201001", "O101929955" },
-                    { "CHA20230530001003", "D11201002", "H255590997" },
-                    { "CHA20230530001004", "D11201002", "L198058112" },
-                    { "CHA20230530001005", "D11201002", "S257920071" }
+                    { "CHA2023053013001001", "A118992634", "D11201001" },
+                    { "CHA2023053013001003", "H255590997", "D11201002" },
+                    { "CHA2023053013001004", "L198058112", "D11201002" },
+                    { "CHA2023053013001002", "O101929955", "D11201001" },
+                    { "CHA2023053013001005", "S257920071", "D11201002" }
                 });
 
             migrationBuilder.InsertData(
@@ -423,17 +428,18 @@ namespace HISDB.Migrations
                 columns: new[] { "PresNo", "DrugDate", "PatientID", "PhaID" },
                 values: new object[,]
                 {
-                    { "PRE20230530001001", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "A118992634", "P11201001" },
-                    { "PRE20230530001002", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "O101929955", "P11201001" },
-                    { "PRE20230530001003", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "H255590997", "P11201001" },
-                    { "PRE20230530001004", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "L198058112", "P11201001" },
-                    { "PRE20230530001005", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "S257920071", "P11201001" }
+                    { "PRE2023053013001001", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "A118992634", "P11201001" },
+                    { "PRE2023053013001002", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "O101929955", "P11201001" },
+                    { "PRE2023053013001003", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "H255590997", "P11201001" },
+                    { "PRE2023053013001004", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "L198058112", "P11201001" },
+                    { "PRE2023053013001005", new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "S257920071", "P11201001" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Charts_Drugs_Dosages_DosID",
                 table: "Charts_Drugs_Dosages",
-                column: "DosID");
+                column: "DosID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Charts_Drugs_Dosages_DrugID",
@@ -456,9 +462,10 @@ namespace HISDB.Migrations
                 column: "ChaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctors_Patients_Charts_PatientID",
+                name: "IX_Doctors_Patients_Charts_DoctorID_ChaID",
                 table: "Doctors_Patients_Charts",
-                column: "PatientID");
+                columns: new[] { "DoctorID", "ChaID" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Drugs_ROAID",
