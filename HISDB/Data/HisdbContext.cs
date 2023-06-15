@@ -355,13 +355,11 @@ public partial class HisdbContext : DbContext
         );
         modelBuilder.Entity<Chart>().HasData(
             // CHA + NOWDATE + 小時 + 診間號 + (就診號)序號
-            new Chart { ChaId="CHA2023053013001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="胸悶", Object="心臟病" },
-            new Chart { ChaId="CHA2023053013001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心跳好像一直不規律，呼吸不過來", Object="心臟病" },
-            new Chart { ChaId="CHA2023053013001003", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="頭痛、噁心、冒冷汗", Object="心臟病" },
-            new Chart { ChaId="CHA2023053013001004", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="呼吸急促、胸悶", Object="心臟病" },
-            new Chart { ChaId="CHA2023053013001005", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心臟很痛", Object="心臟病" },
-            new Chart { ChaId="CHA2023061313001006", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,13), Subject="", Object="" },
-            new Chart { ChaId="CHA2023061313001007", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,13), Subject="", Object="" }
+            new Chart { ChaId="CHA2023053013001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="胸悶", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心跳好像一直不規律，呼吸不過來", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001003", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="頭痛、噁心、冒冷汗", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001004", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="呼吸急促、胸悶", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001005", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心臟很痛", Object="心臟病", History= new DateTime(2023, 05, 30) }
         );
         modelBuilder.Entity<Prescription>().HasData(
             // PRE + NOWDATE + 小時 + 診間號 + (領藥號)序號
@@ -389,11 +387,11 @@ public partial class HisdbContext : DbContext
             new Drug { DrugId= "026173", Atccode= "C02KX01", Nhicode= "BC26173100", DrugName= "Tracleer", GenericName= "Bosentan Monohydrate", UnitPrice=240, Dcontent= "62.5mg/tab", Appearance= "橘白色圓凸錠,62.5", ClinicalUses= "治療因先天性心臟病續發WHO Class III 肺動脈高血壓", SuggestedUsage= "腎功能受損者不需要調整劑量。接受血液透析治療之病人，亦無需調整劑量", AdverseReactions= "呼吸道感染、頭痛、水腫、昏厥、低血壓、心悸、貧血等", WarningPrecautions= "無資料", PointOfHealthEducation= "1.除非醫師指示，請勿任意停藥。 2.漏服一劑，請在想起時立即服用，切勿依次服用 2劑藥物。", StorageConditions= "儲存於30℃以下避光處", OtherInstructions= "每日服用1-2次，請於每日固定時間服用", ProcessingMethod= "無資料", Roaid= "PO" }
         );
         modelBuilder.Entity<ChartsDrugsDosage>().HasData(
-            new ChartsDrugsDosage { ChaId= "CHA2023053013001001", DrugId= "046404", DosId= "QD", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA2023053013001002", DrugId= "046404", DosId= "BID", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA2023053013001003", DrugId= "046404", DosId= "QID", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA2023053013001004", DrugId= "046404", DosId= "Q4H", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA2023053013001005", DrugId= "046404", DosId= "HS", Days=3, Total=9, Remark="無" }
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001001", DrugId= "046404", DosId= "QD", Quantity= 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001002", DrugId= "046404", DosId= "BID", Quantity = 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001003", DrugId= "046404", DosId= "QID", Quantity = 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001004", DrugId= "046404", DosId= "Q4H", Quantity = 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001005", DrugId= "046404", DosId= "HS", Quantity = 1, Days=3, Total=9, Remark="無" }
         );
         modelBuilder.Entity<RoutesOfAdminstration>().HasData(
             new RoutesOfAdminstration { Roaid="PO", BodyParts="口服" }
