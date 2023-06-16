@@ -82,7 +82,8 @@ public partial class HisdbContext : DbContext
 
         modelBuilder.Entity<ChartsDrugsDosage>(entity =>
         {
-            entity.HasKey(e => new { e.ChaId, e.DrugId, e.DosId }).HasName("PK__Charts_D__43E0B46C2967DE43");
+            
+            entity.HasKey(e => new { e.ChaId, e.DrugId}).HasName("PK__Charts_D__43E0B46C2967DE43");
 
             entity.ToTable("Charts_Drugs_Dosages");
 
@@ -98,18 +99,6 @@ public partial class HisdbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("DosID");
-
-            entity.HasOne(d => d.Cha).WithMany(p => p.ChartsDrugsDosages)
-                .HasForeignKey(d => d.ChaId)
-                .HasConstraintName("FK_Charts_Drugs_Dosages_Charts");
-
-            entity.HasOne(d => d.Dos).WithMany(p => p.ChartsDrugsDosages)
-                .HasForeignKey(d => d.DosId)
-                .HasConstraintName("FK_Charts_Drugs_Dosages_Dosages");
-
-            entity.HasOne(d => d.Drug).WithMany(p => p.ChartsDrugsDosages)
-                .HasForeignKey(d => d.DrugId)
-                .HasConstraintName("FK_Charts_Drugs_Dosages_Drugs");
         });
 
         modelBuilder.Entity<Detail>(entity =>
@@ -158,7 +147,8 @@ public partial class HisdbContext : DbContext
 
         modelBuilder.Entity<DoctorsPatientsChart>(entity =>
         {
-            entity.HasKey(e => new { e.DoctorId, e.PatientId, e.ChaId }).HasName("PK__Doctors___20274777D9BDA64F");
+            entity.HasKey(e => new { e.PatientId, e.ChaId }).HasName("PK__Doctors___20274777D9BDA64F");
+            entity.HasIndex(e => new { e.DoctorId, e.ChaId }).IsUnique();
 
             entity.ToTable("Doctors_Patients_Charts");
 
@@ -349,42 +339,44 @@ public partial class HisdbContext : DbContext
             new Cashier { CasId="C11201002" }
         );
         modelBuilder.Entity<DoctorsPatientsChart>().HasData(
-            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "A118992634", ChaId= "CHA20230530001001" },
-            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "O101929955", ChaId= "CHA20230530001002" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "H255590997", ChaId= "CHA20230530001003" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "L198058112", ChaId= "CHA20230530001004" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA20230530001005" }
+            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "A118992634", ChaId= "CHA2023053013001001" },
+            new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "O101929955", ChaId= "CHA2023053013001002" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "H255590997", ChaId= "CHA2023053013001003" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "L198058112", ChaId= "CHA2023053013001004" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA2023053013001005" }
         );
         modelBuilder.Entity<Patient>().HasData(
-            // PAT + NOWDATE + 診間號 + (病患)序號
-            new Patient { PatientId="A118992634", Nhicard="000012345678", CaseHistory="PAT20160610001001", PatientName= "水戶黃門", BirthDate= new DateTime(1999,06,07), Gender="1", Blood="A", Address="台北市", Mobile="0912345678" },
-            new Patient { PatientId="O101929955", Nhicard="080009699912", CaseHistory="PAT20160610001002", PatientName="海綿寶寶", BirthDate= new DateTime(1997,05,26), Gender="1", Blood="A", Address="新竹市", Mobile="0965478932" },
-            new Patient { PatientId="H255590997", Nhicard="123456789011", CaseHistory="PAT20161225001003", PatientName="晨曦", BirthDate= new DateTime(1997,08,13), Gender="2", Blood="AB", Address="桃園市", Mobile="0955664477" },
-            new Patient { PatientId="L198058112", Nhicard="647519785134", CaseHistory="PAT20170526001004", PatientName="野原新之助", BirthDate= new DateTime(1992,12,22), Gender="1", Blood="O", Address="台中市", Mobile="0964973125" },
-            new Patient { PatientId="S257920071", Nhicard="715687493157", CaseHistory="PAT20170811001005", PatientName= "橘子", BirthDate= new DateTime(2000,02,29), Gender="2", Blood="O", Address="高雄市", Mobile="0997919395" }
+            // PAT + NOWDATE + 小時 + 診間號 + (病患)序號
+            new Patient { PatientId="A118992634", Nhicard="000012345678", CaseHistory="PAT2016061013001001", PatientName= "水戶黃門", BirthDate= new DateTime(1999,06,07), Gender="1", Blood="A", Address="台北市", Mobile="0912345678" },
+            new Patient { PatientId="O101929955", Nhicard="080009699912", CaseHistory="PAT2016061013001002", PatientName="海綿寶寶", BirthDate= new DateTime(1997,05,26), Gender="1", Blood="A", Address="新竹市", Mobile="0965478932" },
+            new Patient { PatientId="H255590997", Nhicard="123456789011", CaseHistory="PAT2016122513001003", PatientName="晨曦", BirthDate= new DateTime(1997,08,13), Gender="2", Blood="AB", Address="桃園市", Mobile="0955664477" },
+            new Patient { PatientId="L198058112", Nhicard="647519785134", CaseHistory="PAT2017052613001004", PatientName="野原新之助", BirthDate= new DateTime(1992,12,22), Gender="1", Blood="O", Address="台中市", Mobile="0964973125" },
+            new Patient { PatientId="S257920071", Nhicard="715687493157", CaseHistory="PAT2017081113001005", PatientName= "橘子", BirthDate= new DateTime(2000,02,29), Gender="2", Blood="O", Address="高雄市", Mobile="0997919395" }
         );
         modelBuilder.Entity<Chart>().HasData(
-            // CHA + NOWDATE + 診間號 + (就診號)序號
-            new Chart { ChaId="CHA20230530001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="胸悶", Object="心臟病" },
-            new Chart { ChaId="CHA20230530001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心跳好像一直不規律，呼吸不過來", Object="心臟病" },
-            new Chart { ChaId="CHA20230530001003", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="頭痛、噁心、冒冷汗", Object="心臟病" },
-            new Chart { ChaId="CHA20230530001004", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="呼吸急促、胸悶", Object="心臟病" },
-            new Chart { ChaId="CHA20230530001005", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心臟很痛", Object="心臟病" }
+            // CHA + NOWDATE + 小時 + 診間號 + (就診號)序號
+            new Chart { ChaId="CHA2023053013001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="胸悶", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心跳好像一直不規律，呼吸不過來", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001003", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="頭痛、噁心、冒冷汗", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001004", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="呼吸急促、胸悶", Object="心臟病", History = new DateTime(2023, 05, 30) },
+            new Chart { ChaId="CHA2023053013001005", DepartmentName= "心臟內科", Vdate=new DateTime(2023,05,30), Subject="心臟很痛", Object="心臟病", History= new DateTime(2023, 05, 30) }
         );
         modelBuilder.Entity<Prescription>().HasData(
-            // PRE + NOWDATE + 診間號 + (領藥號)序號
-            new Prescription { PresNo= "PRE20230530001001", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "A118992634" },
-            new Prescription { PresNo= "PRE20230530001002", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "O101929955" },
-            new Prescription { PresNo= "PRE20230530001003", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "H255590997" },
-            new Prescription { PresNo= "PRE20230530001004", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "L198058112" },
-            new Prescription { PresNo= "PRE20230530001005", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "S257920071" }
+            // PRE + NOWDATE + 小時 + 診間號 + (領藥號)序號
+            new Prescription { PresNo= "PRE2023053013001001", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "A118992634" },
+            new Prescription { PresNo= "PRE2023053013001002", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "O101929955" },
+            new Prescription { PresNo= "PRE2023053013001003", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "H255590997" },
+            new Prescription { PresNo= "PRE2023053013001004", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "L198058112" },
+            new Prescription { PresNo= "PRE2023053013001005", DrugDate=new DateTime(2023,05,30), PhaId= "P11201001", PatientId= "S257920071" }
         );
         modelBuilder.Entity<Dosage>().HasData(
-            new Dosage { DosId = "BIAH", Direction = "每天早,晚(飯前)及睡前1次" },
-            new Dosage { DosId = "BIDP", Direction= "需要時早,晚(飯後)1次" },
-            new Dosage { DosId = "QN", Direction= "每晚1次" },
-            new Dosage { DosId = "PRN", Direction= "需要時使用" },
-            new Dosage { DosId = "ORDER", Direction= "依照醫師指示" }
+            new Dosage { DosId = "QD", Direction = "每日服用一次，通常在早上(飯後)，服用時間請根據醫生指示", Freq = 1 },
+            new Dosage { DosId = "BID", Direction = "每天兩次，通常在早晚(飯後)", Freq = 2 },
+            new Dosage { DosId = "TID", Direction = "每日三次，通常會配合早中晚吃飯時間(飯後)", Freq = 3 },
+            new Dosage { DosId = "QID", Direction = "每日四次，通常是早、中、晚(飯後)加上睡前共四次", Freq = 4 },
+            new Dosage { DosId = "Q4H", Direction = "每隔四小時使用一次", Freq = 6 },
+            new Dosage { DosId = "Q6H", Direction = "每隔六小時使用一次", Freq = 4 },
+            new Dosage { DosId = "HS", Direction = "睡前服用", Freq = 1 }
         );
         modelBuilder.Entity<Drug>().HasData(
             //參照童綜合醫院心臟相關藥品查詢
@@ -395,22 +387,22 @@ public partial class HisdbContext : DbContext
             new Drug { DrugId= "026173", Atccode= "C02KX01", Nhicode= "BC26173100", DrugName= "Tracleer", GenericName= "Bosentan Monohydrate", UnitPrice=240, Dcontent= "62.5mg/tab", Appearance= "橘白色圓凸錠,62.5", ClinicalUses= "治療因先天性心臟病續發WHO Class III 肺動脈高血壓", SuggestedUsage= "腎功能受損者不需要調整劑量。接受血液透析治療之病人，亦無需調整劑量", AdverseReactions= "呼吸道感染、頭痛、水腫、昏厥、低血壓、心悸、貧血等", WarningPrecautions= "無資料", PointOfHealthEducation= "1.除非醫師指示，請勿任意停藥。 2.漏服一劑，請在想起時立即服用，切勿依次服用 2劑藥物。", StorageConditions= "儲存於30℃以下避光處", OtherInstructions= "每日服用1-2次，請於每日固定時間服用", ProcessingMethod= "無資料", Roaid= "PO" }
         );
         modelBuilder.Entity<ChartsDrugsDosage>().HasData(
-            new ChartsDrugsDosage { ChaId= "CHA20230530001001", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA20230530001002", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA20230530001003", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA20230530001004", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" },
-            new ChartsDrugsDosage { ChaId= "CHA20230530001005", DrugId= "046404", DosId= "ORDER", Days=3, Total=9, Remark="無" }
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001001", DrugId= "046404", DosId= "QD", Quantity= 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001002", DrugId= "046404", DosId= "BID", Quantity = 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001003", DrugId= "046404", DosId= "QID", Quantity = 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001004", DrugId= "046404", DosId= "Q4H", Quantity = 1, Days=3, Total=9, Remark="無" },
+            new ChartsDrugsDosage { ChaId= "CHA2023053013001005", DrugId= "046404", DosId= "HS", Quantity = 1, Days=3, Total=9, Remark="無" }
         );
         modelBuilder.Entity<RoutesOfAdminstration>().HasData(
             new RoutesOfAdminstration { Roaid="PO", BodyParts="口服" }
         );
         modelBuilder.Entity<Detail>().HasData(
             // DET + NOWDATE + 診間號 + (繳費條碼)序號
-            new Detail { DetId= "DET20230530001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634" },
-            new Detail { DetId= "DET20230530001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955" },
-            new Detail { DetId= "DET20230530001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997" },
-            new Detail { DetId= "DET20230530001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112" },
-            new Detail { DetId= "DET20230530001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071" }
+            new Detail { DetId= "DET2023053013001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634" },
+            new Detail { DetId= "DET2023053013001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955" },
+            new Detail { DetId= "DET2023053013001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997" },
+            new Detail { DetId= "DET2023053013001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112" },
+            new Detail { DetId= "DET2023053013001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071" }
         );
 
         OnModelCreatingPartial(modelBuilder);

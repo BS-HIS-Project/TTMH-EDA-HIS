@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HISDB.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    [Migration("20230612130404_Chat20ChangeTo100")]
-    partial class Chat20ChangeTo100
+    [Migration("20230614092038_newHISDB")]
+    partial class newHISDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,7 +82,7 @@ namespace HISDB.Migrations
                     b.HasData(
                         new
                         {
-                            ChaId = "CHA20230530001001",
+                            ChaId = "CHA2023053013001001",
                             DepartmentName = "心臟內科",
                             Object = "心臟病",
                             Subject = "胸悶",
@@ -90,7 +90,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            ChaId = "CHA20230530001002",
+                            ChaId = "CHA2023053013001002",
                             DepartmentName = "心臟內科",
                             Object = "心臟病",
                             Subject = "心跳好像一直不規律，呼吸不過來",
@@ -98,7 +98,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            ChaId = "CHA20230530001003",
+                            ChaId = "CHA2023053013001003",
                             DepartmentName = "心臟內科",
                             Object = "心臟病",
                             Subject = "頭痛、噁心、冒冷汗",
@@ -106,7 +106,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            ChaId = "CHA20230530001004",
+                            ChaId = "CHA2023053013001004",
                             DepartmentName = "心臟內科",
                             Object = "心臟病",
                             Subject = "呼吸急促、胸悶",
@@ -114,11 +114,27 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            ChaId = "CHA20230530001005",
+                            ChaId = "CHA2023053013001005",
                             DepartmentName = "心臟內科",
                             Object = "心臟病",
                             Subject = "心臟很痛",
                             Vdate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ChaId = "CHA2023061313001006",
+                            DepartmentName = "心臟內科",
+                            Object = "",
+                            Subject = "",
+                            Vdate = new DateTime(2023, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ChaId = "CHA2023061313001007",
+                            DepartmentName = "心臟內科",
+                            Object = "",
+                            Subject = "",
+                            Vdate = new DateTime(2023, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -136,14 +152,15 @@ namespace HISDB.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("DrugID");
 
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
                     b.Property<string>("DosId")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("DosID");
-
-                    b.Property<int>("Days")
-                        .HasColumnType("int");
 
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
@@ -151,10 +168,11 @@ namespace HISDB.Migrations
                     b.Property<int>("Total")
                         .HasColumnType("int");
 
-                    b.HasKey("ChaId", "DrugId", "DosId")
+                    b.HasKey("ChaId", "DrugId")
                         .HasName("PK__Charts_D__43E0B46C2967DE43");
 
-                    b.HasIndex("DosId");
+                    b.HasIndex("DosId")
+                        .IsUnique();
 
                     b.HasIndex("DrugId");
 
@@ -163,46 +181,46 @@ namespace HISDB.Migrations
                     b.HasData(
                         new
                         {
-                            ChaId = "CHA20230530001001",
+                            ChaId = "CHA2023053013001001",
                             DrugId = "046404",
-                            DosId = "ORDER",
                             Days = 3,
+                            DosId = "QD",
                             Remark = "無",
                             Total = 9
                         },
                         new
                         {
-                            ChaId = "CHA20230530001002",
+                            ChaId = "CHA2023053013001002",
                             DrugId = "046404",
-                            DosId = "ORDER",
                             Days = 3,
+                            DosId = "BID",
                             Remark = "無",
                             Total = 9
                         },
                         new
                         {
-                            ChaId = "CHA20230530001003",
+                            ChaId = "CHA2023053013001003",
                             DrugId = "046404",
-                            DosId = "ORDER",
                             Days = 3,
+                            DosId = "QID",
                             Remark = "無",
                             Total = 9
                         },
                         new
                         {
-                            ChaId = "CHA20230530001004",
+                            ChaId = "CHA2023053013001004",
                             DrugId = "046404",
-                            DosId = "ORDER",
                             Days = 3,
+                            DosId = "Q4H",
                             Remark = "無",
                             Total = 9
                         },
                         new
                         {
-                            ChaId = "CHA20230530001005",
+                            ChaId = "CHA2023053013001005",
                             DrugId = "046404",
-                            DosId = "ORDER",
                             Days = 3,
+                            DosId = "HS",
                             Remark = "無",
                             Total = 9
                         });
@@ -251,7 +269,7 @@ namespace HISDB.Migrations
                     b.HasData(
                         new
                         {
-                            DetId = "DET20230530001001",
+                            DetId = "DET2023053013001001",
                             CasId = "C11201001",
                             MedicalCost = 500m,
                             PatientId = "A118992634",
@@ -260,7 +278,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            DetId = "DET20230530001002",
+                            DetId = "DET2023053013001002",
                             CasId = "C11201001",
                             MedicalCost = 500m,
                             PatientId = "O101929955",
@@ -269,7 +287,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            DetId = "DET20230530001003",
+                            DetId = "DET2023053013001003",
                             CasId = "C11201001",
                             MedicalCost = 500m,
                             PatientId = "H255590997",
@@ -278,7 +296,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            DetId = "DET20230530001004",
+                            DetId = "DET2023053013001004",
                             CasId = "C11201001",
                             MedicalCost = 500m,
                             PatientId = "L198058112",
@@ -287,7 +305,7 @@ namespace HISDB.Migrations
                         },
                         new
                         {
-                            DetId = "DET20230530001005",
+                            DetId = "DET2023053013001005",
                             CasId = "C11201001",
                             MedicalCost = 500m,
                             PatientId = "S257920071",
@@ -329,12 +347,6 @@ namespace HISDB.Migrations
 
             modelBuilder.Entity("HISDB.Models.DoctorsPatientsChart", b =>
                 {
-                    b.Property<string>("DoctorId")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("DoctorID");
-
                     b.Property<string>("PatientId")
                         .HasMaxLength(100)
                         .IsUnicode(false)
@@ -347,45 +359,53 @@ namespace HISDB.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("ChaID");
 
-                    b.HasKey("DoctorId", "PatientId", "ChaId")
+                    b.Property<string>("DoctorId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("DoctorID");
+
+                    b.HasKey("PatientId", "ChaId")
                         .HasName("PK__Doctors___20274777D9BDA64F");
 
                     b.HasIndex("ChaId");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("DoctorId", "ChaId")
+                        .IsUnique();
 
                     b.ToTable("Doctors_Patients_Charts", (string)null);
 
                     b.HasData(
                         new
                         {
-                            DoctorId = "D11201001",
                             PatientId = "A118992634",
-                            ChaId = "CHA20230530001001"
+                            ChaId = "CHA2023053013001001",
+                            DoctorId = "D11201001"
                         },
                         new
                         {
-                            DoctorId = "D11201001",
                             PatientId = "O101929955",
-                            ChaId = "CHA20230530001002"
+                            ChaId = "CHA2023053013001002",
+                            DoctorId = "D11201001"
                         },
                         new
                         {
-                            DoctorId = "D11201002",
                             PatientId = "H255590997",
-                            ChaId = "CHA20230530001003"
+                            ChaId = "CHA2023053013001003",
+                            DoctorId = "D11201002"
                         },
                         new
                         {
-                            DoctorId = "D11201002",
                             PatientId = "L198058112",
-                            ChaId = "CHA20230530001004"
+                            ChaId = "CHA2023053013001004",
+                            DoctorId = "D11201002"
                         },
                         new
                         {
-                            DoctorId = "D11201002",
                             PatientId = "S257920071",
-                            ChaId = "CHA20230530001005"
+                            ChaId = "CHA2023053013001005",
+                            DoctorId = "D11201002"
                         });
                 });
 
@@ -401,6 +421,9 @@ namespace HISDB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Freq")
+                        .HasColumnType("int");
+
                     b.HasKey("DosId")
                         .HasName("PK__Dosages__4DFE76ACB6EE094D");
 
@@ -409,28 +432,45 @@ namespace HISDB.Migrations
                     b.HasData(
                         new
                         {
-                            DosId = "BIAH",
-                            Direction = "每天早,晚(飯前)及睡前1次"
+                            DosId = "QD",
+                            Direction = "每日服用一次，通常在早上(飯後)，服用時間請根據醫生指示",
+                            Freq = 1
                         },
                         new
                         {
-                            DosId = "BIDP",
-                            Direction = "需要時早,晚(飯後)1次"
+                            DosId = "BID",
+                            Direction = "每天兩次，通常在早晚(飯後)",
+                            Freq = 2
                         },
                         new
                         {
-                            DosId = "QN",
-                            Direction = "每晚1次"
+                            DosId = "TID",
+                            Direction = "每日三次，通常會配合早中晚吃飯時間(飯後)",
+                            Freq = 3
                         },
                         new
                         {
-                            DosId = "PRN",
-                            Direction = "需要時使用"
+                            DosId = "QID",
+                            Direction = "每日四次，通常是早、中、晚(飯後)加上睡前共四次",
+                            Freq = 4
                         },
                         new
                         {
-                            DosId = "ORDER",
-                            Direction = "依照醫師指示"
+                            DosId = "Q4H",
+                            Direction = "每隔四小時使用一次",
+                            Freq = 6
+                        },
+                        new
+                        {
+                            DosId = "Q6H",
+                            Direction = "每隔六小時使用一次",
+                            Freq = 4
+                        },
+                        new
+                        {
+                            DosId = "HS",
+                            Direction = "睡前服用",
+                            Freq = 1
                         });
                 });
 
@@ -757,7 +797,7 @@ namespace HISDB.Migrations
                             Address = "台北市",
                             BirthDate = new DateTime(1999, 6, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blood = "A",
-                            CaseHistory = "PAT20160610001001",
+                            CaseHistory = "PAT2016061013001001",
                             Gender = "1",
                             Mobile = "0912345678",
                             Nhicard = "000012345678",
@@ -769,7 +809,7 @@ namespace HISDB.Migrations
                             Address = "新竹市",
                             BirthDate = new DateTime(1997, 5, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blood = "A",
-                            CaseHistory = "PAT20160610001002",
+                            CaseHistory = "PAT2016061013001002",
                             Gender = "1",
                             Mobile = "0965478932",
                             Nhicard = "080009699912",
@@ -781,7 +821,7 @@ namespace HISDB.Migrations
                             Address = "桃園市",
                             BirthDate = new DateTime(1997, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blood = "AB",
-                            CaseHistory = "PAT20161225001003",
+                            CaseHistory = "PAT2016122513001003",
                             Gender = "2",
                             Mobile = "0955664477",
                             Nhicard = "123456789011",
@@ -793,7 +833,7 @@ namespace HISDB.Migrations
                             Address = "台中市",
                             BirthDate = new DateTime(1992, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blood = "O",
-                            CaseHistory = "PAT20170526001004",
+                            CaseHistory = "PAT2017052613001004",
                             Gender = "1",
                             Mobile = "0964973125",
                             Nhicard = "647519785134",
@@ -805,7 +845,7 @@ namespace HISDB.Migrations
                             Address = "高雄市",
                             BirthDate = new DateTime(2000, 2, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Blood = "O",
-                            CaseHistory = "PAT20170811001005",
+                            CaseHistory = "PAT2017081113001005",
                             Gender = "2",
                             Mobile = "0997919395",
                             Nhicard = "715687493157",
@@ -873,35 +913,35 @@ namespace HISDB.Migrations
                     b.HasData(
                         new
                         {
-                            PresNo = "PRE20230530001001",
+                            PresNo = "PRE2023053013001001",
                             DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "A118992634",
                             PhaId = "P11201001"
                         },
                         new
                         {
-                            PresNo = "PRE20230530001002",
+                            PresNo = "PRE2023053013001002",
                             DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "O101929955",
                             PhaId = "P11201001"
                         },
                         new
                         {
-                            PresNo = "PRE20230530001003",
+                            PresNo = "PRE2023053013001003",
                             DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "H255590997",
                             PhaId = "P11201001"
                         },
                         new
                         {
-                            PresNo = "PRE20230530001004",
+                            PresNo = "PRE2023053013001004",
                             DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "L198058112",
                             PhaId = "P11201001"
                         },
                         new
                         {
-                            PresNo = "PRE20230530001005",
+                            PresNo = "PRE2023053013001005",
                             DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "S257920071",
                             PhaId = "P11201001"
@@ -952,22 +992,19 @@ namespace HISDB.Migrations
                         .WithMany("ChartsDrugsDosages")
                         .HasForeignKey("ChaId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Charts_Drugs_Dosages_Charts");
+                        .IsRequired();
 
                     b.HasOne("HISDB.Models.Dosage", "Dos")
-                        .WithMany("ChartsDrugsDosages")
-                        .HasForeignKey("DosId")
+                        .WithOne("ChartsDrugsDosage")
+                        .HasForeignKey("HISDB.Models.ChartsDrugsDosage", "DosId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Charts_Drugs_Dosages_Dosages");
+                        .IsRequired();
 
                     b.HasOne("HISDB.Models.Drug", "Drug")
                         .WithMany("ChartsDrugsDosages")
                         .HasForeignKey("DrugId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Charts_Drugs_Dosages_Drugs");
+                        .IsRequired();
 
                     b.Navigation("Cha");
 
@@ -1103,7 +1140,8 @@ namespace HISDB.Migrations
 
             modelBuilder.Entity("HISDB.Models.Dosage", b =>
                 {
-                    b.Navigation("ChartsDrugsDosages");
+                    b.Navigation("ChartsDrugsDosage")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HISDB.Models.Drug", b =>
