@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - TTMH_EDA_HIS</title>
+        <link rel="stylesheet" href="./../../wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./../../Views/Shared/_Layout.cshtml.css" asp-append-version="true" />
+        <link rel="stylesheet" href="./../../wwwroot/css/site.css" asp-append-version="true" />
+        <!--Section CSS-->
+        <link rel="stylesheet" href="./../../wwwroot/css/theme.css" asp-append-version="true" />
+        <style>
+            .bd1{
+                border:3px solid blue;
+            }
+            .bd2{
+                border:3px solid red;
+            }
+            .bd3{
+                border:3px solid green;
+            }
+            .bd4{
+                border:3px solid yellow;
+            }
+            /*******************************************************************/
+            @media (max-width:992px) {
+                .LY-nav-logo {
+                    display: none;
+                }
+            }
+            .LY-bg {
+                    background-color: #0FC2C0 !important;
+            }
+            /*******************************************************************/
+            .SC-input-button-form_submit {
+                background-color: #4443a3;
+                border-radius: 10px;
+                border: 0px solid;
+                color: white;
+                font-size: 30px;
+                padding: 15px;
+                width: 85%;
+            }
+            .SC-input-button-form_submit:hover {
+                background-color: #5554b4;
+            }
+            .SC-input-button-form_submit:focus {
+                background-color: #5554b4;
+            }
+            @media (max-width:1600px) {
+                .SC-input-button-form_submit{
+                    font-size:20px;
+                }
+            }
+
+
+            /*******************************************************************/
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg LY-bg bg-body-tertiary" style="background-color: #0FC2C0 !important;">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="width:100px;height:100px">
+                        <span class="navbar-toggler-icon" style="width:fit-content;height:70px;">
+                            <img src="./../../wwwroot/img/Logo.png" class="img-fluid" alt="Logo">
+                        </span>
+                    </button>
+                    <img src="./../../wwwroot/img/Logo.png" class="img-fluid LY-nav-logo" alt="Logo" width="60px">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                        <div class="d-flex">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item px-4">
+                                    <a class="nav-link h2 text-white" href="#">Peter</a>
+                                </li>
+                                <li class="nav-item px-4">
+                                    <a class="nav-link h2 text-white" asp-controller="Account" asp-action="Logout">登出</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main role="main" class="row">
+            <!--Body-->
+            <!------------------------------------------------------------------------------------------------->
+            <div class="row">
+                <div class="container-lg col-11 py-4">
+                    <div class="row">
+                        <div class="col-3 bd3">
+                            <div class="row">
+                                <div class="col bd3">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col bd4">
+
+                                </div>
+                                <div class="col bd2">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-9 bd1">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-5 d-flex justify-content-between">
+                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                                        送出紀錄
+                                    </div>
+                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                                        重新列印
+                                    </div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-between">
+                                    
+                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                        <<
+                                    </div>
+                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                        <
+                                    </div>
+                                    <div class="dropdown-center" style="width:35%;margin-left:5%;">
+                                        <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            就診紀錄
+                                        </button>
+                                        <ul class="dropdown-menu ">
+                                            <li><a class="dropdown-item AT-fs-25" href="#">Action</a></li>
+                                            <li><a class="dropdown-item AT-fs-25" href="#">Action two</a></li>
+                                            <li><a class="dropdown-item AT-fs-25" href="#">Action three</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                        >
+                                    </div>
+                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                        >>
+                                    </div>            
+                                </div>           
+                            </div>
+
+
+                            <div class="row mt-2 p-3" style="gap:15px;">
+                                <div class="col AT-rounded-1 AT-bg-fourth">
+                                    <div class="AT-fs-40 text-secondary">
+                                        ewrrwe
+                                    </div>
+                                    <div class="bg-secondary AT-hr"></div>
+                                    <textarea name="" id="" class="AT-bg-fourth AT-fs-33" style="border:none;width: 100%;height:320px;">
+                                    </textarea>
+                                </div>
+                                <textarea class="col AT-rounded-1 AT-bg-fourth">
+
+                                </textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!------------------------------------------------------------------------------------------------->
+        </main>
+        <footer class="border-top footer text-muted">
+        </footer>
+        <script src="./../../wwwroot/lib/jquery/dist/jquery.min.js"></script>
+        <script src="./../../wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="./../../wwwroot/js/site.js" asp-append-version="true"></script>
+        <script>
+            /////////////////////////////////////////////////////////////////
+
+
+
+
+
+            /////////////////////////////////////////////////////////////////
+        </script>
+    </body>
+</html>

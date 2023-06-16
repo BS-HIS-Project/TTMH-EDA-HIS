@@ -4,6 +4,7 @@
     CT >>> Project Component Elements
     MD >>> Media (Only appear at section)
     SC >>> Section Elements (Only appear at section)
+    LY >>> Layout
 */
 
 /* Bootstrap Edit--------------------------------------------------------------------------------*/
@@ -18,11 +19,6 @@
 
 
 /* Project Attribute Elements-----------------------------------------------------------------------------------*/
-@media (max-width:992px) {
-    .AT-Nav-Logo {
-        display: none;
-    }
-}
 
 .AT-bg-primary {
     background-color: #0CABA8 !important;
@@ -60,25 +56,39 @@
 .AT-fg-third {
     color: #4443a3 !important;
 }
-.AT-hr-third {
-    border-top: 7px solid #4443a3;
+.AT-bg-fourth {
+    background-color: #BCEFEE !important;
+}
+.AT-fg-fourth {
+    color: #BCEFEE !important;
+}
+
+
+.AT-hr {
+    border-top: 7px solid gray;
     width: 100%;
 }
 
 
-.AT-font-75 {
+.AT-fs-75 {
     font-size: 75px !important;
 }
-.AT-font-50 {
+.AT-fs-70 {
+    font-size: 70px !important;
+}
+.AT-fs-50 {
     font-size: 50px !important;
 }
-.AT-font-35 {
+.AT-fs-40 {
+    font-size: 40px !important;
+}
+.AT-fs-35 {
     font-size: 35px !important;
 }
-.AT-font-33 {
-    font-size: 33px !important;
+.AT-fs-30 {
+    font-size: 30px !important;
 }
-.AT-font-25 {
+.AT-fs-25 {
     font-size: 25px !important;
 }
 
