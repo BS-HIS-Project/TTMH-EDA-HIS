@@ -3,18 +3,21 @@
     AT >>> Project Attribute Elements
     CT >>> Project Component Elements
     MD >>> Media (Only appear at section)
-    ED >>> Certain Elements Edits (Only appear at section)
+    SC >>> Section Elements (Only appear at section)
 */
 
 /* Bootstrap Edit--------------------------------------------------------------------------------*/
 
 .BS-btn {
     border: #023535 solid 1px !important;
+    color: white !important;
+}
+.BS-btn:hover {
+    color: white !important;
 }
 
 
 /* Project Attribute Elements-----------------------------------------------------------------------------------*/
-
 @media (max-width:992px) {
     .AT-Nav-Logo {
         display: none;
@@ -64,19 +67,19 @@
 
 
 .AT-font-75 {
-    font-size: 75px;
+    font-size: 75px !important;
 }
 .AT-font-50 {
-    font-size: 50px;
+    font-size: 50px !important;
 }
 .AT-font-35 {
-    font-size: 35px;
+    font-size: 35px !important;
 }
 .AT-font-33 {
-    font-size: 33px;
+    font-size: 33px !important;
 }
 .AT-font-25 {
-    font-size: 25px;
+    font-size: 25px !important;
 }
 
 
@@ -102,15 +105,6 @@
 
 /* Project Component Elements-----------------------------------------------------------------------------------*/
 
-.CT-input-button-entry {
-    font-size: 40px;
-    color: white;
-    border: 0px;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-}
-
 .CT-tbody-ColorInterval tr:nth-of-type(odd) {
     background-color: #BCEFEE;
 }
@@ -120,19 +114,17 @@
 }
 
 .CT-tbody-ColorInterval > tr > td {
-    font-size: 35px;
+    font-size: 30px;
     padding: 20px 0px;
     color: black;
     text-align: start;
 }
 
 .CT-tbody-ColorInterval > tr > td:first-child {
-    font-size: 35px;
     padding: 20px 0px 20px 50px;
 }
 
-.CT-tbody-Lasttd-RightSide > tr > td:last-child {
-    font-size: 35px;
+.CT-tbody-ColorInterval > tr > td:last-child {
     padding: 20px 35px 20px 0px;
 }
 
@@ -143,27 +135,4 @@
 .CT-tbody-ColorInterval > tr:last-child > td:last-child {
     border-bottom-right-radius: 25px;
 }
-
-
-
-
-
-
-.CT-input-button-submit {
-    background-color: #4443a3;
-    border-radius: 10px;
-    border: 0px solid;
-    color: white;
-    font-size: 30px;
-    padding: 10px;
-    width: 85%;
-}
-.CT-input-button-submit:hover {
-    background-color: #008F8C;
-}
-.CT-input-button-submit:focus {
-    background-color: #0CABAB;
-}
-
-
 
