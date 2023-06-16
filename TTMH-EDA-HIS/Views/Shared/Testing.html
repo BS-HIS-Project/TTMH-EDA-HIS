@@ -32,12 +32,15 @@
                     background-color: #0FC2C0 !important;
             }
             /*******************************************************************/
+            .CT-tbody-ColorInterval tr > td:first-child {
+                padding: 20px 0px 20px 20px;
+            }
             .SC-input-button-form_submit {
                 background-color: #4443a3;
                 border-radius: 10px;
                 border: 0px solid;
                 color: white;
-                font-size: 30px;
+                font-size: 27px;
                 padding: 15px;
                 width: 85%;
             }
@@ -47,13 +50,45 @@
             .SC-input-button-form_submit:focus {
                 background-color: #5554b4;
             }
-            @media (max-width:1600px) {
+            .SC-block {
+                border:none;
+                height:150px;
+            }
+            @media (max-width:1700px) {
                 .SC-input-button-form_submit{
-                    font-size:20px;
+                    font-size:20px !important;
+                }
+                .CT-tbody-ColorInterval tr > td {
+                    font-size: 22px !important;
+                }
+                .SC-block{
+                    font-size: 30px !important;
                 }
             }
-
-
+            @media (max-width:1300px) {
+                .SC-input-button-form_submit{
+                    font-size:20px !important;
+                }
+                .CT-tbody-ColorInterval tr > td {
+                    font-size: 25px !important;
+                }
+                .SC-block{
+                    font-size: 23px !important;
+                }
+                .MD-adjust-1{
+                    width: 100%;
+                    margin-top: 10px;
+                }
+            }
+            @media (max-width:900px) {
+                body{
+                    background-color: red;
+                }
+                .MD-adjust-2{
+                    width: 100%;
+                    margin-top: 10px;
+                }
+            }
             /*******************************************************************/
         </style>
     </head>
@@ -89,83 +124,243 @@
             <div class="row">
                 <div class="container-lg col-11 py-4">
                     <div class="row">
-                        <div class="col-3 bd3">
+                        <div class="col-4 MD-adjust-1">
                             <div class="row">
-                                <div class="col bd3">
-
+                                <div class="col">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            病歷號碼
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col bd4">
-
+                            <div class="row mt-4">
+                                <div class="col-6 MD-adjust-2">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            就診號
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col bd2">
-
+                                <div class="col-6 MD-adjust-2">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            病患姓名
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6 MD-adjust-2">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            年齡
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 MD-adjust-2">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            病患性別
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6 MD-adjust-2">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            出生年月日
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 MD-adjust-2">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            看診日期
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                            123456789
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
 
-                        <div class="col-9 bd1">
+                        <div class="col-8 MD-adjust-1">
                             <div class="row d-flex justify-content-between">
-                                <div class="col-5 d-flex justify-content-between">
-                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                                <div class="col-5 d-flex justify-content-between MD-adjust-2">
+                                    <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
                                         送出紀錄
-                                    </div>
-                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                                    </button>
+                                    <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
                                         重新列印
-                                    </div>
+                                    </button>
                                 </div>
-                                <div class="col-6 d-flex justify-content-between">
+                                <div class="col-6 d-flex justify-content-between MD-adjust-2">
                                     
-                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                    <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                                         <<
-                                    </div>
-                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                    </button>
+                                    <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                                         <
-                                    </div>
+                                    </button>
                                     <div class="dropdown-center" style="width:35%;margin-left:5%;">
                                         <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             就診紀錄
                                         </button>
                                         <ul class="dropdown-menu ">
-                                            <li><a class="dropdown-item AT-fs-25" href="#">Action</a></li>
-                                            <li><a class="dropdown-item AT-fs-25" href="#">Action two</a></li>
-                                            <li><a class="dropdown-item AT-fs-25" href="#">Action three</a></li>
+                                            <li><button class="dropdown-item AT-fs-25">Action</button></li>
+                                            <li><button class="dropdown-item AT-fs-25">Action two</button></li>
+                                            <li><button class="dropdown-item AT-fs-25">Action three</button></li>
                                         </ul>
                                     </div>
-                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                    <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                                         >
-                                    </div>
-                                    <div class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                                    </button>
+                                    <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                                         >>
-                                    </div>            
+                                    </button>            
                                 </div>           
                             </div>
 
-
-                            <div class="row mt-2 p-3" style="gap:15px;">
-                                <div class="col AT-rounded-1 AT-bg-fourth">
-                                    <div class="AT-fs-40 text-secondary">
-                                        ewrrwe
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            病患自述(Subject)
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">
+                                        </textarea>
                                     </div>
-                                    <div class="bg-secondary AT-hr"></div>
-                                    <textarea name="" id="" class="AT-bg-fourth AT-fs-33" style="border:none;width: 100%;height:320px;">
-                                    </textarea>
                                 </div>
-                                <textarea class="col AT-rounded-1 AT-bg-fourth">
-
-                                </textarea>
+                                <div class="col-6">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            過去病史(History)
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">
+                                        </textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
 
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                                        <div class="AT-fs-30 text-secondary px-3 py-2">
+                                            入院經過(Object)
+                                        </div>
+                                        <div class="bg-secondary AT-hr"></div>
+                                        <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">
+                                        </textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
 
-                                </div>
+                            <div class="row p-2 mt-2">
+                                <table class="">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-2 ps-4 py-2 AT-rounded-1-top-left">
+                                                藥品編號
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-2 py-2">
+                                                藥品名稱
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-1 py-2">
+                                                用法
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-1 py-2">
+                                                頻率
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
+                                                次量
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
+                                                天數
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
+                                                總量
+                                            </th>
+                                            <th class="text-white AT-bg-primary AT-fs-30 col-2 py-1 AT-rounded-1-top-right">
+                                                備註
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="CT-tbody-ColorInterval">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
                             </div>
                         </div>
                     </div>
