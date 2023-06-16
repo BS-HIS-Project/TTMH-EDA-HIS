@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using HISDB.Data;
+using TTMH_EDA_HIS.Interfaces;
+using TTMH_EDA_HIS.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration.GetConnectionString("HISDBContext");
@@ -9,10 +12,18 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<HisdbContext>(
     options => options.UseSqlServer(conn)
 );
-
+builder.Services.AddSingleton<IHashService,SHA512HashService>();
 //builder.Services.AddControllers();
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.Cookie.Name = "TTMH_EDA_HIS_LOGIN";
+    options.ExpireTimeSpan=TimeSpan.FromMinutes(45);
+    options.SlidingExpiration = true;
+    options.AccessDeniedPath = "/Account/Denied";
+});
 
 var app = builder.Build();
 
@@ -32,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
