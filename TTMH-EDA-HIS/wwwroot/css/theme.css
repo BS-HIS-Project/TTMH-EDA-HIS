@@ -3,7 +3,7 @@
     AT >>> Project Attribute Elements
     CT >>> Project Component Elements
     MD >>> Media (Only appear at section)
-    ED >>> Certain Elements (Only appear at section)
+    ED >>> Certain Elements Edits (Only appear at section)
 */
 
 /* Bootstrap Edit--------------------------------------------------------------------------------*/
@@ -102,6 +102,15 @@
 
 /* Project Component Elements-----------------------------------------------------------------------------------*/
 
+.CT-input-text-entry {
+    font-size: 40px;
+    color: white;
+    border: 0px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .CT-tbody-ColorInterval tr:nth-of-type(odd) {
     background-color: #BCEFEE;
 }
@@ -134,6 +143,9 @@
 .CT-tbody-ColorInterval > tr:last-child > td:last-child {
     border-bottom-right-radius: 25px;
 }
+
+
+
 
 
 

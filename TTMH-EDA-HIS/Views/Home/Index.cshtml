@@ -3,6 +3,7 @@
     Layout = "_EmptyLayout";
 }
 @section CSS{
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
         @@media (max-width:1400px) {
             .MD-adjust-1 {
@@ -19,15 +20,7 @@
             .MD-adjust-3 {
                 width: 230px;
             }
-        }
-        .ED-input-text-entry {
-            background-color: #0FC2C0;
-            font-size: 40px;
-            color: white;
-            border: 0px;
-            margin: 10px;
-            padding: 10px;
-            border-radius: 10px;
+
         }
     </style>
 }
@@ -42,7 +35,7 @@
             </div>
         </div>
         <div class="row mt-5 MD-adjust-2">
-            <a class="col-2 mx-auto BS-btn AT-bg-primary-emphasis btn fs-1 MD-adjust-3 ED-input-text-entry" asp-controller="Account" asp-action="Index" role="button">
+            <a class="col-2 mx-auto BS-btn AT-bg-primary-emphasis fs-1 MD-adjust-3 CT-input-text-entry btn" asp-controller="Account" asp-action="Index" role="button">
                 進入系統
             </a>
         </div>
