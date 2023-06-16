@@ -5,35 +5,44 @@
 @section CSS{
     <style>
         @@media (max-width:1400px) {
-            .ED-media-1 {
+            .MD-adjust-1 {
                 display: block;
                 width: 100%;
                 text-align: center;
             }
 
-            .ED-media-2 {
+            .MD-adjust-2 {
                 display: flex;
                 justify-content: center;
             }
 
-            .ED-media-3 {
+            .MD-adjust-3 {
                 width: 230px;
             }
+        }
+        .ED-input-text-entry {
+            background-color: #0FC2C0;
+            font-size: 40px;
+            color: white;
+            border: 0px;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
         }
     </style>
 }
 <div class="container-xl d-flex" style="height:900px;">
     <div class="my-auto" style="width:100%;">
         <div class="row justify-content-center">
-            <div class="col-3 ED-media-1">
+            <div class="col-3 MD-adjust-1">
                 <img src="~/img/Logo.png" alt="Logo" width="300px" height="300px">
             </div>
-            <div class="col-9 my-auto ED-media-1">
+            <div class="col-9 my-auto MD-adjust-1">
                 <h1 class="h1 text-white" style="font-size: 130px;">童綜合醫院HIS</h1>
             </div>
         </div>
-        <div class="row mt-5 ED-media-2">
-            <a class="col-2 mx-auto btn btn-primary fs-1 ED-media-3 ED-input-button2" asp-controller="Account" asp-action="Index" role="button">
+        <div class="row mt-5 MD-adjust-2">
+            <a class="col-2 mx-auto BS-btn AT-bg-primary-emphasis btn fs-1 MD-adjust-3 ED-input-text-entry" asp-controller="Account" asp-action="Index" role="button">
                 進入系統
             </a>
         </div>

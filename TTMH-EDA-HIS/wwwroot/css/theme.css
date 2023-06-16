@@ -1,1 +1,157 @@
-﻿
+﻿/*
+    BS >>> Bootstrap
+    AT >>> Project Attribute Elements
+    CT >>> Project Component Elements
+    MD >>> Media (Only appear at section)
+    ED >>> Certain Elements (Only appear at section)
+*/
+
+/* Bootstrap Edit--------------------------------------------------------------------------------*/
+
+.BS-btn {
+    border: #023535 solid 1px !important;
+}
+
+
+/* Project Attribute Elements-----------------------------------------------------------------------------------*/
+
+@media (max-width:992px) {
+    .AT-Nav-Logo {
+        display: none;
+    }
+}
+
+.AT-bg-primary {
+    background-color: #0CABA8 !important;
+}
+.AT-fg-primary {
+    color: #0CABA8 !important;
+}
+.AT-bg-primary-emphasis {
+    background-color: #0FC2C0 !important;
+}
+.AT-fg-primary-emphasis {
+    color: #0FC2C0 !important;
+}
+.AT-bg-primary-deep {
+    background-color: #008F8C !important;
+}
+.AT-fg-primary-deep {
+    color: #008F8C !important;
+}
+.AT-bg-secondary {
+    background-color: #015958 !important;
+}
+.AT-fg-secondary {
+    color: #015958 !important;
+}
+.AT-bg-secondary-emphasis {
+    background-color: #023535 !important;
+}
+.AT-fg-secondary-emphasis {
+    color: #023535 !important;
+}
+.AT-bg-third {
+    background-color: #4443a3 !important;
+}
+.AT-fg-third {
+    color: #4443a3 !important;
+}
+.AT-hr-third {
+    border-top: 7px solid #4443a3;
+    width: 100%;
+}
+
+
+.AT-font-75 {
+    font-size: 75px;
+}
+.AT-font-50 {
+    font-size: 50px;
+}
+.AT-font-35 {
+    font-size: 35px;
+}
+.AT-font-33 {
+    font-size: 33px;
+}
+.AT-font-25 {
+    font-size: 25px;
+}
+
+
+.AT-rounded-1 {
+    border-radius: 20px !important;
+}
+
+.AT-rounded-1-top-left {
+    border-top-left-radius: 20px !important;
+}
+
+.AT-rounded-1-top-right {
+    border-top-right-radius: 20px !important;
+}
+
+.AT-rounded-1-bottom-left {
+    border-bottom-left-radius: 20px !important;
+}
+
+.AT-rounded-1-bottom-right {
+    border-bottom-right-radius: 20px !important;
+}
+
+/* Project Component Elements-----------------------------------------------------------------------------------*/
+
+.CT-tbody-ColorInterval tr:nth-of-type(odd) {
+    background-color: #BCEFEE;
+}
+
+.CT-tbody-ColorInterval tr:nth-of-type(even) {
+    background-color: #AAD7D6;
+}
+
+.CT-tbody-ColorInterval > tr > td {
+    font-size: 35px;
+    padding: 20px 0px;
+    color: black;
+    text-align: start;
+}
+
+.CT-tbody-ColorInterval > tr > td:first-child {
+    font-size: 35px;
+    padding: 20px 0px 20px 50px;
+}
+
+.CT-tbody-Lasttd-RightSide > tr > td:last-child {
+    font-size: 35px;
+    padding: 20px 35px 20px 0px;
+}
+
+.CT-tbody-ColorInterval > tr:last-child > td:first-child {
+    border-bottom-left-radius: 25px;
+}
+
+.CT-tbody-ColorInterval > tr:last-child > td:last-child {
+    border-bottom-right-radius: 25px;
+}
+
+
+
+.CT-input-button-submit {
+    background-color: #4443a3;
+    border-radius: 10px;
+    border: 0px solid;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    width: 85%;
+}
+.CT-input-button-submit:hover {
+    background-color: #008F8C;
+}
+.CT-input-button-submit:focus {
+    background-color: #0CABAB;
+}
+
+
+
