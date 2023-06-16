@@ -122,10 +122,10 @@ namespace TTMH_EDA_HIS.Controllers
                     CaseHistory=patient.CaseHistory,
                     PatientName=patient.PatientName,
                     Gender=patient.Gender,
-                    BirthDate=$"{patient.BirthDate.Year.ToString()}年{patient.BirthDate.Month.ToString()}月{patient.BirthDate.Day.ToString()}日",
+                    BirthDate=$"{patient.BirthDate.Year.ToString()}/{patient.BirthDate.Month.ToString()}/{patient.BirthDate.Day.ToString()}",
                     Age= age.ToString(),
                     DoctorName=employee.EmployeeName,
-                    VDate=$"{chart.Vdate.Year.ToString()}年{chart.Vdate.Month.ToString()}月{chart.Vdate.Day.ToString()}日",
+                    VDate=$"{chart.Vdate.Year.ToString()}/{chart.Vdate.Month.ToString()}/{chart.Vdate.Day.ToString()}",
                     Subject=chart.Subject,
                     Object=chart.Object,
                     drugList=drugs
