@@ -8,6 +8,6 @@ public partial class Dosage
     public string DosId { get; set; } = null!;
 
     public string Direction { get; set; } = null!;
-
-    public virtual ICollection<ChartsDrugsDosage> ChartsDrugsDosages { get; set; } = new List<ChartsDrugsDosage>();
+    public int? Freq { get; set; }
+    public virtual ChartsDrugsDosage ChartsDrugsDosage { get; set; } = null!;
 }

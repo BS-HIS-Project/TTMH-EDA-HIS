@@ -14,6 +14,10 @@ public partial class Chart
     public string Subject { get; set; } = null!;
 
     public string Object { get; set; } = null!;
+    //就診紀錄
+    public DateTime History { get; set; }
+
+
 
     public virtual ICollection<ChartsDrugsDosage> ChartsDrugsDosages { get; set; } = new List<ChartsDrugsDosage>();
 
