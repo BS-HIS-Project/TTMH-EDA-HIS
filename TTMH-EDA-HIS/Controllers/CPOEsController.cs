@@ -6,6 +6,7 @@ using HISDB.Data;
 using HISDB.Models;
 using TTMH_EDA_HIS.ViewModels;
 using HISDB;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -17,10 +18,14 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
         }
 
+        [Authorize]
+        [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction("ChartList");
         }
+
+        [Authorize]
         [HttpGet("[controller]/[action]/{id?}")]
         public async Task<IActionResult> ChartList(int id)
         {
@@ -48,6 +53,7 @@ namespace TTMH_EDA_HIS.Controllers
             return View(vm);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChartList(CPOEsChartListViewModel vm)
         {
@@ -68,6 +74,8 @@ namespace TTMH_EDA_HIS.Controllers
             vm.UseButtonGp = false;
             return View(vm);
         }
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> PatientDetails(string id)
         {
