@@ -1,7 +1,6 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
 @{
-
-
+    string vdate = $"{Model.chart.Vdate.Year}/{Model.chart.Vdate.Month.ToString()}/{Model.chart.Vdate.Day.ToString()}";
 }
 @section CSS{
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
@@ -27,6 +26,7 @@
         .SC-block {
             border:none;
             height:150px;
+            overflow:scroll;
         }
         @@media (max-width:1700px) {
             .SC-input-button-form_submit{
@@ -84,8 +84,8 @@
                                 就診號
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
-                                123456789
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center">
+                                @Model.chart.ChaId
                             </div>
                         </div>
                     </div>
@@ -119,16 +119,16 @@
                                 病患性別
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            @if (Model.Gender=="男")
+                            @if (Model.Gender=="1")
                             {
                                 <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center text-primary">
-                                    @Model.Gender
+                                    男
                                 </div>
                             }
                             else
                             {
                                 <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center text-danger">
-                                    @Model.Gender
+                                    女
                                 </div>
                             }
                         </div>
@@ -153,7 +153,7 @@
                             </div>
                             <div class="bg-secondary AT-hr"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
-                                @Model.VDate
+                                @vdate
                             </div>
                         </div>
                     </div>
@@ -174,10 +174,10 @@
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <<
+                            &lt;&lt;
                         </button>
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <
+                            &lt;
                         </button>
                         <div class="dropdown-center" style="width:35%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -190,10 +190,10 @@
                             </ul>
                         </div>
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            >
+                            &gt;
                         </button>
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            >>
+                            &gt;&gt;
                         </button>            
                     </div>           
                 </div>
@@ -205,7 +205,7 @@
                                 病患自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">
+                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">@Model.chart.Subject
                             </textarea>
                         </div>
                     </div>
@@ -215,8 +215,9 @@
                                 過去病史(History)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">
-                            </textarea>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="overflow:scroll;">
+                                @Model.chart.History
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -228,7 +229,7 @@
                                 入院經過(Object)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">
+                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">@Model.chart.Object
                             </textarea>
                         </div>
                     </div>
@@ -265,7 +266,7 @@
                             </tr>
                         </thead>
                         <tbody class="CT-tbody-ColorInterval">
-                            @foreach(TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.drugList)
+                            @foreach(TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.Drugs)
                             {
                                 <tr>
                                     <td>
@@ -278,10 +279,10 @@
                                         @i.DosID
                                     </td>
                                     <td>
-                                        @*@i.Freq  add later after migration*@
+                                        @i.Freq
                                     </td>
                                     <td>
-                                        @i.BodyParts
+                                        @i.Quantity
                                     </td>
                                     <td>
                                         @i.Days

@@ -8,6 +8,8 @@ using TTMH_EDA_HIS.ViewModels;
 using HISDB;
 using Microsoft.AspNetCore.Authorization;
 
+
+
 namespace TTMH_EDA_HIS.Controllers
 {
     public class CPOEsController : Controller
@@ -78,70 +80,85 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> PatientDetails(string id)
+        [HttpGet("~/[controller]/[action]/CHistory={CaseHistory}&ChaID={ChaID}")]
+        [HttpGet("~/[controller]/[action]/CHistory={CaseHistory}")]
+        [HttpGet("~/[controller]/[action]")]
+        public async Task<IActionResult> PatientDetails(string? CaseHistory,string? ChaID)
         {
-            if(id == null)
+            if(CaseHistory == null)
             {
                 return NotFound();
             }
-            Patient? patient=await _context.Patients.FirstOrDefaultAsync(x=>x.CaseHistory == id);
+            Patient? patient=await _context.Patients.FirstOrDefaultAsync(x=>x.CaseHistory == CaseHistory);
             if(patient == null) 
             {
                 return NotFound(); 
-            } 
+            }
+
+            IEnumerable<string> ChaIDs = (
+                from i in _context.DoctorsPatientsCharts
+                where i.PatientId == patient.PatientId
+                select i.ChaId
+            );
+            List<Chart> charts = await (
+                from i in _context.Charts
+                join j in ChaIDs on i.ChaId equals j
+                orderby i.Vdate descending
+                select i
+            ).ToListAsync();
+
+
+            CPOEsPatientDetailsViewModel vm = new CPOEsPatientDetailsViewModel();
+
+            if (ChaID == null)
+            {
+                vm.chart = charts[0];
+            }
             else
             {
-                DoctorsPatientsChart? dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.PatientId == patient.PatientId);
-                Employee? employee = await _context.Employees.FindAsync(dpc.DoctorId);
-                Chart? chart = await _context.Charts.FindAsync(dpc.ChaId);
+                vm.chart = charts.FirstOrDefault(x => x.ChaId == ChaID);
+                if (vm.chart == null)
+                {
+                    return NotFound();
+                }
+            }
+            DoctorsPatientsChart dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == vm.chart.ChaId);
+            Employee doctor = await _context.Employees.FindAsync(dpc.DoctorId);
+            int age = DateTime.Today.Year - patient.BirthDate.Year;
+            if (patient.BirthDate.Date > DateTime.Today.AddYears(--age)) { age--; }
 
-                List<CPOEsPatientDetailsViewModel_DrugTableTD> drugs = new List<CPOEsPatientDetailsViewModel_DrugTableTD>();
-                List<ChartsDrugsDosage>? cdds = await (from i in _context.ChartsDrugsDosages where i.ChaId == dpc.ChaId select i).ToListAsync();
-                foreach(var i in cdds)
-                {
-                    Drug drug = await _context.Drugs.FindAsync(i.DrugId);
-                    Dosage dosage = await _context.Dosages.FindAsync(i.DosId);
-                    RoutesOfAdminstration? roa= await _context.RoutesOfAdminstrations.FindAsync(drug.Roaid);
-                    drugs.Add(new CPOEsPatientDetailsViewModel_DrugTableTD()
-                    {
-                        DrugID = drug.DrugId,
-                        DrugName = drug.DrugName,
-                        DosID = dosage.DosId,
-                        Freq = "",  //Add later after Migration
-                        BodyParts = roa.BodyParts,
-                        Days = i.Days.ToString(),
-                        Total = i.Total.ToString(),
-                        Remark = i.Remark
-                    });
-                }
+            vm.CaseHistory = patient.CaseHistory;
+            vm.PatientName = patient.PatientName;
+            vm.Age = age.ToString();
+            vm.Gender = patient.Gender;
+            vm.BirthDate = $"{patient.BirthDate.Year.ToString()}/{patient.BirthDate.Month.ToString()}/{patient.BirthDate.Day.ToString()}";
+            vm.DoctorID = doctor.EmployeeId;
+            vm.DoctorName = doctor.EmployeeName;
 
-                if (patient.Gender == "1")
+
+            List<CPOEsPatientDetailsViewModel_DrugTableTD> drugs = new List<CPOEsPatientDetailsViewModel_DrugTableTD>();
+            List<ChartsDrugsDosage>? cdds = await (from i in _context.ChartsDrugsDosages where i.ChaId == vm.chart.ChaId select i).ToListAsync();
+            foreach (var i in cdds)
+            {
+                Drug drug = await _context.Drugs.FindAsync(i.DrugId);
+                Dosage dosage = await _context.Dosages.FindAsync(i.DosId);
+                RoutesOfAdminstration? roa = await _context.RoutesOfAdminstrations.FindAsync(drug.Roaid);
+                drugs.Add(new CPOEsPatientDetailsViewModel_DrugTableTD()
                 {
-                    patient.Gender = "男";
-                }
-                else
-                {
-                    patient.Gender = "女";
-                }
-                int age= DateTime.Today.Year-patient.BirthDate.Year;
-                if (patient.BirthDate.Date > DateTime.Today.AddYears(--age)) { age--; }
-                
-                CPOEsPatientDetailsViewModel vm = new CPOEsPatientDetailsViewModel() 
-                {
-                    CaseHistory=patient.CaseHistory,
-                    PatientName=patient.PatientName,
-                    Gender=patient.Gender,
-                    BirthDate=$"{patient.BirthDate.Year.ToString()}/{patient.BirthDate.Month.ToString()}/{patient.BirthDate.Day.ToString()}",
-                    Age= age.ToString(),
-                    DoctorName=employee.EmployeeName,
-                    VDate=$"{chart.Vdate.Year.ToString()}/{chart.Vdate.Month.ToString()}/{chart.Vdate.Day.ToString()}",
-                    Subject=chart.Subject,
-                    Object=chart.Object,
-                    drugList=drugs
-                };
-                return View(vm);
-            }            
+                    DrugID = drug.DrugId,
+                    DrugName = drug.DrugName,
+                    DosID = dosage.DosId,
+                    Freq = dosage.Freq,
+                    Quantity = i.Quantity,
+                    Days = i.Days,
+                    Total = i.Total,
+                    Remark = i.Remark,
+                    BodyParts = roa.BodyParts
+                });
+            }
+            vm.Drugs = drugs;
+
+            return View(vm);
         }
     }
 }
