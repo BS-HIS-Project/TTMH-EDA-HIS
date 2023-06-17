@@ -26,9 +26,11 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
         [Authorize]
-        [HttpGet("[controller]/[action]/{id?}")]
-        public async Task<IActionResult> ChartList(int id)
+        [HttpGet("~/[controller]/[action]/page={id}")]
+        [HttpGet("~/[controller]/[action]")]
+        public async Task<IActionResult> ChartList(int? id)
         {
+            id=id ?? 0;
             int page=0;
             if (id<=1)
             {
@@ -37,12 +39,12 @@ namespace TTMH_EDA_HIS.Controllers
             }
             else
             {
-                page = id;
+                page = (int)id;
                 id *= 6;
                 id -= 6;
             }
             CPOEsChartListViewModel vm = new CPOEsChartListViewModel();  
-            vm.Patients = await _context.Patients.Skip(id).Take(6).ToListAsync();
+            vm.Patients = await _context.Patients.Skip((int)id).Take(6).ToListAsync();
             vm.content = "";
             vm.UseButtonGp = true;
             vm.previous_page=page-1;
@@ -94,14 +96,14 @@ namespace TTMH_EDA_HIS.Controllers
                 Employee? employee = await _context.Employees.FindAsync(dpc.DoctorId);
                 Chart? chart = await _context.Charts.FindAsync(dpc.ChaId);
 
-                List<DrugTableTD> drugs = new List<DrugTableTD>();
+                List<CPOEsPatientDetailsViewModel_DrugTableTD> drugs = new List<CPOEsPatientDetailsViewModel_DrugTableTD>();
                 List<ChartsDrugsDosage>? cdds = await (from i in _context.ChartsDrugsDosages where i.ChaId == dpc.ChaId select i).ToListAsync();
                 foreach(var i in cdds)
                 {
                     Drug drug = await _context.Drugs.FindAsync(i.DrugId);
                     Dosage dosage = await _context.Dosages.FindAsync(i.DosId);
                     RoutesOfAdminstration? roa= await _context.RoutesOfAdminstrations.FindAsync(drug.Roaid);
-                    drugs.Add(new DrugTableTD()
+                    drugs.Add(new CPOEsPatientDetailsViewModel_DrugTableTD()
                     {
                         DrugID = drug.DrugId,
                         DrugName = drug.DrugName,

@@ -11,9 +11,9 @@
         public string? VDate { get; set; }
         public string? Subject { get; set; }
         public string? Object { get; set; }
-        public List<DrugTableTD> drugList { get; set; }
+        public List<CPOEsPatientDetailsViewModel_DrugTableTD> drugList { get; set; }
     }
-    public class DrugTableTD
+    public class CPOEsPatientDetailsViewModel_DrugTableTD
     {
         public string? DrugID { get; set; }
         public string? DrugName { get; set; }
