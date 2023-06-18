@@ -68,9 +68,9 @@ namespace TTMH_EDA_HIS.Controllers
             List<Patient> result=await(
                 from i in _context.Patients
                 where (
-                    i.PatientId.Contains(vm.content) ||
-                    i.PatientName.Contains(vm.content) ||
-                    i.CaseHistory.Contains(vm.content)
+                    i.PatientId.ToUpper().Contains(vm.content.ToUpper()) ||
+                    i.PatientName.ToUpper().Contains(vm.content.ToUpper()) ||
+                    i.CaseHistory.ToUpper().Contains(vm.content.ToUpper())
                 ) select i
             ).ToListAsync();
             vm.Patients = result;
