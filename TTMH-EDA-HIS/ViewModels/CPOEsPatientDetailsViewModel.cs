@@ -1,5 +1,6 @@
 ﻿using HISDB.Models;
 using Microsoft.Build.ObjectModelRemoting;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Permissions;
 
@@ -7,11 +8,16 @@ namespace TTMH_EDA_HIS.ViewModels
 {
     public class CPOEsPatientDetailsViewModel
     {
-        public string? CaseHistory { get; set; } //病歷號碼
-        public string? PatientName { get; set; } //病患姓名
-        public string? Age { get; set; } //年齡
-        public string? Gender { get; set; } //病患性別
-        public string? BirthDate { get; set; } //出生年月日
+        [DisplayName("病歷號碼")]
+        public string? CaseHistory { get; set; } 
+        [DisplayName("病患姓名")]
+        public string? PatientName { get; set; } 
+        [DisplayName("年齡")]
+        public string? Age { get; set; } 
+        [DisplayName("病患性別")]
+        public string? Gender { get; set; } 
+        [DisplayName("出生年月日")]
+        public string? BirthDate { get; set; } 
         public string? DoctorID { get; set; }
         public string? DoctorName { get; set; }
 
@@ -30,18 +36,27 @@ namespace TTMH_EDA_HIS.ViewModels
 
     public class CPOEsPatientDetailsViewModel_DrugTableTD
     {
+        [DisplayName("藥品編號")]
         public string? DrugID { get; set; }
+        [DisplayName("藥品名稱")]
         public string? DrugName { get; set; }
+        [DisplayName("用法")]
         public string? DosID { get; set; }
+        [DisplayName("頻率")]
         [DataType("int")]
         public int? Freq { get; set; }
+        [DisplayName("次量")]
         [DataType("float")]
         public double? Quantity { get; set; }
+        [DisplayName("天數")]
         [DataType("int")]
         public int? Days { get; set; }
+        [DisplayName("總量")]
         [DataType("int")]
         public int? Total { get; set; }
+        [DisplayName("備註")]
         public string? Remark { get; set; }
+
         public string? BodyParts { get; set; }
     }
 }
