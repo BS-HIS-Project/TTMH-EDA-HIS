@@ -173,28 +173,29 @@
                     </div>
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.FirstChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &lt;&lt;
-                        </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        </a>
+                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.PreviousChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &lt;
-                        </button>
+                        </a>
                         <div class="dropdown-center" style="width:35%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 就診紀錄
                             </button>
                             <ul class="dropdown-menu ">
-                                <li><button class="dropdown-item AT-fs-25">Action</button></li>
-                                <li><button class="dropdown-item AT-fs-25">Action two</button></li>
-                                <li><button class="dropdown-item AT-fs-25">Action three</button></li>
+                                @for(int i = 0; i < Model.RecordsOfvdate.Count; i++)
+                                {
+                                    <li><a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.RecordsOfChaID[i]" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
+                                }
                             </ul>
                         </div>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.NextChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &gt;
-                        </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        </a>
+                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.LastChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &gt;&gt;
-                        </button>            
+                        </a>            
                     </div>           
                 </div>
 
@@ -205,8 +206,7 @@
                                 病患自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">@Model.chart.Subject
-                            </textarea>
+                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">@Model.chart.Subject</textarea>
                         </div>
                     </div>
                     <div class="col-6">
@@ -229,8 +229,7 @@
                                 入院經過(Object)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">@Model.chart.Object
-                            </textarea>
+                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">@Model.chart.Object</textarea>
                         </div>
                     </div>
                 </div>

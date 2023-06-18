@@ -80,8 +80,7 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
         [Authorize]
-        [HttpGet("~/[controller]/[action]/CHistory={CaseHistory}&ChaID={ChaID}")]
-        [HttpGet("~/[controller]/[action]/CHistory={CaseHistory}")]
+        [HttpGet("~/[controller]/[action]/CHistory={CaseHistory}+ChaID={ChaID}")]
         [HttpGet("~/[controller]/[action]")]
         public async Task<IActionResult> PatientDetails(string? CaseHistory,string? ChaID)
         {
@@ -100,17 +99,17 @@ namespace TTMH_EDA_HIS.Controllers
                 where i.PatientId == patient.PatientId
                 select i.ChaId
             );
-            List<Chart> charts = await (
+            Chart[] charts = await (
                 from i in _context.Charts
                 join j in ChaIDs on i.ChaId equals j
                 orderby i.Vdate descending
                 select i
-            ).ToListAsync();
+            ).ToArrayAsync();
 
 
             CPOEsPatientDetailsViewModel vm = new CPOEsPatientDetailsViewModel();
 
-            if (ChaID == null)
+            if (ChaID == "latest" || ChaID == null)
             {
                 vm.chart = charts[0];
             }
@@ -157,6 +156,34 @@ namespace TTMH_EDA_HIS.Controllers
                 });
             }
             vm.Drugs = drugs;
+
+            vm.RecordsOfChaID = new List<string>();
+            vm.RecordsOfvdate = new List<string>();
+            for (int i=0;i<charts.Length;i++)
+            {
+                vm.RecordsOfChaID.Add(charts[i].ChaId);
+                vm.RecordsOfvdate.Add(charts[i].Vdate.ToString());
+            }
+            vm.FirstChart = charts[0].ChaId;
+            vm.LastChart = charts[charts.Length - 1].ChaId;
+
+            int currentIndex = Array.IndexOf(charts, vm.chart.ChaId);
+            if(currentIndex-1 >= 0)
+            {
+                vm.PreviousChart = charts[currentIndex-1].ChaId;
+            }
+            else
+            {
+                vm.PreviousChart = charts[0].ChaId;
+            }
+            if(currentIndex+1 < charts.Length)
+            {
+                vm.NextChart = charts[currentIndex + 1].ChaId;
+            }
+            else
+            {
+                vm.NextChart = charts[charts.Length - 1].ChaId;
+            }
 
             return View(vm);
         }

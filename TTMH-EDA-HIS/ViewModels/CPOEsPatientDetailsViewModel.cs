@@ -1,5 +1,7 @@
 ﻿using HISDB.Models;
+using Microsoft.Build.ObjectModelRemoting;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Permissions;
 
 namespace TTMH_EDA_HIS.ViewModels
 {
@@ -14,8 +16,16 @@ namespace TTMH_EDA_HIS.ViewModels
         public string? DoctorName { get; set; }
 
         //就診紀錄
-        public Chart? chart { get; set; } //就診號 + 看診日期 + Obj + Sub
+        public Chart? chart { get; set; } //就診號 + 看診日期 + Object + Subject + History
         public List<CPOEsPatientDetailsViewModel_DrugTableTD> Drugs { get; set; }
+
+        //Navigation for other Charts
+        public List<string> RecordsOfChaID { get; set; }
+        public List<string> RecordsOfvdate { get; set; }
+        public string? FirstChart { get; set; }
+        public string? LastChart { get; set; }
+        public string? PreviousChart { get; set; }
+        public string? NextChart { get; set; }
     }
 
     public class CPOEsPatientDetailsViewModel_DrugTableTD
