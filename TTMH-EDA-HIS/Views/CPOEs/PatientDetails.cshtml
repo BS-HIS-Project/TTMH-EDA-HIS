@@ -179,10 +179,10 @@
                     </div>
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
-                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.FirstChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.FirstChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &lt;&lt;
                         </a>
-                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.PreviousChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.PreviousChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &lt;
                         </a>
                         <div class="dropdown-center" style="width:35%;margin-left:5%;">
@@ -192,14 +192,14 @@
                             <ul class="dropdown-menu ">
                                 @for(int i = 0; i < Model.RecordsOfvdate.Count; i++)
                                 {
-                                    <li><a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.RecordsOfChaID[i]" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
+                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID})" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
                                 }
                             </ul>
                         </div>
-                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.NextChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.NextChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &gt;
                         </a>
-                        <a href="~/CPOEs/PatientDetails/CHistory=@Model.CaseHistory+ChaID=@Model.LastChart" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
+                        <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.LastChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &gt;&gt;
                         </a>            
                     </div>           
