@@ -50,11 +50,62 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                     Payable = Convert.ToDecimal(650),
 
                     CasId = CashierId,
-                    PatientId = JsonData.PatientID ?? throw new Exception("PatientId is NULL")
+                    PatientId = JsonData.PatientId ?? throw new Exception("PatientId is NULL")
                 };
                 PaymentBarcode++;
                 _context.Details.Add(_detail);
                 _context.SaveChanges();
+
+                if(JsonData.ChartsDrugsDosages != null)
+                {
+                    foreach (var data in JsonData.ChartsDrugsDosages)
+                    {
+                        var _ChartsDrugsDosage = new HISDB.Models.ChartsDrugsDosage()
+                        {
+                            ChaId = JsonData.ChaId ?? throw new Exception("ChaId is NULL"),
+                            DrugId = data.DrugId,
+                            DosId = data.DosId,
+                            Quantity = data.Quantity,
+                            Days = data.Days,
+                            Remark = data.Remark
+                        };
+
+                        var _chart = _context.Charts.Where(x => x.ChaId == JsonData.ChaId).FirstOrDefault();
+                        var _dosage = _context.Dosages.Where(x => x.DosId == data.DosId).FirstOrDefault();
+                        var _drug = _context.Drugs.Where(x => x.DrugId == data.DrugId).FirstOrDefault();
+
+                        if (_chart == null)
+                        {
+                            throw new Exception("Chart is NULL");
+                        }
+                        if (_dosage == null)
+                        {
+                            throw new Exception("Dosage is NULL");
+                        }
+                        if (_drug == null)
+                        {
+                            throw new Exception("Drug is NULL");
+                        }
+
+                        _ChartsDrugsDosage.Cha = _chart;
+                        _ChartsDrugsDosage.Dos = _dosage;
+                        _ChartsDrugsDosage.Drug = _drug;
+
+                        var _freg = _dosage.Freq;
+                        if (_freg == 0)
+                        {
+                            throw new Exception("Freq is 0");
+                        } else if(_freg == null)
+                        {
+                            throw new Exception("Freg is NULL");
+                        }
+
+                        _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * (double)_ChartsDrugsDosage.Days);
+
+                        _context.ChartsDrugsDosages.Add(_ChartsDrugsDosage);
+                        _context.SaveChanges();
+                    }
+                }
             }
         }
         catch (Exception e)
