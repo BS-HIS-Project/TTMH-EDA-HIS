@@ -13,6 +13,10 @@ namespace HISDB.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_Charts_Drugs_Dosages_DosID",
+                table: "Charts_Drugs_Dosages");
+
             migrationBuilder.AlterColumn<double>(
                 name: "Total",
                 table: "Charts_Drugs_Dosages",
@@ -143,11 +147,20 @@ namespace HISDB.Migrations
                     { "CHA2023060613001002", "L198058112", "D11201001" },
                     { "CHA2023060613001001", "O101929955", "D11201001" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Charts_Drugs_Dosages_DosID",
+                table: "Charts_Drugs_Dosages",
+                column: "DosID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_Charts_Drugs_Dosages_DosID",
+                table: "Charts_Drugs_Dosages");
+
             migrationBuilder.DeleteData(
                 table: "Charts_Drugs_Dosages",
                 keyColumns: new[] { "ChaID", "DrugID" },
@@ -283,6 +296,12 @@ namespace HISDB.Migrations
                 keyValues: new object[] { "CHA2023053013001005", "046404" },
                 column: "Total",
                 value: 9);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Charts_Drugs_Dosages_DosID",
+                table: "Charts_Drugs_Dosages",
+                column: "DosID",
+                unique: true);
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HISDB.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    [Migration("20230619091104_altercolumTotalinChartsDrugsDosage")]
+    [Migration("20230619095943_altercolumTotalinChartsDrugsDosage")]
     partial class altercolumTotalinChartsDrugsDosage
     {
         /// <inheritdoc />
@@ -185,8 +185,7 @@ namespace HISDB.Migrations
                     b.HasKey("ChaId", "DrugId")
                         .HasName("PK__Charts_D__43E0B46C2967DE43");
 
-                    b.HasIndex("DosId")
-                        .IsUnique();
+                    b.HasIndex("DosId");
 
                     b.HasIndex("DrugId");
 

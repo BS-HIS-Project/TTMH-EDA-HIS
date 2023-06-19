@@ -182,8 +182,7 @@ namespace HISDB.Migrations
                     b.HasKey("ChaId", "DrugId")
                         .HasName("PK__Charts_D__43E0B46C2967DE43");
 
-                    b.HasIndex("DosId")
-                        .IsUnique();
+                    b.HasIndex("DosId");
 
                     b.HasIndex("DrugId");
 

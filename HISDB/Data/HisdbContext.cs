@@ -85,6 +85,7 @@ public partial class HisdbContext : DbContext
         {
             
             entity.HasKey(e => new { e.ChaId, e.DrugId }).HasName("PK__Charts_D__43E0B46C2967DE43");
+            entity.HasIndex(e => e.DosId).IsUnique(false);
 
             entity.ToTable("Charts_Drugs_Dosages");
 
