@@ -14,8 +14,7 @@ public partial class ChartsDrugsDosage
     //次量
     public double Quantity { get; set; }
     public int Days { get; set; }
-
-    public int Total { get; set; }
+    public double Total { get; set; }
 
     public string? Remark { get; set; }
 
