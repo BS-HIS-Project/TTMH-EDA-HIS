@@ -1,12 +1,18 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.CPOEsChartListViewModel
 @{
 }
+@section CSS{
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
+    <style>
+
+    </style>
+}
 
 <div class="row">
     <div class="container-lg col-11 py-4">
         <form asp-action="ChartList" asp-route-id="" method="post" class="d-flex row">
             <div class="form-group col" method="post">
-                <input type="text" asp-for="content" class="form-control ED-Font-Size-1">
+                <input type="text" asp-for="content" class="form-control AT-fs-25">
             </div>
         </form>
     </div>
@@ -15,25 +21,25 @@
     <table class="container-lg col-11">
         <thead>
             <tr>
-                <th class="text-white ED-bigger-title3 col-2 bg-secondary ps-5 py-2 rounded-4-top-left">
+                <th class="text-white AT-bg-secondary-emphasis AT-fs-35 col-2 ps-5 py-2 AT-rounded-1-top-left">
                     編號
                 </th>
-                <th class="text-white ED-bigger-title3 col-3 bg-secondary py-2">
+                <th class="text-white AT-bg-secondary-emphasis AT-fs-35 col-3 py-2">
                     病歷編號
                 </th>
-                <th class="text-white ED-bigger-title3 col-2 bg-secondary py-2">
+                <th class="text-white AT-bg-secondary-emphasis AT-fs-35 col-2 py-2">
                     病患姓名
                 </th>
-                <th class="text-white ED-bigger-title3 col-2 bg-secondary py-2">
+                <th class="text-white AT-bg-secondary-emphasis AT-fs-35 col-2 py-2">
                     性別
                 </th>
-                <th class="text-white ED-bigger-title3 col-1 bg-secondary py-3">
+                <th class="text-white AT-bg-secondary-emphasis AT-fs-35 col-1 py-3">
                 </th>
-                <th class="text-white ED-bigger-title3 col bg-secondary py-2 rounded-4-top-right">
+                <th class="text-white AT-bg-secondary-emphasis AT-fs-35 col py-2 AT-rounded-1-top-right">
                 </th>
             </tr>
         </thead>
-        <tbody class="ED-tbody-ColorInterval ED-tbody-Lasttd-RightSide">
+        <tbody class="CT-tbody-ColorInterval">
             @foreach(Patient i in Model.Patients)
             {
                 <tr>
@@ -57,7 +63,7 @@
                     <td>
                     </td>
                     <td>
-                        <a asp-action="PatientDetails" asp-route-id="@i.CaseHistory" class="text-white btn btn-primary-emphasis btn-lg ED-Font-Size-1">進入看診</a>
+                        <a href="~/CPOEs/PatientDetails/CHistory=@i.CaseHistory+ChaID=latest" class="text-white BS-btn AT-bg-primary-deep btn btn-lg">進入看診</a>
                     </td>
                 </tr>
             }
@@ -70,11 +76,11 @@
         <div class="container-lg col-11 py-4">
             <div class="row">
                 <div class="btn-group mx-auto" style="width:300px">
-                    <a asp-route-id="@Model.previous_page" class="btn btn-primary text-secondary">上一頁</a>
-                    <a asp-route-id="@Model.page1" class="btn btn-primary active" aria-current="page">@Model.page1</a>
-                    <a asp-route-id="@Model.page2" class="btn btn-primary text-secondary">@Model.page2</a>
-                    <a asp-route-id="@Model.page3" class="btn btn-primary text-secondary">@Model.page3</a>
-                    <a asp-route-id="@Model.next_page" class="btn btn-primary text-secondary">下一頁</a>
+                    <a asp-route-id="@Model.previous_page" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">上一頁</a>
+                    <a asp-route-id="@Model.page1" class="btn text-white AT-bg-secondary-emphasis active" aria-current="page">@Model.page1</a>
+                    <a asp-route-id="@Model.page2" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">@Model.page2</a>
+                    <a asp-route-id="@Model.page3" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">@Model.page3</a>
+                    <a asp-route-id="@Model.next_page" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">下一頁</a>
                 </div>
             </div>
         </div>

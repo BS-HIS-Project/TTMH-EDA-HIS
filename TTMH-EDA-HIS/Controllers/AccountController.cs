@@ -27,7 +27,14 @@ namespace TTMH_EDA_HIS.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+			if (User.Identity.IsAuthenticated)
+			{
+				return RedirectToAction("Index", "CPOEs");
+			}
+			else
+			{
+                return View();
+            }
         }
 		[HttpPost]
         [ValidateAntiForgeryToken]
