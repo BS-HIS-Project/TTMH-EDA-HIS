@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using HISDB.Models;
+using NuGet.Protocol;
 
 namespace HISDB.Data;
 
@@ -83,7 +84,7 @@ public partial class HisdbContext : DbContext
         modelBuilder.Entity<ChartsDrugsDosage>(entity =>
         {
             
-            entity.HasKey(e => new { e.ChaId, e.DrugId}).HasName("PK__Charts_D__43E0B46C2967DE43");
+            entity.HasKey(e => new { e.ChaId, e.DrugId }).HasName("PK__Charts_D__43E0B46C2967DE43");
 
             entity.ToTable("Charts_Drugs_Dosages");
 

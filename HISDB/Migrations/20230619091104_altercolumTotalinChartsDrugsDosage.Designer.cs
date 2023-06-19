@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HISDB.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    [Migration("20230619080618_AddNewHasData")]
-    partial class AddNewHasData
+    [Migration("20230619091104_altercolumTotalinChartsDrugsDosage")]
+    partial class altercolumTotalinChartsDrugsDosage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,8 +62,9 @@ namespace HISDB.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("History")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("History")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Object")
                         .IsRequired()
@@ -87,7 +88,7 @@ namespace HISDB.Migrations
                         {
                             ChaId = "CHA2023053013001001",
                             DepartmentName = "心臟內科",
-                            History = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            History = "先天心臟病",
                             Object = "心臟病",
                             Subject = "胸悶",
                             Vdate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -96,7 +97,7 @@ namespace HISDB.Migrations
                         {
                             ChaId = "CHA2023053013001002",
                             DepartmentName = "心臟內科",
-                            History = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            History = "先天心臟病",
                             Object = "心臟病",
                             Subject = "心跳好像一直不規律，呼吸不過來",
                             Vdate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -105,7 +106,7 @@ namespace HISDB.Migrations
                         {
                             ChaId = "CHA2023053013001003",
                             DepartmentName = "心臟內科",
-                            History = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            History = "先天心臟病",
                             Object = "心臟病",
                             Subject = "頭痛、噁心、冒冷汗",
                             Vdate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -114,7 +115,7 @@ namespace HISDB.Migrations
                         {
                             ChaId = "CHA2023053013001004",
                             DepartmentName = "心臟內科",
-                            History = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            History = "先天心臟病",
                             Object = "心臟病",
                             Subject = "呼吸急促、胸悶",
                             Vdate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -123,10 +124,28 @@ namespace HISDB.Migrations
                         {
                             ChaId = "CHA2023053013001005",
                             DepartmentName = "心臟內科",
-                            History = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            History = "先天心臟病",
                             Object = "心臟病",
                             Subject = "心臟很痛",
                             Vdate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ChaId = "CHA2023060613001001",
+                            DepartmentName = "心臟內科",
+                            History = "先天心臟病",
+                            Object = "心臟病",
+                            Subject = "吃完藥會頭暈",
+                            Vdate = new DateTime(2023, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ChaId = "CHA2023060613001002",
+                            DepartmentName = "心臟內科",
+                            History = "先天心臟病",
+                            Object = "心臟病",
+                            Subject = "有些緩和了",
+                            Vdate = new DateTime(2023, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -160,8 +179,8 @@ namespace HISDB.Migrations
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("ChaId", "DrugId")
                         .HasName("PK__Charts_D__43E0B46C2967DE43");
@@ -182,7 +201,7 @@ namespace HISDB.Migrations
                             DosId = "QD",
                             Quantity = 1.0,
                             Remark = "無",
-                            Total = 9
+                            Total = 9.0
                         },
                         new
                         {
@@ -192,7 +211,7 @@ namespace HISDB.Migrations
                             DosId = "BID",
                             Quantity = 1.0,
                             Remark = "無",
-                            Total = 9
+                            Total = 9.0
                         },
                         new
                         {
@@ -202,7 +221,7 @@ namespace HISDB.Migrations
                             DosId = "QID",
                             Quantity = 1.0,
                             Remark = "無",
-                            Total = 9
+                            Total = 9.0
                         },
                         new
                         {
@@ -212,7 +231,7 @@ namespace HISDB.Migrations
                             DosId = "Q4H",
                             Quantity = 1.0,
                             Remark = "無",
-                            Total = 9
+                            Total = 9.0
                         },
                         new
                         {
@@ -222,7 +241,27 @@ namespace HISDB.Migrations
                             DosId = "HS",
                             Quantity = 1.0,
                             Remark = "無",
-                            Total = 9
+                            Total = 9.0
+                        },
+                        new
+                        {
+                            ChaId = "CHA2023060613001001",
+                            DrugId = "046404",
+                            Days = 3,
+                            DosId = "BID",
+                            Quantity = 1.0,
+                            Remark = "無",
+                            Total = 9.0
+                        },
+                        new
+                        {
+                            ChaId = "CHA2023060613001002",
+                            DrugId = "046404",
+                            Days = 3,
+                            DosId = "Q6H",
+                            Quantity = 1.0,
+                            Remark = "無",
+                            Total = 9.0
                         });
                 });
 
@@ -309,6 +348,24 @@ namespace HISDB.Migrations
                             CasId = "C11201001",
                             MedicalCost = 500m,
                             PatientId = "S257920071",
+                            Payable = 650m,
+                            Registration = 150m
+                        },
+                        new
+                        {
+                            DetId = "DET2023060613001001",
+                            CasId = "C11201002",
+                            MedicalCost = 500m,
+                            PatientId = "O101929955",
+                            Payable = 650m,
+                            Registration = 150m
+                        },
+                        new
+                        {
+                            DetId = "DET2023060613001002",
+                            CasId = "C11201002",
+                            MedicalCost = 500m,
+                            PatientId = "L198058112",
                             Payable = 650m,
                             Registration = 150m
                         });
@@ -406,6 +463,18 @@ namespace HISDB.Migrations
                             PatientId = "S257920071",
                             ChaId = "CHA2023053013001005",
                             DoctorId = "D11201002"
+                        },
+                        new
+                        {
+                            PatientId = "O101929955",
+                            ChaId = "CHA2023060613001001",
+                            DoctorId = "D11201001"
+                        },
+                        new
+                        {
+                            PatientId = "L198058112",
+                            ChaId = "CHA2023060613001002",
+                            DoctorId = "D11201001"
                         });
                 });
 
@@ -945,6 +1014,20 @@ namespace HISDB.Migrations
                             DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "S257920071",
                             PhaId = "P11201001"
+                        },
+                        new
+                        {
+                            PresNo = "PRE2023060613001001",
+                            DrugDate = new DateTime(2023, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientId = "O101929955",
+                            PhaId = "P11201002"
+                        },
+                        new
+                        {
+                            PresNo = "PRE2023060613001002",
+                            DrugDate = new DateTime(2023, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientId = "L198058112",
+                            PhaId = "P11201002"
                         });
                 });
 
