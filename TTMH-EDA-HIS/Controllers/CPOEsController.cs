@@ -28,8 +28,7 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
         [Authorize]
-        [HttpGet("~/[controller]/[action]/page={id}")]
-        [HttpGet("~/[controller]/[action]")]
+        [HttpGet]
         public async Task<IActionResult> ChartList(int? id)
         {
             id=id ?? 0;
@@ -80,9 +79,8 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
         [Authorize]
-        [HttpGet("~/[controller]/[action]/CHistory={CaseHistory}+ChaID={ChaID}")]
-        [HttpGet("~/[controller]/[action]")]
-        public async Task<IActionResult> PatientDetails(string? CaseHistory,string? ChaID)
+        [HttpGet]
+        public async Task<IActionResult> PatientDetails(string? CaseHistory, string? ChaID)
         {
             if(CaseHistory == null)
             {
