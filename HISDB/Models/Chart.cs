@@ -15,7 +15,7 @@ public partial class Chart
 
     public string Object { get; set; } = null!;
     //就診紀錄
-    public DateTime History { get; set; }
+    public string History { get; set; }
 
 
 
