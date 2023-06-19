@@ -134,5 +134,7 @@ namespace TTMH_EDA_HIS.Controllers
         {
             return (_context.Charts?.Any(e => e.ChaId == id)).GetValueOrDefault();
         }
+
+        
     }
 }

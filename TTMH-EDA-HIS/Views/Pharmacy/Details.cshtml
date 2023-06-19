@@ -5,69 +5,105 @@
     ViewData["Title"] = " Details";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PresId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.chId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PatsName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.birthday)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.docsName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vdate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PresId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.chId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PatsName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.birthday)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.docsName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vdate)
-                </td>
-                <td>
-                    @*<a class="btn btn-primary" asp-area="" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-warning" asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-danger" asp-area="" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+<div class="row">
+    <div class="container-lg col-11 py-4">
+        <form asp-action="ChartList" asp-route-id="" method="post" class="d-flex row">
+            <div class="form-group col" method="post">
+                <input type="text" class="form-control ED-Font-Size-1" placeholder="請輸入領藥號/病例編號">
+            </div>
+        </form>
+    </div>
+</div>
 
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    <div class="container-lg col-11 py-4">
+        <div class="row p-3 d-flex justify-content-between">
+            <div class="ED-media-1 py-3 row me-5 bg-secondary rounded-4" style="width:1950px;height:200px;">
+
+                    @*<p class="h4 text-white lh-lg text-end">病例編號</p>
+                    <p class="h4 text-white lh-lg text-end">病患姓名</p>
+                    <p class="h4 text-white lh-lg text-end">性別</p>
+                    <p class="h4 text-white lh-lg text-end">出生年月日</p>
+                    <p class="h4 text-white lh-lg text-end">年齡</p>
+                    <p class="h4 text-white lh-lg text-end">看診醫生</p>
+                    <p class="h4 text-white lh-lg text-end">看診日期</p>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container-lg col-11 py-4 ED-BadgeTablePosition-2" style="height:700px">
+        
+        <table class="ED-BadgesTable-2">
+            <thead>
+                <tr>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-2 bg-primary ps-5 text-start py-2" style="border-top-left-radius:25px;">
+                        藥品編號
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-2 bg-primary py-2 text-start">
+                        藥品名稱
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        日劑
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        次量
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        用法
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        天數
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col-1 bg-primary py-2 text-start">
+                        總量
+                    </th>
+                    <th class="bg-secondary text-white ED-Font-Size-2 col bg-primary py-2 text-start" style="border-top-right-radius:25px;">
+                        註
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="ED-tbody-ColorInterval">
+                
+                    <tr>
+                        <td>
+                            @*DrugID*@
+                        </td>
+                        <td>
+                            @*DrugName*@
+                        </td>
+                        <td>
+                            @*DosID*@
+                        </td>
+                        <td>
+                            @*@i.Freq  add later after migration*@
+                        </td>
+                        <td>
+                            @*BodyParts*@
+                        </td>
+                        <td>
+                            @*Days*@
+                        </td>
+                        <td>
+                            @*Total*@
+                        </td>
+                        <td>
+                            @*Remark*@
+                        </td>
+                    </tr>
+                
+            </tbody>
+        </table>
+    
+</div>
+<div class="row">
+    <div class="container-lg col-11 py-4 d-flex justify-content-end">
+        <div class="col-2 d-flex justify-content-end">
+            <button id="Post" class="ED-input-button1 btn">
+                完成領藥
+            </button>
+        </div>
+    </div>
 
