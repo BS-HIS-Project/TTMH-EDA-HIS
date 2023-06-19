@@ -1,0 +1,148 @@
+﻿/*
+    BS >>> Bootstrap
+    AT >>> Project Attribute Elements
+    CT >>> Project Component Elements
+    MD >>> Media (Only appear at section)
+    SC >>> Section Elements (Only appear at section)
+    LY >>> Layout
+*/
+
+/* Bootstrap Edit--------------------------------------------------------------------------------*/
+
+.BS-btn {
+    border: #023535 solid 1px !important;
+    color: white !important;
+}
+.BS-btn:hover {
+    color: white !important;
+}
+
+
+/* Project Attribute Elements-----------------------------------------------------------------------------------*/
+
+.AT-bg-primary {
+    background-color: #0CABA8 !important;
+}
+.AT-fg-primary {
+    color: #0CABA8 !important;
+}
+.AT-bg-primary-emphasis {
+    background-color: #0FC2C0 !important;
+}
+.AT-fg-primary-emphasis {
+    color: #0FC2C0 !important;
+}
+.AT-bg-primary-deep {
+    background-color: #008F8C !important;
+}
+.AT-fg-primary-deep {
+    color: #008F8C !important;
+}
+.AT-bg-secondary {
+    background-color: #015958 !important;
+}
+.AT-fg-secondary {
+    color: #015958 !important;
+}
+.AT-bg-secondary-emphasis {
+    background-color: #023535 !important;
+}
+.AT-fg-secondary-emphasis {
+    color: #023535 !important;
+}
+.AT-bg-third {
+    background-color: #4443a3 !important;
+}
+.AT-fg-third {
+    color: #4443a3 !important;
+}
+.AT-bg-fourth {
+    background-color: #BCEFEE !important;
+}
+.AT-fg-fourth {
+    color: #BCEFEE !important;
+}
+
+
+.AT-hr {
+    border-top: 7px solid gray;
+    width: 100%;
+}
+
+
+.AT-fs-75 {
+    font-size: 75px !important;
+}
+.AT-fs-70 {
+    font-size: 70px !important;
+}
+.AT-fs-50 {
+    font-size: 50px !important;
+}
+.AT-fs-40 {
+    font-size: 40px !important;
+}
+.AT-fs-35 {
+    font-size: 35px !important;
+}
+.AT-fs-30 {
+    font-size: 30px !important;
+}
+.AT-fs-25 {
+    font-size: 25px !important;
+}
+
+
+.AT-rounded-1 {
+    border-radius: 20px !important;
+}
+
+.AT-rounded-1-top-left {
+    border-top-left-radius: 20px !important;
+}
+
+.AT-rounded-1-top-right {
+    border-top-right-radius: 20px !important;
+}
+
+.AT-rounded-1-bottom-left {
+    border-bottom-left-radius: 20px !important;
+}
+
+.AT-rounded-1-bottom-right {
+    border-bottom-right-radius: 20px !important;
+}
+
+/* Project Component Elements-----------------------------------------------------------------------------------*/
+
+.CT-tbody-ColorInterval tr:nth-of-type(odd) {
+    background-color: #BCEFEE;
+}
+
+.CT-tbody-ColorInterval tr:nth-of-type(even) {
+    background-color: #AAD7D6;
+}
+
+.CT-tbody-ColorInterval > tr > td {
+    font-size: 30px;
+    padding: 20px 0px;
+    color: black;
+    text-align: start;
+}
+
+.CT-tbody-ColorInterval > tr > td:first-child {
+    padding: 20px 0px 20px 50px;
+}
+
+.CT-tbody-ColorInterval > tr > td:last-child {
+    padding: 20px 35px 20px 0px;
+}
+
+.CT-tbody-ColorInterval > tr:last-child > td:first-child {
+    border-bottom-left-radius: 25px;
+}
+
+.CT-tbody-ColorInterval > tr:last-child > td:last-child {
+    border-bottom-right-radius: 25px;
+}
+
