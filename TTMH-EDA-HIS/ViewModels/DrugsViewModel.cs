@@ -17,7 +17,7 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("天數")]
         public int days { get; set; }
         [DisplayName("總量")]
-        public int total { get; set; }
+        public double total { get; set; }
         [DisplayName("備註")]
         public string remark { get; set; }
     }

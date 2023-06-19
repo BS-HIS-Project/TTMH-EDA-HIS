@@ -52,8 +52,8 @@ namespace TTMH_EDA_HIS.ViewModels
         [DataType("int")]
         public int? Days { get; set; }
         [DisplayName("總量")]
-        [DataType("int")]
-        public int? Total { get; set; }
+        [DataType("float")]
+        public double? Total { get; set; }
         [DisplayName("備註")]
         public string? Remark { get; set; }
 
