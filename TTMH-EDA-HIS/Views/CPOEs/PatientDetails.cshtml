@@ -316,8 +316,9 @@
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
 
         function AddInputRow() {
+            let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
             let td_placeholder=["DrugID","DrugName","DosID","Freq","Quty","Days","Total","Remark"];
-            let api_href=["https://localhost:7233/api/CPOEsAPI/SearchDrugID","https://localhost:7233/api/CPOEsAPI/SearchDrugName","https://localhost:7233/api/CPOEsAPI/SearchDosID"];
+            let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
             DrugRowIndex++;
             let entry_tr=document.createElement("tr");
             for(var i=0;i<8;i++){
