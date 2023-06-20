@@ -192,7 +192,7 @@
                             <ul class="dropdown-menu ">
                                 @for(int i = 0; i < Model.RecordsOfvdate.Count; i++)
                                 {
-                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID})" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
+                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID[i]})" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
                                 }
                             </ul>
                         </div>
@@ -315,7 +315,7 @@
         let DrugRowIndex = @DrugRowIndex ; //Backend to Frontend
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
 
-        function AddInputRow() {
+        function AddInputRow(defaultInputValue) {
             let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
             let td_placeholder=["DrugID","DrugName","DosID","Freq","Quty","Days","Total","Remark"];
             let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
@@ -339,6 +339,9 @@
                 entry.setAttribute("style","width:85%;border:none;opacity:0.5;");
                 entry.setAttribute("class","form-control AT-fs-25");
                 entry.setAttribute("placeholder",td_placeholder[i]);
+                if(defaultInputValue!=null){
+                    entry.setAttribute("value", defaultInputValue);
+                }
                 if(i>=3 && i<=6){
                     entry.setAttribute("type","number");
                 }
