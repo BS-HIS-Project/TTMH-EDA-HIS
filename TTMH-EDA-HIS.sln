@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTMH-EDA-HIS", "TTMH-EDA-HI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HISDB", "HISDB\HISDB.csproj", "{F6C25CEF-A5D9-4775-B191-D333615E906A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsumerTerminal", "ConsumerTerminal\ConsumerTerminal.csproj", "{19557994-9E1A-410B-88ED-7C68C23288A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsumerTerminal", "ConsumerTerminal\ConsumerTerminal.csproj", "{19557994-9E1A-410B-88ED-7C68C23288A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaWebAPI", "KafkaWebAPI\KafkaWebAPI.csproj", "{7673A751-C7E5-4A79-8810-92160E90107B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaWebAPI", "KafkaWebAPI\KafkaWebAPI.csproj", "{7673A751-C7E5-4A79-8810-92160E90107B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BC576C66-42C9-47ED-90C7-0A1044C290E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7673A751-C7E5-4A79-8810-92160E90107B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7673A751-C7E5-4A79-8810-92160E90107B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7673A751-C7E5-4A79-8810-92160E90107B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC576C66-42C9-47ED-90C7-0A1044C290E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC576C66-42C9-47ED-90C7-0A1044C290E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC576C66-42C9-47ED-90C7-0A1044C290E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC576C66-42C9-47ED-90C7-0A1044C290E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
