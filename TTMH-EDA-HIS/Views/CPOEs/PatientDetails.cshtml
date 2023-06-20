@@ -34,6 +34,9 @@
             height:150px;
             overflow:scroll;
         }
+        textarea{
+            padding:1%;
+        }
         @@media (max-width:1700px) {
             .SC-input-button-form_submit{
                 font-size:20px !important;
@@ -270,39 +273,8 @@
                                 </th>
                             </tr>
                         </thead>
-                        @{
-                            int DrugRowIndex = -1;
-                        }
                         <tbody class="CT-tbody-ColorInterval">
-                            @foreach(TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.Drugs)
-                            {
-                                <tr>
-                                    <td id="Drugs-0-@(++DrugRowIndex)">
-                                        @i.DrugID
-                                    </td>
-                                    <td id="Drugs-1-@DrugRowIndex">
-                                        @i.DrugName
-                                    </td>
-                                    <td id="Drugs-2-@DrugRowIndex">
-                                        @i.DosID
-                                    </td>
-                                    <td id="Drugs-3-@DrugRowIndex">
-                                        @i.Freq
-                                    </td>
-                                    <td id="Drugs-4-@DrugRowIndex">
-                                        @i.Quantity
-                                    </td>
-                                    <td id="Drugs-5-@DrugRowIndex">
-                                        @i.Days
-                                    </td>
-                                    <td id="Drugs-6-@DrugRowIndex">
-                                        @i.Total
-                                    </td>
-                                    <td id="Drugs-7-@DrugRowIndex">
-                                        @i.Remark
-                                    </td>
-                                </tr>
-                            }
+                            
                         </tbody>
                     </table>
                 </div>
@@ -310,16 +282,49 @@
         </div>
     </div>
 </div>
+<table id="DBdrugs-injection" style="display:none;">
+	<tbody>
+        @foreach (TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.Drugs)
+        {
+            <tr>
+                <td>
+                    @i.DrugID
+                </td>
+                <td>
+                    @i.DrugName
+                </td>
+                <td>
+                    @i.DosID
+                </td>
+                <td>
+                    @i.Freq
+                </td>
+                <td>
+                    @i.Quantity
+                </td>
+                <td>
+                    @i.Days
+                </td>
+                <td>
+                    @i.Total
+                </td>
+                <td>
+                    @i.Remark
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 @section Script{
     <script>
-        let DrugRowIndex = @DrugRowIndex ; //Backend to Frontend
+        let DrugRowIndex = -1 ;
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
 
-        function AddInputRow(defaultInputValue) {
+        function AddInputRow(InputList) {
+            DrugRowIndex++;
             let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
             let td_placeholder=["DrugID","DrugName","DosID","Freq","Quty","Days","Total","Remark"];
             let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
-            DrugRowIndex++;
             let entry_tr=document.createElement("tr");
             for(var i=0;i<8;i++){
                 let id = `Drugs-${i}-${DrugRowIndex}`;
@@ -339,11 +344,12 @@
                 entry.setAttribute("style","width:85%;border:none;opacity:0.5;");
                 entry.setAttribute("class","form-control AT-fs-25");
                 entry.setAttribute("placeholder",td_placeholder[i]);
-                if(defaultInputValue!=null){
-                    entry.setAttribute("value", defaultInputValue);
+                if (InputList != null) {
+                    entry.setAttribute("value", InputList[i]);
                 }
                 if(i>=3 && i<=6){
                     entry.setAttribute("type","number");
+                    entry.setAttribute("min","0");
                 }
 
                 let datalist=document.createElement("datalist");
@@ -407,6 +413,18 @@
         }
 
         window.onload=()=>{
+            var DBdata = document.getElementById("DBdrugs-injection");
+            var RowNum = DBdata.rows.length;
+            for(var r=1; r<RowNum+1; r++){
+                var inputList=[];
+                r = r.toString();
+                for(var c=1;c<9;c++){
+                    c=c.toString();
+                    var d = DBdata.querySelector(`tbody tr:nth-child(${r}) td:nth-child(${c})`);
+                    inputList.push(d.innerHTML.trim());
+                }
+                AddInputRow(inputList);
+            }
             AddInputRow();
         };
     </script>
