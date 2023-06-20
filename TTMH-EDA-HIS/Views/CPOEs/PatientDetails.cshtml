@@ -482,6 +482,19 @@
             var PatientID = "@Model.PatientID";
             var ChaID = "@Model.chart.ChaId";
 
+            var info = {
+                "topic": "my-topic",
+                "key": "string",
+                "message": {
+                    "doctorId": DoctorID,
+                    "patientId": PatientID,
+                    "chaId": ChaID,
+                    "chartsDrugsDosages": GetCurrentDrugs()
+                }
+            };
+            console.log("Submit DATA");
+            console.log(info);
+
             fetch("http://server.nicklu89.com:7777/KafkaAPI/api/KafkaProducerDoctor", {
                 method: "POST",
                 headers: {
@@ -491,17 +504,8 @@
                 redirect: "follow",
                 credentials: "include",
                 timeout: 5000,
-                body: JSON.stringify({
-                    "topic": "my-topic",
-                    "key": "string",
-                    "message": {
-                        "doctorId": DoctorID,
-                        "patientId": PatientID,
-                        "chaId": ChaID,
-                        "chartsDrugsDosages": GetCurrentDrugs()
-                    }
-                })
-            })
+                body: JSON.stringify(info)
+            });
         }
         ////////////Start up
         window.onload=()=>{
