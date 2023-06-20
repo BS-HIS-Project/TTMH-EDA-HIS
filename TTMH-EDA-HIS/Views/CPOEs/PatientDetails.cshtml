@@ -455,10 +455,10 @@
                     "remark":""
                 };
                 var val="";
-                r = r.toString();
+                var rr = r.toString();
                 for (var c = 1; c < 9; c++) {
-                    c = c.toString();
-                    var d = tbody.querySelector(`tr:nth-child(${r}) td:nth-child(${c}) input`);
+                    var cc = c.toString();
+                    var d = tbody.querySelector(`tr:nth-child(${rr}) td:nth-child(${cc}) input`);
                     val = d.value.trim();
                     switch(c){
                         case 1:
@@ -484,8 +484,6 @@
         }
 
         function SubmitDATA(){
-            alert("SEND TEST");
-
             var DoctorID = "@Model.DoctorID";
             var PatientID = "@Model.PatientID";
             var ChaID = "@Model.chart.ChaId";
