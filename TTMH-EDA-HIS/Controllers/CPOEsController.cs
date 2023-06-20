@@ -125,6 +125,7 @@ namespace TTMH_EDA_HIS.Controllers
             if (patient.BirthDate.Date > DateTime.Today.AddYears(--age)) { age--; }
 
             vm.CaseHistory = patient.CaseHistory;
+            vm.PatientID = patient.PatientId;
             vm.PatientName = patient.PatientName;
             vm.Age = age.ToString();
             vm.Gender = patient.Gender;

@@ -10,6 +10,7 @@ namespace TTMH_EDA_HIS.ViewModels
     {
         [DisplayName("病歷號碼")]
         public string? CaseHistory { get; set; } 
+        public string? PatientID { get; set; }
         [DisplayName("病患姓名")]
         public string? PatientName { get; set; } 
         [DisplayName("年齡")]

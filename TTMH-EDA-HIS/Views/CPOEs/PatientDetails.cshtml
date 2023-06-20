@@ -5,6 +5,7 @@
 @section CSS{
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
+        /* Overwrite theme.css ************************************/
         .CT-tbody-ColorInterval tr > td:first-child {
             padding: 20px 0px 20px 20px;
         }
@@ -14,6 +15,15 @@
         .CT-tbody-ColorInterval tr:nth-of-type(even) > td input{
             background-color: #AAD7D6;
         }
+
+        .CT-tbody-ColorInterval > tr:last-child > td:first-child {
+            border-bottom-left-radius: 0px;
+        }
+
+        .CT-tbody-ColorInterval > tr:last-child > td:last-child {
+            border-bottom-right-radius: 0px;
+        }
+        /* Sections ************************************************/
         .SC-input-button-form_submit {
             background-color: #4443a3;
             border-radius: 10px;
@@ -35,8 +45,9 @@
             overflow:scroll;
         }
         textarea{
-            padding:1%;
+            padding:2%;
         }
+        /* Media Adjustment ****************************************/
         @@media (max-width:1700px) {
             .SC-input-button-form_submit{
                 font-size:20px !important;
@@ -173,7 +184,7 @@
             <div class="col-8 MD-adjust-1">
                 <div class="row d-flex justify-content-between">
                     <div class="col-5 d-flex justify-content-between MD-adjust-2">
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;" onclick="SubmitDATA()">
                             送出紀錄
                         </button>
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
@@ -276,12 +287,23 @@
                         <tbody class="CT-tbody-ColorInterval">
                             
                         </tbody>
+						<tr>
+                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-left"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+                            <th class="text-white AT-bg-primary AT-fs-30"><button class="BS-btn AT-bg-third btn w-100" onclick="AddInputRow()">+</button></th>
+                            <th class="text-white AT-bg-primary AT-fs-30"><button class="BS-btn AT-bg-third btn w-100" onclick="RemoveInputRow()">-</button></th>
+                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right"></th>
+                        </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--Template Back-end-->
 <table id="DBdrugs-injection" style="display:none;">
 	<tbody>
         @foreach (TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.Drugs)
@@ -317,9 +339,10 @@
 </table>
 @section Script{
     <script>
-        let DrugRowIndex = -1 ;
+        ////////////Global Variables
+        let DrugRowIndex = 0 ;
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
-
+        ////////////Functions
         function AddInputRow(InputList) {
             DrugRowIndex++;
             let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
@@ -412,6 +435,83 @@
             tbody.appendChild(entry_tr);
         }
 
+        function RemoveInputRow(){
+            if (DrugRowIndex-1>=0){
+                var lastrow = tbody.lastChild;
+                tbody.removeChild(lastrow);
+                DrugRowIndex--;
+            }
+        }
+
+        function GetCurrentDrugs(){
+            var result=[];
+            var RowNum = tbody.rows.length;
+            for (var r = 1; r < RowNum + 1; r++) {
+                var inputobj = {
+                    "drugId":"",
+                    "dosId":"",
+                    "quantity":"",
+                    "days":"",
+                    "remark":""
+                };
+                var val="";
+                r = r.toString();
+                for (var c = 1; c < 9; c++) {
+                    c = c.toString();
+                    var d = tbody.querySelector(`tr:nth-child(${r}) td:nth-child(${c}) input`);
+                    val = d.value.trim();
+                    switch(c){
+                        case 1:
+                            inputobj["drugId"] = val;
+                            break;
+                        case 3:
+                            inputobj["dosId"] = val;
+                            break;
+                        case 5:
+                            inputobj["quantity"] = val;
+                            break;
+                        case 6:
+                            inputobj["days"] = val; 
+                            break;
+                        case 8:
+                            inputobj["remark"] = val;
+                            break;
+                    }
+                }
+                result.push(inputobj);
+            }
+            return result;
+        }
+
+        function SubmitDATA(){
+            alert("SEND TEST");
+
+            var DoctorID = "@Model.DoctorID";
+            var PatientID = "@Model.PatientID";
+            var ChaID = "@Model.chart.ChaId";
+
+            fetch("http://server.nicklu89.com:7777/KafkaAPI/api/KafkaProducerDoctor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                redirect: "follow",
+                credentials: "include",
+                timeout: 5000,
+                body: JSON.stringify({
+                    "topic": "my-topic",
+                    "key": "string",
+                    "message": {
+                        "doctorId": DoctorID,
+                        "patientId": PatientID,
+                        "chaId": ChaID,
+                        "chartsDrugsDosages": GetCurrentDrugs()
+                    }
+                })
+            })
+        }
+        ////////////Start up
         window.onload=()=>{
             var DBdata = document.getElementById("DBdrugs-injection");
             var RowNum = DBdata.rows.length;
