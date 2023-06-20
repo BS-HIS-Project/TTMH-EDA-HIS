@@ -56,6 +56,8 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                 _context.Details.Add(_detail);
                 _context.SaveChanges();
 
+               Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
+
                 if(JsonData.ChartsDrugsDosages != null)
                 {
                     foreach (var data in JsonData.ChartsDrugsDosages)
@@ -104,6 +106,8 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
 
                         _context.ChartsDrugsDosages.Add(_ChartsDrugsDosage);
                         _context.SaveChanges();
+
+                        Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId} 成功新增");
                     }
                 }
             }
