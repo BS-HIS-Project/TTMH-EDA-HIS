@@ -105,10 +105,16 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
 
                         _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * (double)_ChartsDrugsDosage.Days);
 
-                        _context.ChartsDrugsDosages.Add(_ChartsDrugsDosage);
-                        _context.SaveChanges();
+                        if(_context.ChartsDrugsDosages.Find(_ChartsDrugsDosage.ChaId, _ChartsDrugsDosage.DrugId) != null)
+                        {
+                            Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId}, {_ChartsDrugsDosage.DrugId} 新增已存在");
+                        } else
+                        {
+                            _context.ChartsDrugsDosages.Add(_ChartsDrugsDosage);
+                            _context.SaveChanges();
 
-                        Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId} 成功新增");
+                            Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId} 成功新增");
+                        }
                     }
                 }
             }
