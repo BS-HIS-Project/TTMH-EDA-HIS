@@ -7,8 +7,9 @@ using HISDB;
 
 var _context = new HisdbContext();
 
-Console.WriteLine("請輸入GroupId");
-var inputGroupId = Console.ReadLine();
+//Console.WriteLine("請輸入GroupId");
+//var inputGroupId = Console.ReadLine();
+var inputGroupId = "G001";
 
 ConsumerConfig config = new ConsumerConfig
 {
