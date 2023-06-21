@@ -23,6 +23,6 @@ services:
       context: .
       dockerfile: TTMH-EDA-HIS/Dockerfile
     ports:
-      - "9095:80"
+      - "9095:32768"
       - "9096:443"
 
