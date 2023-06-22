@@ -29,30 +29,30 @@ namespace TTMH_EDA_HIS.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> ChartList(int? id)
+        public async Task<IActionResult> ChartList(int? page)
         {
-            id=id ?? 0;
-            int page=0;
-            if (id<=1)
+            page=page ?? 0;
+            int dpage=0;
+            if (page<=1)
             {
-                page = 1;
-                id = 0;
+                dpage = 1;
+                page = 0;
             }
             else
             {
-                page = (int)id;
-                id *= 6;
-                id -= 6;
+                dpage = (int)page;
+                page *= 6;
+                page -= 6;
             }
             CPOEsChartListViewModel vm = new CPOEsChartListViewModel();  
-            vm.Patients = await _context.Patients.Skip((int)id).Take(6).ToListAsync();
+            vm.Patients = await _context.Patients.Skip((int)page).Take(6).ToListAsync();
             vm.content = "";
             vm.UseButtonGp = true;
-            vm.previous_page=page-1;
-            vm.page1=page;
-            vm.page2=page+1;
-            vm.page3=page+2;
-            vm.next_page=page+1;
+            vm.previous_page=dpage-1;
+            vm.page1=dpage;
+            vm.page2=dpage+1;
+            vm.page3=dpage+2;
+            vm.next_page=dpage+1;
             return View(vm);
         }
 
@@ -121,15 +121,16 @@ namespace TTMH_EDA_HIS.Controllers
             }
             DoctorsPatientsChart dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == vm.chart.ChaId);
             Employee doctor = await _context.Employees.FindAsync(dpc.DoctorId);
-            int age = DateTime.Today.Year - patient.BirthDate.Year;
-            if (patient.BirthDate.Date > DateTime.Today.AddYears(--age)) { age--; }
+            DateTime zerotime = new DateTime(1, 1, 1);
+            TimeSpan ageSpan = DateTime.Now - patient.BirthDate;
+            int age = (zerotime + ageSpan).Year - 1;
 
             vm.CaseHistory = patient.CaseHistory;
             vm.PatientID = patient.PatientId;
             vm.PatientName = patient.PatientName;
             vm.Age = age.ToString();
             vm.Gender = patient.Gender;
-            vm.BirthDate = $"{patient.BirthDate.Year.ToString()}/{patient.BirthDate.Month.ToString()}/{patient.BirthDate.Day.ToString()}";
+            vm.BirthDate = patient.BirthDate.ToString("yyyy/MM/dd");
             vm.DoctorID = doctor.EmployeeId;
             vm.DoctorName = doctor.EmployeeName;
 
@@ -161,7 +162,7 @@ namespace TTMH_EDA_HIS.Controllers
             for (int i=0;i<charts.Length;i++)
             {
                 vm.RecordsOfChaID.Add(charts[i].ChaId);
-                vm.RecordsOfvdate.Add(charts[i].Vdate.Date.ToString());
+                vm.RecordsOfvdate.Add(charts[i].Vdate.ToString("yyyy/MM/dd"));
             }
             vm.FirstChart = charts[0].ChaId;
             vm.LastChart = charts[charts.Length - 1].ChaId;
@@ -183,6 +184,7 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 vm.NextChart = charts[charts.Length - 1].ChaId;
             }
+            vm.ChaID_Display = vm.chart.ChaId.Substring(vm.chart.ChaId.Length-3,3);
 
             return View(vm);
         }

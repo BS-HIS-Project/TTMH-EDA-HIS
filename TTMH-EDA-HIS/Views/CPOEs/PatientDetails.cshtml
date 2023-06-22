@@ -1,6 +1,6 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
 @{
-    string vdate = $"{Model.chart.Vdate.Year}/{Model.chart.Vdate.Month.ToString()}/{Model.chart.Vdate.Day.ToString()}";
+    
 }
 @section CSS{
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
@@ -103,8 +103,8 @@
                                 就診號
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center">
-                                @Model.chart.ChaId
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                @Model.ChaID_Display
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                             </div>
                             <div class="bg-secondary AT-hr"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
-                                @vdate
+                                @Model.chart.Vdate.ToString("yyyy/MM/dd")
                             </div>
                         </div>
                     </div>
@@ -222,7 +222,7 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-6">
+                    <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
                                 病患自述(Subject)
@@ -231,7 +231,7 @@
                             <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
                                 歷史自述(Subject)
@@ -244,7 +244,7 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-6">
+                    <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
                                 醫生檢查(Object)
@@ -253,7 +253,7 @@
                             <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
                                 歷史檢查(Object)

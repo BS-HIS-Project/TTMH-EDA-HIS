@@ -25,6 +25,7 @@ namespace TTMH_EDA_HIS.ViewModels
         //就診紀錄
         public Chart? chart { get; set; } //就診號 + 看診日期 + Object + Subject + History
         public List<CPOEsPatientDetailsViewModel_DrugTableTD> Drugs { get; set; }
+        public string? ChaID_Display { get; set; }
 
         //Navigation for other Charts
         public List<string> RecordsOfChaID { get; set; }
