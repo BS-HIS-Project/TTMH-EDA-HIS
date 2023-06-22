@@ -3,6 +3,7 @@
     
 }
 @section CSS{
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.js"/>
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
         /* Overwrite theme.css ************************************/
@@ -38,6 +39,16 @@
         }
         .SC-input-button-form_submit:focus {
             background-color: #5554b4;
+        }
+        .SC-RemoveButton {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 20%;
+            right: -30%;
+            background-color: red;
+            vertical-align: middle;
+            text-align: center;
         }
         .SC-block {
             border:none;
@@ -302,8 +313,16 @@
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
-                            <th class="text-white AT-bg-primary AT-fs-30"><button class="BS-btn AT-bg-third btn w-100" onclick="AddInputRow()">+</button></th>
-                            <th class="text-white AT-bg-primary AT-fs-30"><button class="BS-btn AT-bg-third btn w-100" onclick="RemoveInputRow()">-</button></th>
+                            <th class="text-white AT-bg-primary AT-fs-30">
+                                <button class="BS-btn AT-bg-third btn w-100" onclick="AddInputRow()">
+                                    <i class="fa-solid fa-plus AT-fs-25"></i>
+                                </button>
+                            </th>
+                            <th class="text-white AT-bg-primary AT-fs-30">
+                                <button class="BS-btn AT-bg-third btn w-100" onclick="RemoveInputRow()">
+                                    <i class="fa-solid fa-xmark AT-fs-25"></i>
+                                </button>
+                            </th>
                             <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right"></th>
                         </tr>
                     </table>
@@ -347,6 +366,7 @@
     </tbody>
 </table>
 @section Script{
+    <script src="~/lib/font-awesome/js/all.js"></script>
     <script>
         ////////////Global Variables
         let DrugRowIndex = 0 ;
@@ -444,6 +464,23 @@
                         );
                     });
                 }
+
+                if(i==7){
+                    td.setAttribute("style", "position:relative;");
+                    var CurrentRowIndex = DrugRowIndex;
+                    var RemoveBtn=document.createElement("button");
+                    RemoveBtn.setAttribute("class", "BS-btn btn SC-RemoveButton");
+                    RemoveBtn.addEventListener("click",()=>{
+                        RemoveInputRow(`tr-Drugs-${CurrentRowIndex}`);
+                    });
+
+                    var font=document.createElement("i");
+                    font.setAttribute("class", "fa-solid fa-trash-can AT-fs-25");
+
+                    RemoveBtn.appendChild(font);
+                    td.appendChild(RemoveBtn);
+                }
+
                 form_group.appendChild(entry);
                 form_group.appendChild(datalist);
                 td.appendChild(form_group);
