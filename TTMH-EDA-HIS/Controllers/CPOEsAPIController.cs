@@ -39,7 +39,7 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Result = results,
+                Results = results,
                 Relatives = relatives.ToArray()
             };
             return response;
@@ -67,7 +67,7 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Result = results,
+                Results = results,
                 Relatives = relatives.ToArray()
             };
             return response;
@@ -89,7 +89,7 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Result = results
+                Results = results
             };
             return response;
         }

@@ -158,11 +158,11 @@ namespace TTMH_EDA_HIS.Controllers
             vm.Drugs = drugs;
 
             vm.RecordsOfChaID = new List<string>();
-            vm.RecordsOfvdate = new List<string>();
+            vm.RecordsOfVDate = new List<string>();
             for (int i=0;i<charts.Length;i++)
             {
                 vm.RecordsOfChaID.Add(charts[i].ChaId);
-                vm.RecordsOfvdate.Add(charts[i].Vdate.ToString("yyyy/MM/dd"));
+                vm.RecordsOfVDate.Add(charts[i].Vdate.ToString("yyyy/MM/dd"));
             }
             vm.FirstChart = charts[0].ChaId;
             vm.LastChart = charts[charts.Length - 1].ChaId;
@@ -184,6 +184,7 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 vm.NextChart = charts[charts.Length - 1].ChaId;
             }
+            vm.VDate_Display = vm.chart.Vdate.ToString("yyyy/MM/dd");
             vm.ChaID_Display = vm.chart.ChaId.Substring(vm.chart.ChaId.Length-3,3);
 
             return View(vm);

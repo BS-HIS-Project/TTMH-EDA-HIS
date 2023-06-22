@@ -18,18 +18,21 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("病患性別")]
         public string? Gender { get; set; } 
         [DisplayName("出生年月日")]
-        public string? BirthDate { get; set; } 
+        public string? BirthDate { get; set; }
+        [DisplayName("醫生編號")]
         public string? DoctorID { get; set; }
+        [DisplayName("醫生姓名")]
         public string? DoctorName { get; set; }
 
         //就診紀錄
         public Chart? chart { get; set; } //就診號 + 看診日期 + Object + Subject + History
         public List<CPOEsPatientDetailsViewModel_DrugTableTD> Drugs { get; set; }
         public string? ChaID_Display { get; set; }
+        public string? VDate_Display { get; set; }
 
         //Navigation for other Charts
         public List<string> RecordsOfChaID { get; set; }
-        public List<string> RecordsOfvdate { get; set; }
+        public List<string> RecordsOfVDate { get; set; }
         public string? FirstChart { get; set; }
         public string? LastChart { get; set; }
         public string? PreviousChart { get; set; }
@@ -45,20 +48,16 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("用法")]
         public string? DosID { get; set; }
         [DisplayName("頻率")]
-        [DataType("int")]
         public int? Freq { get; set; }
         [DisplayName("次量")]
-        [DataType("float")]
         public double? Quantity { get; set; }
         [DisplayName("天數")]
-        [DataType("int")]
         public int? Days { get; set; }
         [DisplayName("總量")]
-        [DataType("float")]
         public double? Total { get; set; }
         [DisplayName("備註")]
         public string? Remark { get; set; }
-
+        [DisplayName("備註")]
         public string? BodyParts { get; set; }
     }
 }

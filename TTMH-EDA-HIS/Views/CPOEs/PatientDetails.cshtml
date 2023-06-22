@@ -189,7 +189,7 @@
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;">
                             重新列印
                         </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
+                        <button id="dito" onclick="DitoExchange()" class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
                             D
                         </button>
                     </div>
@@ -201,14 +201,14 @@
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.PreviousChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
                             &lt;
                         </a>
-                        <div class="dropdown-center" style="width:35%;margin-left:5%;">
+                        <div class="dropdown-center" style="width:40%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                就診紀錄
+                                @Model.VDate_Display
                             </button>
                             <ul class="dropdown-menu ">
-                                @for(int i = 0; i < Model.RecordsOfvdate.Count; i++)
+                                @for(int i = 0; i < Model.RecordsOfVDate.Count; i++)
                                 {
-                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID[i]})" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
+                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID[i]})" class="dropdown-item AT-fs-25">@Model.RecordsOfVDate[i]</a></li>
                                 }
                             </ul>
                         </div>
@@ -228,7 +228,7 @@
                                 病患自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
+                            <textarea name="" id="current-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
@@ -237,9 +237,7 @@
                                 歷史自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">
-                                @Model.chart.Subject
-                            </div>
+                            <div name="" id="history-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Subject</div>
                         </div>
                     </div>
                 </div>
@@ -250,7 +248,7 @@
                                 醫生檢查(Object)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
+                            <textarea name="" id="current-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
@@ -259,9 +257,7 @@
                                 歷史檢查(Object)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">
-                                @Model.chart.Object
-                            </div>
+                            <div name="" id="history-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Object</div>
                         </div>
                     </div>
                 </div>
@@ -422,13 +418,13 @@
                                 for(var k of Alloptions){
                                     k.remove();
                                 }
-                                for(var j of data["result"]) {
+                                for(var j of data["results"]) {
                                     var option=document.createElement("option");
                                     option.innerHTML=j;
                                     option.setAttribute("id", `option-${id}`);
                                     datalist.appendChild(option);
                                 }
-                                if(input_value==data["result"][0]){
+                                if(input_value==data["results"][0]){
                                     if(current_col==0){
                                         document.getElementById(`input-Drugs-1-${current_row}`).value=data["relatives"][0];
                                     }
@@ -488,6 +484,16 @@
                 result.push(inputobj);
             }
             return result;
+        }
+
+        function DitoExchange(){
+            var CurrentSubject = document.getElementById("current-subject");
+            var HistorySubject = document.getElementById("history-subject");
+            var CurrentObject = document.getElementById("current-object");
+            var HistoryObject = document.getElementById("history-object");
+
+            CurrentSubject.value += HistorySubject.innerHTML;
+            CurrentObject.value += HistoryObject.innerHTML;
         }
 
         function SubmitDATA(){
