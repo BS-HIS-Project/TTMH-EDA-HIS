@@ -161,7 +161,7 @@ namespace TTMH_EDA_HIS.Controllers
             for (int i=0;i<charts.Length;i++)
             {
                 vm.RecordsOfChaID.Add(charts[i].ChaId);
-                vm.RecordsOfvdate.Add(charts[i].Vdate.ToString());
+                vm.RecordsOfvdate.Add(charts[i].Vdate.Date.ToString());
             }
             vm.FirstChart = charts[0].ChaId;
             vm.LastChart = charts[charts.Length - 1].ChaId;
@@ -175,9 +175,9 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 vm.PreviousChart = charts[0].ChaId;
             }
-            if(currentIndex+1 < charts.Length)
+            if(currentIndex+1 < charts.Length-1)
             {
-                vm.NextChart = charts[currentIndex + 1].ChaId;
+                vm.NextChart = charts[currentIndex + 2].ChaId;
             }
             else
             {

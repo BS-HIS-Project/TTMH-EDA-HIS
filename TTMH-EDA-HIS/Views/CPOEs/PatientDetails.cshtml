@@ -25,7 +25,7 @@
         }
         /* Sections ************************************************/
         .SC-input-button-form_submit {
-            background-color: #4443a3;
+            background-color: #536195;
             border-radius: 10px;
             border: 0px solid;
             color: white;
@@ -42,10 +42,9 @@
         .SC-block {
             border:none;
             height:150px;
-            overflow:scroll;
         }
-        textarea{
-            padding:2%;
+        .textarea-showcase{
+            padding:3%;
         }
         /* Media Adjustment ****************************************/
         @@media (max-width:1700px) {
@@ -182,13 +181,16 @@
 
 
             <div class="col-8 MD-adjust-1">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-5 d-flex justify-content-between MD-adjust-2">
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;" onclick="SubmitDATA()">
+                <div class="row d-flex">
+                    <div class="col-6 d-flex justify-content-between MD-adjust-2">
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="SubmitDATA()">
                             送出紀錄
                         </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;">
                             重新列印
+                        </button>
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
+                            D
                         </button>
                     </div>
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
@@ -226,33 +228,44 @@
                                 病患自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">@Model.chart.Subject</textarea>
+                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
-                                過去病史(History)
+                                歷史自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="overflow:scroll;">
-                                @Model.chart.History
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">
+                                @Model.chart.Subject
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                                醫生檢查(Object)
+                            </div>
+                            <div class="bg-secondary AT-hr"></div>
+                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                                歷史檢查(Object)
+                            </div>
+                            <div class="bg-secondary AT-hr"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">
+                                @Model.chart.Object
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
-                                入院經過(Object)
-                            </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">@Model.chart.Object</textarea>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row p-2 mt-2">
                     <table class="">
