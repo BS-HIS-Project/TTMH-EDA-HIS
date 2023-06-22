@@ -350,24 +350,25 @@
     <script>
         ////////////Global Variables
         let DrugRowIndex = 0 ;
+        let RowCount = 0;
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
         ////////////Functions
         function AddInputRow(InputList) {
             DrugRowIndex++;
+            RowCount++;
             let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
             let td_placeholder=["DrugID","DrugName","DosID","Freq","Quty","Days","Total","Remark"];
             let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
             let entry_tr=document.createElement("tr");
+            entry_tr.setAttribute("id", `tr-Drugs-${DrugRowIndex}`);
             for(var i=0;i<8;i++){
                 let id = `Drugs-${i}-${DrugRowIndex}`;
 
                 let td=document.createElement("td");
                 td.setAttribute("id",id);
                 
-
                 let form_group=document.createElement("div");
                 form_group.setAttribute("class","form-group");
-
 
                 let entry=document.createElement("input");
                 entry.setAttribute("id","input-"+id);
@@ -431,6 +432,13 @@
                                     if(current_col==1){
                                         document.getElementById(`input-Drugs-0-${current_row}`).value=data["relatives"][0];
                                     }
+                                }else{
+                                    if (current_col == 0) {
+                                        document.getElementById(`input-Drugs-1-${current_row}`).value = "";
+                                    }
+                                    if (current_col == 1) {
+                                        document.getElementById(`input-Drugs-0-${current_row}`).value = "";
+                                    }
                                 }
                             }
                         );
@@ -444,11 +452,17 @@
             tbody.appendChild(entry_tr);
         }
 
-        function RemoveInputRow(){
-            if (DrugRowIndex-1>=0){
-                var lastrow = tbody.lastChild;
-                tbody.removeChild(lastrow);
-                DrugRowIndex--;
+        function RemoveInputRow(id){
+            if(arguments.length==0){
+                if (RowCount - 1 >= 0) {
+                    var lastrow = tbody.lastChild;
+                    tbody.removeChild(lastrow);
+                    RowCount--;
+                }
+            } else {
+                var row = document.getElementById(id);
+                tbody.removeChild(row);
+                RowCount--;
             }
         }
 
