@@ -207,10 +207,10 @@
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.FirstChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &lt;&lt;
+                            <i class="fa-solid fa-arrow-left"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.PreviousChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &lt;
+                            <i class="fa-solid fa-arrow-left"></i>
                         </a>
                         <div class="dropdown-center" style="width:40%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -224,10 +224,10 @@
                             </ul>
                         </div>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.NextChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &gt;
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.LastChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &gt;&gt;
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>            
                     </div>           
                 </div>
