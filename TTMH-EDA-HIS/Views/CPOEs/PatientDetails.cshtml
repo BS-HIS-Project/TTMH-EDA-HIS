@@ -551,6 +551,19 @@
             var DoctorID = "@Model.DoctorID";
             var PatientID = "@Model.PatientID";
             var ChaID = "@Model.chart.ChaId";
+            var Drugs = GetCurrentDrugs();
+
+            for(var i of Drugs){
+                if (i["drugId"].trim() == "" ||
+                    i["dosId"].trim() == "" ||
+                    i["quantity"].trim() == "" ||
+                    i["days"].trim() == ""
+                ) {
+                    alert("格式錯誤或未填入資料");
+                    return false;
+                }
+            }
+
 
             var info = {
                 "topic": "my-topic",
@@ -559,7 +572,7 @@
                     "doctorId": DoctorID,
                     "patientId": PatientID,
                     "chaId": ChaID,
-                    "chartsDrugsDosages": GetCurrentDrugs()
+                    "chartsDrugsDosages": Drugs
                 }
             };
             console.log("Data Submited");
@@ -576,6 +589,8 @@
                 timeout: 5000,
                 body: JSON.stringify(info)
             });
+
+            return true;
         }
         ////////////Start up
         window.onload=()=>{
