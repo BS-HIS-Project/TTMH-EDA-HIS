@@ -97,10 +97,10 @@
                 <div class="row">
                     <div class="col">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 opacity-75 text-secondary px-3 py-2">
                                 病歷號碼
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
                                 @Model.CaseHistory
                             </div>
@@ -110,22 +110,22 @@
                 <div class="row mt-4">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 就診號
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                            <div class="bg-secondary AT-hr opacity-75"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center">
                                 @Model.ChaID_Display
                             </div>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 病患姓名
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                            <div class="bg-secondary AT-hr opacity-75"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center">
                                 @Model.PatientName
                             </div>
                         </div>
@@ -134,30 +134,30 @@
                 <div class="row mt-4">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 年齡
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                            <div class="bg-secondary AT-hr opacity-75"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center">
                                 @Model.Age
                             </div>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 病患性別
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             @if (Model.Gender=="1")
                             {
-                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center text-primary">
+                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center text-primary">
                                     男
                                 </div>
                             }
                             else
                             {
-                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center text-danger">
+                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center text-danger">
                                     女
                                 </div>
                             }
@@ -167,10 +167,10 @@
                 <div class="row mt-4">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 出生年月日
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
                                 @Model.BirthDate
                             </div>
@@ -178,10 +178,10 @@
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 看診日期
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
                                 @Model.chart.Vdate.ToString("yyyy/MM/dd")
                             </div>
@@ -235,19 +235,19 @@
                 <div class="row mt-3">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 病患自述(Subject)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <textarea name="" id="current-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 歷史自述(Subject)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="history-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Subject</div>
                         </div>
                     </div>
@@ -255,19 +255,19 @@
                 <div class="row mt-3">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 醫生檢查(Object)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <textarea name="" id="current-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 歷史檢查(Object)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="history-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Object</div>
                         </div>
                     </div>
@@ -313,17 +313,13 @@
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
-                            <th class="text-white AT-bg-primary AT-fs-30">
-                                <button class="BS-btn AT-bg-third btn w-100" onclick="AddInputRow()">
+                            <th class="text-white AT-bg-primary AT-fs-30"></th>
+                            <th class="text-white AT-bg-primary AT-fs-30"></th>
+                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right d-flex justify-content-end">
+                                <button class="BS-btn AT-bg-third btn w-25 me-4" onclick="AddInputRow()">
                                     <i class="fa-solid fa-plus AT-fs-25"></i>
                                 </button>
                             </th>
-                            <th class="text-white AT-bg-primary AT-fs-30">
-                                <button class="BS-btn AT-bg-third btn w-100" onclick="RemoveInputRow()">
-                                    <i class="fa-solid fa-xmark AT-fs-25"></i>
-                                </button>
-                            </th>
-                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right"></th>
                         </tr>
                     </table>
                 </div>
@@ -475,7 +471,7 @@
                     });
 
                     var font=document.createElement("i");
-                    font.setAttribute("class", "fa-solid fa-trash-can AT-fs-25");
+                    font.setAttribute("class", "fa-solid fa-xmark AT-fs-25");
 
                     RemoveBtn.appendChild(font);
                     td.appendChild(RemoveBtn);
