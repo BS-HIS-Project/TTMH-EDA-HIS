@@ -1,4 +1,5 @@
-﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
+﻿@using System.Security.Claims;
+@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
 @{
     
 }
@@ -519,19 +520,25 @@
                     val = d.value.trim();
                     switch(c){
                         case 1:
-                            inputobj["drugId"] = val;
+                            inputobj["DrugID"] = val;
                             break;
                         case 3:
-                            inputobj["dosId"] = val;
+                            inputobj["DosID"] = val;
+                            break;
+                        case 4:
+                            inputobj["Freq"] = val;
                             break;
                         case 5:
-                            inputobj["quantity"] = val;
+                            inputobj["Quantity"] = val;
                             break;
                         case 6:
-                            inputobj["days"] = val; 
+                            inputobj["Days"] = val;
+                            break;
+                        case 7:
+                            inputobj["Total"] = val;
                             break;
                         case 8:
-                            inputobj["remark"] = val;
+                            inputobj["Remark"] = val;
                             break;
                     }
                 }
@@ -552,28 +559,32 @@
 
         async function SubmitDATA(){
             var Answer = "";
-            var DoctorID = "@Model.DoctorID";
+            var ResponseData;
             var PatientID = "@Model.PatientID";
-            var ChaID = "@Model.chart.ChaId";
+            var DoctorID = "@User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.NameIdentifier).Value";
+            var Subject = document.getElementById("current-subject").value;
+            var Object = document.getElementById("current-object").value;
             var Drugs = GetCurrentDrugs();
 
             for(var i of Drugs){
-                if (i["drugId"].trim() == "" ||
-                    i["dosId"].trim() == "" ||
-                    i["quantity"].trim() == "" ||
-                    i["days"].trim() == ""
+                if (i["DrugID"].trim() == "" ||
+                    i["DosID"].trim() == "" ||
+                    i["Freq"].trim() == "" ||
+                    i["Quantity"].trim() == "" ||
+                    i["Days"].trim() == "" ||
+                    i["Total"].trim() == "" 
                 ) {
                     console.log("格式錯誤或未填入資料");
                     Swal.fire({
-                        icon: "error",
-                        title: "傳輸受拒",
+                        icon: "warning",
+                        title: "資料條件不符",
                         text: "格式錯誤或未填入資料",
                     });
                     return false;
                 }
             }
             Swal.fire({
-                icon: 'warning',
+                icon: 'info',
                 title: "確定發送嗎 ?",
                 showCancelButton: true,
                 confirmButtonText: "確認",
@@ -596,19 +607,15 @@
             }
             
             var content = {
-                "topic": "my-topic",
-                "key": "string",
-                "message": {
-                    "doctorId": DoctorID,
-                    "patientId": PatientID,
-                    "chaId": ChaID,
-                    "chartsDrugsDosages": Drugs
-                }
+                "PatientID" : PatientID,
+                "DoctorID" : DoctorID,
+                "Subject" : Subject,
+                "Object" : Object,
+                "Drugs" : Drugs
             };
             console.log("Data Submited");
             console.log(content);
-
-            fetch("http://server.nicklu89.com:7777/KafkaAPI/api/KafkaProducerDoctor", {
+            await fetch("@Url.Action("CommitDrugs","CPOEsCommitAP")", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -618,9 +625,48 @@
                 credentials: "include",
                 timeout: 8000,
                 body: JSON.stringify(content)
+            }).then(
+                (response)=>{
+                    console.log("Response Retrieved !");
+                    return response.json();
+                },
+                (error)=>{
+                    return {
+                        "status": "NotFound",
+                        "message": error
+                    };
+                }
+            ).then((data)=>{
+                console.log(data);
+                ResponseData=data;
             });
 
-            return true;
+            if(ResponseData["status"]=="Success"){
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return true;
+            } 
+            else if(ResponseData["status"]=="NotFound"){
+                Swal.fire(
+                    'Connection Failed',
+                    'That thing is still around?',
+                    ResponseData["message"]
+                );
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                });
+            }
+
+            return false;
         }
         ////////////Start up
         window.onload=()=>{
