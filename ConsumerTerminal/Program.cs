@@ -54,10 +54,18 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                     PatientId = JsonData.PatientId ?? throw new Exception("PatientId is NULL")
                 };
                 PaymentBarcode++;
+
+                while(_context.Details.Find(_detail.DetId) != null)
+                {
+                    Console.WriteLine($"Detail: {_detail.DetId} 新增已存在");
+                    _detail.DetId = $"DET{DateTime.Now.ToString("yyyyMMddHH")}{ClinicNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}";
+                    PaymentBarcode++;
+                }
+                
                 _context.Details.Add(_detail);
                 _context.SaveChanges();
 
-               Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
+                Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
 
                 if(JsonData.ChartsDrugsDosages != null)
                 {
@@ -122,6 +130,7 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
         catch (Exception e)
         {
             Console.WriteLine(e);
+            //Console.WriteLine($"Received message: {consumeResult.Message.Value} NOT Doctor VM");
         }
 
         Console.WriteLine($"Received message: {consumeResult.Message.Value}");
