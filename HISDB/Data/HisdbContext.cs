@@ -47,8 +47,8 @@ public partial class HisdbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            //optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=HISDB;TrustServerCertificate=true;MultipleActiveResultSets=true;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer("Data Source=server.nicklu89.com, 8433;Initial Catalog=HISDB;TrustServerCertificate=true;User Id=Docker;Password=Nick0208;");
+            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=HISDB;TrustServerCertificate=true;MultipleActiveResultSets=true;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer("Data Source=server.nicklu89.com, 8433;Initial Catalog=HISDB;TrustServerCertificate=true;User Id=Docker;Password=Nick0208;");
             base.OnConfiguring(optionsBuilder);
         }
     }
