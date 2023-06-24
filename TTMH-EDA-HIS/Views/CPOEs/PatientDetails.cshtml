@@ -195,10 +195,10 @@
                 <div class="row d-flex">
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="SubmitDATA()">
-                            送出紀錄
+                            送出紀錄 <i class="ms-1 fa-solid fa-file-arrow-up"></i>
                         </button>
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;">
-                            重新列印
+                            重新列印 <i class="ms-1 fa-solid fa-print"></i>
                         </button>
                         <button id="dito" onclick="DitoExchange()" class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
                             D
@@ -207,10 +207,10 @@
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.FirstChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-left"></i>
+                            <i class="fa-solid fa-angles-left"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.PreviousChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-left"></i>
+                            <i class="fa-solid fa-chevron-left"></i>
                         </a>
                         <div class="dropdown-center" style="width:40%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -224,10 +224,10 @@
                             </ul>
                         </div>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.NextChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-angle-right"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.LastChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-angles-right"></i>
                         </a>            
                     </div>           
                 </div>
