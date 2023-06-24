@@ -371,6 +371,11 @@
         let RowCount = 0;
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
         ////////////Functions
+        async function sleep(millisec){
+            await new Promise((resolve)=>{
+                return setTimeout(resolve,millisec);
+            });
+        }
         function AddInputRow(InputList) {
             DrugRowIndex++;
             RowCount++;
@@ -545,7 +550,8 @@
             CurrentObject.value += HistoryObject.innerHTML;
         }
 
-        function SubmitDATA(){
+        async function SubmitDATA(){
+            var Answer = "";
             var DoctorID = "@Model.DoctorID";
             var PatientID = "@Model.PatientID";
             var ChaID = "@Model.chart.ChaId";
@@ -557,7 +563,7 @@
                     i["quantity"].trim() == "" ||
                     i["days"].trim() == ""
                 ) {
-                    console.log("格式錯誤 或 未填入資料");
+                    console.log("格式錯誤或未填入資料");
                     Swal.fire({
                         icon: "error",
                         title: "傳輸受拒",
@@ -566,10 +572,30 @@
                     return false;
                 }
             }
+            Swal.fire({
+                icon: 'warning',
+                title: "確定發送嗎 ?",
+                showCancelButton: true,
+                confirmButtonText: "確認",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Answer = "confirm";
+                } else {
+                    Answer = "cancel";
+                }
+            });
 
-            Swal.showLoading();
-
-            var info = {
+            while(true){
+                await sleep(300);
+                if(Answer=="confirm"){
+                    break;
+                }else if(Answer=="cancel"){
+                    return false;
+                }
+            }
+            
+            var content = {
                 "topic": "my-topic",
                 "key": "string",
                 "message": {
@@ -580,7 +606,7 @@
                 }
             };
             console.log("Data Submited");
-            console.log(info);
+            console.log(content);
 
             fetch("http://server.nicklu89.com:7777/KafkaAPI/api/KafkaProducerDoctor", {
                 method: "POST",
@@ -590,8 +616,8 @@
                 },
                 redirect: "follow",
                 credentials: "include",
-                timeout: 5000,
-                body: JSON.stringify(info)
+                timeout: 8000,
+                body: JSON.stringify(content)
             });
 
             return true;
