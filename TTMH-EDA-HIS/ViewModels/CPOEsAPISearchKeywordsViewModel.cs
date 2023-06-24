@@ -7,7 +7,7 @@
     public class CPOEsAPISearchKeywordsViewModel_Response
     {
         public string SearchKeyRequested { get; set; }
-        public string[] Result { get; set; }
+        public string[] Results { get; set; }
         public string[] Relatives { get; set; }
     }
 }

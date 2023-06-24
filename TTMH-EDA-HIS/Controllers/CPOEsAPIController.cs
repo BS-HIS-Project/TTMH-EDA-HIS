@@ -1,4 +1,5 @@
 ﻿using HISDB.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
@@ -7,7 +8,7 @@ using TTMH_EDA_HIS.ViewModels;
 namespace TTMH_EDA_HIS.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class CPOEsAPIController : ControllerBase
     {
         private readonly HISDB.Data.HisdbContext _context;
@@ -16,8 +17,8 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
         }
 
-
-        [HttpPost("[action]")]
+        [Authorize]
+        [HttpPost]
         public async Task<CPOEsAPISearchKeywordsViewModel_Response> SearchDrugID(CPOEsAPISearchKeywordsViewModel vm)
         {
             string[] results = await (
@@ -38,13 +39,14 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Result = results,
+                Results = results,
                 Relatives = relatives.ToArray()
             };
             return response;
         }
 
-        [HttpPost("[action]")]
+        [Authorize]
+        [HttpPost]
         public async Task<CPOEsAPISearchKeywordsViewModel_Response> SearchDrugName(CPOEsAPISearchKeywordsViewModel vm)
         {
             string[] results = await (
@@ -65,13 +67,14 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Result = results,
+                Results = results,
                 Relatives = relatives.ToArray()
             };
             return response;
         }
 
-        [HttpPost("[action]")]
+        [Authorize]
+        [HttpPost]
         public async Task<CPOEsAPISearchKeywordsViewModel_Response> SearchDosID(CPOEsAPISearchKeywordsViewModel vm)
         {
             string[] results = await (
@@ -86,7 +89,7 @@ namespace TTMH_EDA_HIS.Controllers
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Result = results
+                Results = results
             };
             return response;
         }
