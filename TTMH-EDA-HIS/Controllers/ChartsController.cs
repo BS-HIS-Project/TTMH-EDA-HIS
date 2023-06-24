@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TTMH_EDA_HIS.Data;
-using TTMH_EDA_HIS.Models;
+using HISDB.Data;
+using HISDB.Models;
 
 namespace TTMH_EDA_HIS.Controllers
 {

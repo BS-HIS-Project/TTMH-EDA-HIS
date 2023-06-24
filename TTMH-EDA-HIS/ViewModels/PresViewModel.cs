@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using TTMH_EDA_HIS.Controllers;
-using TTMH_EDA_HIS.Models;
+using HISDB.Models;
 
 namespace TTMH_EDA_HIS.ViewModels
 {

@@ -1,8 +1,8 @@
-﻿using TTMH_EDA_HIS.Models;
+﻿using HISDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using TTMH_EDA_HIS.Data;
+using HISDB.Data;
 using TTMH_EDA_HIS.Interfaces;
 using TTMH_EDA_HIS.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
