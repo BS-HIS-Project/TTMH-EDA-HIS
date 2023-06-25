@@ -48,7 +48,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\ChartsView\" />
   </ItemGroup>
 
   <ItemGroup>
