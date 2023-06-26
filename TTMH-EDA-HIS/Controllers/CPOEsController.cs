@@ -186,7 +186,6 @@ namespace TTMH_EDA_HIS.Controllers
             vm.VDate_Display = vm.chart.Vdate.ToString("yyyy/MM/dd");
             vm.ChaID_Display = vm.chart.ChaId.Substring(vm.chart.ChaId.Length-3,3);
 
-            //return Content(currentIndex.ToString());
             return View(vm);
         }
     }
