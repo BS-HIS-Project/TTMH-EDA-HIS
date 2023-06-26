@@ -615,7 +615,7 @@
             };
             console.log("Data Submited");
             console.log(content);
-            await fetch("@Url.Action("CommitDrugs","CPOEsCommitAP")", {
+            await fetch("@Url.Action("CommitDrugs","CPOEsCommitAPI")", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -641,28 +641,27 @@
                 ResponseData=data;
             });
 
-            if(ResponseData["status"]=="Success"){
+            if (ResponseData["status"] == "Success") {
                 Swal.fire({
-                    position: 'top-center',
+                    position: 'center',
                     icon: 'success',
-                    title: 'Your work has been saved',
+                    title: '成功上存',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500 
                 });
                 return true;
-            } 
-            else if(ResponseData["status"]=="NotFound"){
+            }
+            else if (ResponseData["status"] == "NotFound") {
                 Swal.fire(
-                    'Connection Failed',
-                    'That thing is still around?',
-                    ResponseData["message"]
+                    ResponseData["status"],
+                    ResponseData["message"],
+                    'question'
                 );
-            }else{
+            } else {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                    footer: '<a href="">Why do I have this issue?</a>'
+                    icon: "error",
+                    title: ResponseData["status"],
+                    text: ResponseData["message"]
                 });
             }
 
