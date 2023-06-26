@@ -6,6 +6,7 @@ using System.Data;
 using TTMH_EDA_HIS.ViewModels;
 using System.Text.Json;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -52,15 +53,21 @@ namespace TTMH_EDA_HIS.Controllers
                     });
                 }
 
-
+                string LastChaID = await (
+                    from i in _context.Charts
+                    where (i.Vdate.Year==DateTime.Now.Year && i.Vdate.DayOfYear==DateTime.Now.DayOfYear)
+                    orderby i.Vdate descending
+                    select i.ChaId
+                ).MaxAsync();
+                int LastIndex = int.Parse(LastChaID.Substring(LastChaID.Length - 3));
 
                 string yearStr = DateTime.Now.Year.ToString();
-                string monthStr = TwoUnitNumericString(DateTime.Now.Month);
-                string dayStr = TwoUnitNumericString(DateTime.Now.Day);
-                string hourStr = TwoUnitNumericString(DateTime.Now.Hour);
-                string minStr = TwoUnitNumericString(DateTime.Now.Minute);
+                string monthStr = FillZeros(DateTime.Now.Month.ToString(),2);
+                string dayStr = FillZeros(DateTime.Now.Day.ToString(),2);
+                string OPDStr = "13001"; //Out‑Patient Departments (OPD)
+                string currentIndex = FillZeros((++LastIndex).ToString(), 3);
 
-                string cid = $"CHA{yearStr}{monthStr}{dayStr}{hourStr}{minStr}";
+                string cid = $"CHA{yearStr}{monthStr}{dayStr}{OPDStr}{currentIndex}";
                 chart = new Chart()
                 {
                     ChaId = cid,
@@ -106,7 +113,7 @@ namespace TTMH_EDA_HIS.Controllers
                     Icon = "error",
                     Title = "Error",
                     Text = ex.Message,
-                    Details = ex.InnerException.Message
+                    Details = ex.InnerException.Message ?? ""
                 });
             }
             try
@@ -156,7 +163,7 @@ namespace TTMH_EDA_HIS.Controllers
                     Icon = "warning",
                     Title = "Warning",
                     Text = "Database Inserted Success but failed to generate prescription",
-                    Details = ex.Message + "\n" + ex.InnerException.Message
+                    Details = ex.Message + "\n" + ex.InnerException.Message ?? ""
                 });
             }
         }
@@ -181,22 +188,17 @@ namespace TTMH_EDA_HIS.Controllers
             }
             catch (Exception ex)
             {
-                return ex.InnerException.Message;
+                return ex.Message;
             }
         }
 
-        private string TwoUnitNumericString(int value)
+        private string FillZeros(string value, int unit)
         {
-            string result = "";
-            if (value >= 0 && value < 10)
+            while (value.Length != unit)
             {
-                result = "0" + value.ToString();
+                value = value.Insert(0, "0");
             }
-            else
-            {
-                result = value.ToString();
-            }
-            return result;
+            return value;
         }
     }
 }
