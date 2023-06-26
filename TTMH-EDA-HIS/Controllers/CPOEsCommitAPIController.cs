@@ -92,7 +92,6 @@ namespace TTMH_EDA_HIS.Controllers
                         Total = double.Parse(i.Total),
                         Remark = i.Remark,
                         Quantity = double.Parse(i.Quantity)
-                        //Freq = int.Parse(i.Freq)
                     };
                     await _context.ChartsDrugsDosages.AddAsync(cdd);
                 }

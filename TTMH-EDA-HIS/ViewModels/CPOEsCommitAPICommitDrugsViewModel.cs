@@ -12,7 +12,6 @@
     {
         public string DrugID { get; set; }
         public string DosID { get; set; }
-        public string Freq { get; set; }
         public string Quantity { get; set; }
         public string Days { get; set; }
         public string Total { get; set; }

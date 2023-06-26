@@ -47,7 +47,7 @@
             height: 50px;
             position: absolute;
             top: 20%;
-            right: -30%;
+            right: -20%;
             background-color: red;
             vertical-align: middle;
             text-align: center;
@@ -289,9 +289,6 @@
                                 <th class="text-white AT-bg-primary AT-fs-30 col-1 py-2">
                                     用法
                                 </th>
-                                <th class="text-white AT-bg-primary AT-fs-30 col-1 py-2">
-                                    頻率
-                                </th>
                                 <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
                                     次量
                                 </th>
@@ -301,7 +298,7 @@
                                 <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
                                     總量
                                 </th>
-                                <th class="text-white AT-bg-primary AT-fs-30 col-2 py-1 AT-rounded-1-top-right">
+                                <th class="text-white AT-bg-primary AT-fs-30 col-3 py-1 AT-rounded-1-top-right">
                                     備註
                                 </th>
                             </tr>
@@ -311,7 +308,6 @@
                         </tbody>
 						<tr>
                             <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-left"></th>
-							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
@@ -343,9 +339,6 @@
                 </td>
                 <td>
                     @i.DosID
-                </td>
-                <td>
-                    @i.Freq
                 </td>
                 <td>
                     @i.Quantity
@@ -391,7 +384,7 @@
             let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
             let entry_tr=document.createElement("tr");
             entry_tr.setAttribute("id", `tr-Drugs-${DrugRowIndex}`);
-            for(var i=0;i<8;i++){
+            for(var i=0;i<7;i++){
                 let id = `Drugs-${i}-${DrugRowIndex}`;
 
                 let td=document.createElement("td");
@@ -410,7 +403,7 @@
                 if (InputList != null) {
                     entry.setAttribute("value", InputList[i]);
                 }
-                if(i>=3 && i<=6){
+                if(i>=3 && i<=5){
                     entry.setAttribute("type","number");
                     entry.setAttribute("min","0");
                 }
@@ -475,7 +468,7 @@
                     });
                 }
 
-                if(i==7){
+                if(i==6){
                     td.setAttribute("style", "position:relative;");
                     var CurrentRowIndex = DrugRowIndex;
                     var RemoveBtn=document.createElement("button");
@@ -520,7 +513,7 @@
                 var inputobj = {};
                 var val="";
                 var rr = r.toString();
-                for (var c = 1; c < 9; c++) {
+                for (var c = 1; c < 8; c++) {
                     var cc = c.toString();
                     var d = tbody.querySelector(`tr:nth-child(${rr}) td:nth-child(${cc}) input`);
                     val = d.value.trim();
@@ -532,18 +525,15 @@
                             inputobj["DosID"] = val;
                             break;
                         case 4:
-                            inputobj["Freq"] = val;
-                            break;
-                        case 5:
                             inputobj["Quantity"] = val;
                             break;
-                        case 6:
+                        case 5:
                             inputobj["Days"] = val;
                             break;
-                        case 7:
+                        case 6:
                             inputobj["Total"] = val;
                             break;
-                        case 8:
+                        case 7:
                             inputobj["Remark"] = val;
                             break;
                     }
@@ -649,7 +639,6 @@
             for(var i of Drugs){
                 if (i["DrugID"].trim() == "" ||
                     i["DosID"].trim() == "" ||
-                    i["Freq"].trim() == "" ||
                     i["Quantity"].trim() == "" ||
                     i["Days"].trim() == "" ||
                     i["Total"].trim() == "" 
@@ -749,7 +738,7 @@
             for(var r=1; r<RowNum+1; r++){
                 var inputList=[];
                 r = r.toString();
-                for(var c=1;c<9;c++){
+                for(var c=1;c<8;c++){
                     c=c.toString();
                     var d = DBdata.querySelector(`tbody tr:nth-child(${r}) td:nth-child(${c})`);
                     inputList.push(d.innerHTML.trim());
