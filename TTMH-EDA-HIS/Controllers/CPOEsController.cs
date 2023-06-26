@@ -7,8 +7,7 @@ using HISDB.Models;
 using TTMH_EDA_HIS.ViewModels;
 using HISDB;
 using Microsoft.AspNetCore.Authorization;
-
-
+using System.Collections.Immutable;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -167,10 +166,10 @@ namespace TTMH_EDA_HIS.Controllers
             vm.FirstChart = charts[charts.Length - 1].ChaId;
             vm.LastChart = charts[0].ChaId;
 
-            int currentIndex = Array.IndexOf(charts, vm.chart.ChaId);
-            if (currentIndex + 1 < charts.Length - 1)
+            int currentIndex = charts.ToList().FindIndex(x=>x.ChaId==vm.chart.ChaId);
+            if (currentIndex + 1 <= charts.Length - 1)
             {
-                vm.PreviousChart = charts[currentIndex + 2].ChaId;
+                vm.PreviousChart = charts[currentIndex + 1].ChaId;
             }
             else
             {
@@ -187,6 +186,7 @@ namespace TTMH_EDA_HIS.Controllers
             vm.VDate_Display = vm.chart.Vdate.ToString("yyyy/MM/dd");
             vm.ChaID_Display = vm.chart.ChaId.Substring(vm.chart.ChaId.Length-3,3);
 
+            //return Content(currentIndex.ToString());
             return View(vm);
         }
     }

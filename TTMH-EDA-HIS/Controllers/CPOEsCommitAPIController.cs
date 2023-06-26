@@ -37,7 +37,7 @@ namespace TTMH_EDA_HIS.Controllers
                     return Ok(new
                     {
                         Icon = "question",
-                        Title = "Not Found",
+                        Title = "找不到病人資料",
                         Text = "Patient Not Found",
                         Details = ""
                     });
@@ -47,7 +47,7 @@ namespace TTMH_EDA_HIS.Controllers
                     return Ok(new
                     {
                         Icon = "question",
-                        Title = "Not Found",
+                        Title = "找不到醫生資料",
                         Text = "Doctor Not Found",
                         Details = ""
                     });
@@ -59,7 +59,14 @@ namespace TTMH_EDA_HIS.Controllers
                     orderby i.Vdate descending
                     select i.ChaId
                 ).MaxAsync();
-                int LastIndex = int.Parse(LastChaID.Substring(LastChaID.Length - 3));
+                int LastIndex;
+                if (LastChaID == null) { 
+                    LastIndex = 0;
+                }
+                else
+                {
+                    LastIndex = int.Parse(LastChaID.Substring(LastChaID.Length - 3));
+                }
 
                 string yearStr = DateTime.Now.Year.ToString();
                 string monthStr = FillZeros(DateTime.Now.Month.ToString(),2);
@@ -108,20 +115,23 @@ namespace TTMH_EDA_HIS.Controllers
             }
             catch (Exception ex)
             {
+                string eex= "";
+                if (ex.Message == "An error occurred while saving the entity changes. See the inner exception for details.") 
+                { eex += ex.InnerException.Message; }
                 return Ok(new
                 {
                     Icon = "error",
-                    Title = "Error",
-                    Text = ex.Message,
-                    Details = ex.InnerException.Message ?? ""
+                    Title = "資料錯誤",
+                    Text = $"{ex.Message}\n\n{eex}",
+                    Details = eex
                 });
             }
             try
             {
                 CPOEsCommitAPIPrescriptionViewModel pvm = new CPOEsCommitAPIPrescriptionViewModel()
                 {
-                    Topic = "",
-                    Key = "",
+                    Topic = "my-topic",
+                    Key = "string",
                     Message = new CPOEsCommitAPIPrescriptionViewModel_DoctorMessage()
                     {
                         DoctorId = vm.DoctorID,
@@ -147,6 +157,10 @@ namespace TTMH_EDA_HIS.Controllers
                 if (response == null) { 
                     throw new Exception("Connection Failed"); 
                 }
+                else if (response != "")
+                {
+                    throw new Exception("");
+                }
 
                 return Ok(new
                 {
@@ -158,12 +172,15 @@ namespace TTMH_EDA_HIS.Controllers
             }
             catch (Exception ex) 
             {
+                string eex = "";
+                if (ex.Message == "An error occurred while saving the entity changes. See the inner exception for details.")
+                { eex += ex.InnerException.Message; }
                 return Ok(new
                 {
                     Icon = "warning",
-                    Title = "Warning",
-                    Text = "Database Inserted Success but failed to generate prescription",
-                    Details = ex.Message + "\n" + ex.InnerException.Message ?? ""
+                    Title = "警告",
+                    Text = "成功上存 , 但列印失敗\n\n" + ex.Message,
+                    Details = eex
                 });
             }
         }
@@ -178,7 +195,7 @@ namespace TTMH_EDA_HIS.Controllers
                 StringContent content = new StringContent(postJsonStr, Encoding.UTF8, "application/json");
 
                 HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PostAsync("url", content);
+                HttpResponseMessage response = await client.PostAsync("http://server.nicklu89.com/api/KafkaProducerDoctor", content);
 
                 if (response.IsSuccessStatusCode)
                 {
