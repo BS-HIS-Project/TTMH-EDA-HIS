@@ -199,7 +199,7 @@
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="SubmitDATA()">
                             送出紀錄 <i class="ms-1 fa-solid fa-file-arrow-up"></i>
                         </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;">
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="ReprintPrescription()">
                             重新列印 <i class="ms-1 fa-solid fa-print"></i>
                         </button>
                         <button id="dito" onclick="DitoExchange()" class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
@@ -370,6 +370,12 @@
         ////////////Global Variables
         let DrugRowIndex = 0 ;
         let RowCount = 0;
+
+        let PatientID = "@Model.PatientID";
+        let DoctorID = "@User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.NameIdentifier).Value";
+        let ChaID = "@Model.chart.ChaId"
+        let currentSubject = document.getElementById("current-subject");
+        let currentObject = document.getElementById("current-object");
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
         ////////////Functions
         async function sleep(millisec){
@@ -548,22 +554,96 @@
         }
 
         function DitoExchange(){
-            var CurrentSubject = document.getElementById("current-subject");
-            var HistorySubject = document.getElementById("history-subject");
-            var CurrentObject = document.getElementById("current-object");
-            var HistoryObject = document.getElementById("history-object");
+            var historySubject = document.getElementById("history-subject");
+            var historyObject = document.getElementById("history-object");
 
-            CurrentSubject.value += HistorySubject.innerHTML;
-            CurrentObject.value += HistoryObject.innerHTML;
+            currentSubject.value += historySubject.innerHTML;
+            currentObject.value += historyObject.innerHTML;
+        }
+
+        async function ReprintPrescription(){
+
+            var Answer = "";
+
+            Swal.fire({
+                icon: 'info',
+                title: "確定列印先前藥單嗎 ?",
+                showCancelButton: true,
+                confirmButtonText: "確認",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Answer = "confirm";
+                } else {
+                    Answer = "cancel";
+                }
+            });
+            while (true) {
+                await sleep(300);
+                if (Answer == "confirm") {
+                    break;
+                } else if (Answer == "cancel") {
+                    console.log("Action Cancelled");
+                    return false;
+                }
+            }
+
+            var Drugs = GetCurrentDrugs();
+            var ccd = [];
+            for (var i of Drugs) {
+                var col = {};
+                col["DrugId"] = i["DrugID"];
+                col["DosId"] = i["DosID"];
+                col["Quantity"] = i["Quantity"];
+                col["Days"] = i["Days"];
+                col["Total"] = i["Total"];
+                col["Remark"] = i["Remark"];
+                ccd.push(col);
+            }
+            var content = {
+                "Topic": "",
+                "Key": "",
+                "Message": {
+                    "DoctorId": DoctorID,
+                    "Patient": PatientID,
+                    "ChaId": ChaID,
+                    "ChartsDrugsDosages": ccd
+                }
+            };
+            console.log("Prescription Submitted !");
+            console.log(content);
+            await fetch("KAFKA URL", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                redirect: "follow",
+                credentials: "include",
+                timeout: 8000,
+                body: JSON.stringify(content)
+            }).then(
+                (response) => {
+                    return response.json();
+                }
+            ).then((data) => {
+                console.log(data);
+                ResponseData = data;
+                Swal.fire({
+                    position: 'center',
+                    icon: "success",
+                    title: "Printed",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+
+            return true;
         }
 
         async function SubmitDATA(){
             var Answer = "";
             var ResponseData;
-            var PatientID = "@Model.PatientID";
-            var DoctorID = "@User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.NameIdentifier).Value";
-            var Subject = document.getElementById("current-subject").value;
-            var Object = document.getElementById("current-object").value;
             var Drugs = GetCurrentDrugs();
 
             for(var i of Drugs){
@@ -602,6 +682,7 @@
                 if(Answer=="confirm"){
                     break;
                 }else if(Answer=="cancel"){
+                    console.log("Action Cancelled");
                     return false;
                 }
             }
@@ -609,11 +690,11 @@
             var content = {
                 "PatientID" : PatientID,
                 "DoctorID" : DoctorID,
-                "Subject" : Subject,
-                "Object" : Object,
+                "Subject" : currentSubject.value,
+                "Object" : currentObject.value,
                 "Drugs" : Drugs
             };
-            console.log("Data Submited");
+            console.log("New Data Submited");
             console.log(content);
             await fetch("@Url.Action("CommitDrugs","CPOEsCommitAPI")", {
                 method: "POST",
@@ -631,9 +712,10 @@
                     return response.json();
                 },
                 (error)=>{
-                    return {
-                        "status": "NotFound",
-                        "message": error
+                    ResponseData = {
+                        "icon": "question",
+                        "title" : "Connection Failed",
+                        "text" : error
                     };
                 }
             ).then((data)=>{
@@ -641,27 +723,20 @@
                 ResponseData=data;
             });
 
-            if (ResponseData["status"] == "Success") {
+            if (ResponseData["icon"] == "success") {
                 Swal.fire({
                     position: 'center',
-                    icon: 'success',
-                    title: '成功上存',
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
                     showConfirmButton: false,
                     timer: 1500 
                 });
                 return true;
-            }
-            else if (ResponseData["status"] == "NotFound") {
-                Swal.fire(
-                    ResponseData["status"],
-                    ResponseData["message"],
-                    'question'
-                );
             } else {
                 Swal.fire({
-                    icon: "error",
-                    title: ResponseData["status"],
-                    text: ResponseData["message"]
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    text: ResponseData["text"]
                 });
             }
 
