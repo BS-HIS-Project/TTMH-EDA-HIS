@@ -96,7 +96,7 @@ namespace TTMH_EDA_HIS.Controllers
                         dosId = doss.DosId,
                         bp = ROAs.BodyParts,
                         days = CDDs.Days,
-                        total = CDDs.Total,
+                        //total = CDDs.Total,
                         remark = CDDs.Remark
                     }
                 
