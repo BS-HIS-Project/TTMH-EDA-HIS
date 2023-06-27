@@ -26,7 +26,7 @@ public partial class Patient
     // 電話
     public string Mobile { get; set; } = null!;
     public string Status { get; set; } = null!;
-    //public string RegistrationId { get; set; } = null!;
+
 
     public virtual ICollection<Detail> Details { get; set; } = new List<Detail>();
 
@@ -34,6 +34,6 @@ public partial class Patient
 
     public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
 
-    //public virtual Registration Registrations { get; set; } = null!;
+
 
 }
