@@ -81,7 +81,7 @@
     font-size: 50px !important;
 }
 .AT-fs-45 {
-    font-size: 50px !important;
+    font-size: 45px !important;
 }
 .AT-fs-40 {
     font-size: 40px !important;
@@ -94,6 +94,9 @@
 }
 .AT-fs-25 {
     font-size: 25px !important;
+}
+.AT-fs-20 {
+    font-size: 20px !important;
 }
 .AT-w-10 {
     width: 10% !important;
