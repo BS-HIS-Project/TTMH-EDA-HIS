@@ -1,9 +1,11 @@
-﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
+﻿@using System.Security.Claims;
+@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
 @{
     
 }
 @section CSS{
 	<link rel="stylesheet" href="~/lib/font-awesome/css/all.js"/>
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.css" />
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
         /* Overwrite theme.css ************************************/
@@ -45,7 +47,7 @@
             height: 50px;
             position: absolute;
             top: 20%;
-            right: -30%;
+            right: -20%;
             background-color: red;
             vertical-align: middle;
             text-align: center;
@@ -97,10 +99,10 @@
                 <div class="row">
                     <div class="col">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 opacity-75 text-secondary px-3 py-2">
                                 病歷號碼
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
                                 @Model.CaseHistory
                             </div>
@@ -110,22 +112,22 @@
                 <div class="row mt-4">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 就診號
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                            <div class="bg-secondary AT-hr opacity-75"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center">
                                 @Model.ChaID_Display
                             </div>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 病患姓名
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                            <div class="bg-secondary AT-hr opacity-75"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center">
                                 @Model.PatientName
                             </div>
                         </div>
@@ -134,30 +136,30 @@
                 <div class="row mt-4">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 年齡
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                            <div class="bg-secondary AT-hr opacity-75"></div>
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center">
                                 @Model.Age
                             </div>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 病患性別
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             @if (Model.Gender=="1")
                             {
-                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center text-primary">
+                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center text-primary">
                                     男
                                 </div>
                             }
                             else
                             {
-                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center text-danger">
+                                <div name="" id="" class="SC-block AT-bg-fourth AT-fs-45 d-flex align-items-center justify-content-center text-danger">
                                     女
                                 </div>
                             }
@@ -167,10 +169,10 @@
                 <div class="row mt-4">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 出生年月日
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
                                 @Model.BirthDate
                             </div>
@@ -178,10 +180,10 @@
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 看診日期
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
                                 @Model.chart.Vdate.ToString("yyyy/MM/dd")
                             </div>
@@ -195,10 +197,10 @@
                 <div class="row d-flex">
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
                         <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="SubmitDATA()">
-                            送出紀錄
+                            送出紀錄 <i class="ms-1 fa-solid fa-file-arrow-up"></i>
                         </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;">
-                            重新列印
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="ReprintPrescription()">
+                            重新列印 <i class="ms-1 fa-solid fa-print"></i>
                         </button>
                         <button id="dito" onclick="DitoExchange()" class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
                             D
@@ -207,10 +209,10 @@
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.FirstChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-left"></i>
+                            <i class="fa-solid fa-angles-left"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.PreviousChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-left"></i>
+                            <i class="fa-solid fa-chevron-left"></i>
                         </a>
                         <div class="dropdown-center" style="width:40%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -224,10 +226,10 @@
                             </ul>
                         </div>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.NextChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-angle-right"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.LastChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-angles-right"></i>
                         </a>            
                     </div>           
                 </div>
@@ -235,19 +237,19 @@
                 <div class="row mt-3">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 病患自述(Subject)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <textarea name="" id="current-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 歷史自述(Subject)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="history-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Subject</div>
                         </div>
                     </div>
@@ -255,19 +257,19 @@
                 <div class="row mt-3">
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 醫生檢查(Object)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <textarea name="" id="current-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
                     <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                            <div class="AT-fs-25 text-secondary px-3 py-2 opacity-75">
                                 歷史檢查(Object)
                             </div>
-                            <div class="bg-secondary AT-hr"></div>
+                            <div class="bg-secondary AT-hr opacity-75"></div>
                             <div name="" id="history-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Object</div>
                         </div>
                     </div>
@@ -287,9 +289,6 @@
                                 <th class="text-white AT-bg-primary AT-fs-30 col-1 py-2">
                                     用法
                                 </th>
-                                <th class="text-white AT-bg-primary AT-fs-30 col-1 py-2">
-                                    頻率
-                                </th>
                                 <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
                                     次量
                                 </th>
@@ -299,7 +298,7 @@
                                 <th class="text-white AT-bg-primary AT-fs-30 col-1 py-3">
                                     總量
                                 </th>
-                                <th class="text-white AT-bg-primary AT-fs-30 col-2 py-1 AT-rounded-1-top-right">
+                                <th class="text-white AT-bg-primary AT-fs-30 col-3 py-1 AT-rounded-1-top-right">
                                     備註
                                 </th>
                             </tr>
@@ -312,18 +311,13 @@
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
 							<th class="text-white AT-bg-primary AT-fs-30"></th>
-							<th class="text-white AT-bg-primary AT-fs-30"></th>
-                            <th class="text-white AT-bg-primary AT-fs-30">
-                                <button class="BS-btn AT-bg-third btn w-100" onclick="AddInputRow()">
+                            <th class="text-white AT-bg-primary AT-fs-30"></th>
+                            <th class="text-white AT-bg-primary AT-fs-30"></th>
+                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right d-flex justify-content-end">
+                                <button class="BS-btn AT-bg-third btn w-25 me-4" onclick="AddInputRow()">
                                     <i class="fa-solid fa-plus AT-fs-25"></i>
                                 </button>
                             </th>
-                            <th class="text-white AT-bg-primary AT-fs-30">
-                                <button class="BS-btn AT-bg-third btn w-100" onclick="RemoveInputRow()">
-                                    <i class="fa-solid fa-xmark AT-fs-25"></i>
-                                </button>
-                            </th>
-                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right"></th>
                         </tr>
                     </table>
                 </div>
@@ -347,9 +341,6 @@
                     @i.DosID
                 </td>
                 <td>
-                    @i.Freq
-                </td>
-                <td>
                     @i.Quantity
                 </td>
                 <td>
@@ -367,21 +358,33 @@
 </table>
 @section Script{
     <script src="~/lib/font-awesome/js/all.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.js"></script>
     <script>
         ////////////Global Variables
         let DrugRowIndex = 0 ;
         let RowCount = 0;
-        let tbody = document.querySelector(".CT-tbody-ColorInterval");
+
+        const PatientID = "@Model.PatientID";
+        const DoctorID = "@User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.NameIdentifier).Value";
+        const ChaID = "@Model.chart.ChaId"
+        const currentSubject = document.getElementById("current-subject");
+        const currentObject = document.getElementById("current-object");
+        const tbody = document.querySelector(".CT-tbody-ColorInterval");
         ////////////Functions
+        async function sleep(millisec){
+            await new Promise((resolve)=>{
+                return setTimeout(resolve,millisec);
+            });
+        }
         function AddInputRow(InputList) {
             DrugRowIndex++;
             RowCount++;
             let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
-            let td_placeholder=["DrugID","DrugName","DosID","Freq","Quty","Days","Total","Remark"];
+            let td_placeholder=["DrugID","DrugName","DosID","Quty","Days","Total","Remark"];
             let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
             let entry_tr=document.createElement("tr");
             entry_tr.setAttribute("id", `tr-Drugs-${DrugRowIndex}`);
-            for(var i=0;i<8;i++){
+            for(var i=0;i<7;i++){
                 let id = `Drugs-${i}-${DrugRowIndex}`;
 
                 let td=document.createElement("td");
@@ -400,7 +403,7 @@
                 if (InputList != null) {
                     entry.setAttribute("value", InputList[i]);
                 }
-                if(i>=3 && i<=6){
+                if(i>=3 && i<=5){
                     entry.setAttribute("type","number");
                     entry.setAttribute("min","0");
                 }
@@ -465,7 +468,7 @@
                     });
                 }
 
-                if(i==7){
+                if(i==6){
                     td.setAttribute("style", "position:relative;");
                     var CurrentRowIndex = DrugRowIndex;
                     var RemoveBtn=document.createElement("button");
@@ -475,7 +478,7 @@
                     });
 
                     var font=document.createElement("i");
-                    font.setAttribute("class", "fa-solid fa-trash-can AT-fs-25");
+                    font.setAttribute("class", "fa-solid fa-xmark AT-fs-25");
 
                     RemoveBtn.appendChild(font);
                     td.appendChild(RemoveBtn);
@@ -510,25 +513,28 @@
                 var inputobj = {};
                 var val="";
                 var rr = r.toString();
-                for (var c = 1; c < 9; c++) {
+                for (var c = 1; c < 8; c++) {
                     var cc = c.toString();
                     var d = tbody.querySelector(`tr:nth-child(${rr}) td:nth-child(${cc}) input`);
                     val = d.value.trim();
                     switch(c){
                         case 1:
-                            inputobj["drugId"] = val;
+                            inputobj["DrugID"] = val;
                             break;
                         case 3:
-                            inputobj["dosId"] = val;
+                            inputobj["DosID"] = val;
+                            break;
+                        case 4:
+                            inputobj["Quantity"] = val;
                             break;
                         case 5:
-                            inputobj["quantity"] = val;
+                            inputobj["Days"] = val;
                             break;
                         case 6:
-                            inputobj["days"] = val; 
+                            inputobj["Total"] = val;
                             break;
-                        case 8:
-                            inputobj["remark"] = val;
+                        case 7:
+                            inputobj["Remark"] = val;
                             break;
                     }
                 }
@@ -538,47 +544,88 @@
         }
 
         function DitoExchange(){
-            var CurrentSubject = document.getElementById("current-subject");
-            var HistorySubject = document.getElementById("history-subject");
-            var CurrentObject = document.getElementById("current-object");
-            var HistoryObject = document.getElementById("history-object");
+            var historySubject = document.getElementById("history-subject");
+            var historyObject = document.getElementById("history-object");
 
-            CurrentSubject.value += HistorySubject.innerHTML;
-            CurrentObject.value += HistoryObject.innerHTML;
+            currentSubject.value += historySubject.innerHTML;
+            currentObject.value += historyObject.innerHTML;
         }
 
-        function SubmitDATA(){
-            var DoctorID = "@Model.DoctorID";
-            var PatientID = "@Model.PatientID";
-            var ChaID = "@Model.chart.ChaId";
+        async function ReprintPrescription(){
+            Swal.fire({
+                title: 'Coming Soon',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        }
+
+        async function SubmitDATA(){
+            var Answer = "";
+            var ResponseData;
             var Drugs = GetCurrentDrugs();
 
             for(var i of Drugs){
-                if (i["drugId"].trim() == "" ||
-                    i["dosId"].trim() == "" ||
-                    i["quantity"].trim() == "" ||
-                    i["days"].trim() == ""
+                if (i["DrugID"].trim() == "" ||
+                    i["DosID"].trim() == "" ||
+                    i["Quantity"].trim() == "" ||
+                    i["Days"].trim() == "" ||
+                    i["Total"].trim() == "" 
                 ) {
-                    alert("格式錯誤或未填入資料");
+                    console.log("格式錯誤或未填入資料");
+                    Swal.fire({
+                        icon: "warning",
+                        title: "資料條件不符",
+                        text: "格式錯誤或未填入資料",
+                    });
                     return false;
                 }
             }
-
-
-            var info = {
-                "topic": "my-topic",
-                "key": "string",
-                "message": {
-                    "doctorId": DoctorID,
-                    "patientId": PatientID,
-                    "chaId": ChaID,
-                    "chartsDrugsDosages": Drugs
+            Swal.fire({
+                icon: 'info',
+                title: "確定發送嗎 ?",
+                showCancelButton: true,
+                confirmButtonText: "確認",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Answer = "confirm";
+                } else {
+                    Answer = "cancel";
                 }
-            };
-            console.log("Data Submited");
-            console.log(info);
+            });
 
-            fetch("http://server.nicklu89.com:7777/KafkaAPI/api/KafkaProducerDoctor", {
+            while(true){
+                await sleep(300);
+                if(Answer=="confirm"){
+                    break;
+                }else if(Answer=="cancel"){
+                    console.log("Action Cancelled");
+                    return false;
+                }
+            }
+            
+            var content = {
+                "PatientID" : PatientID,
+                "DoctorID" : DoctorID,
+                "Subject" : currentSubject.value,
+                "Object" : currentObject.value,
+                "Drugs" : Drugs
+            };
+            console.log("New Data Submited");
+            console.log(content);
+            Swal.fire({
+                title: '發送中...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false, //Show Loading Message Text
+                timer: 200000
+            });
+            Swal.showLoading(); //Show Loading Message Spin
+            await fetch("@Url.Action("CommitDrugs","CPOEsCommitAPI")", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -586,11 +633,44 @@
                 },
                 redirect: "follow",
                 credentials: "include",
-                timeout: 5000,
-                body: JSON.stringify(info)
+                timeout: 8000,
+                body: JSON.stringify(content)
+            }).then(
+                (response)=>{
+                    console.log("Response Retrieved !");
+                    return response.json();
+                },
+                (error)=>{
+                    ResponseData = {
+                        "icon": "question",
+                        "title" : "Connection Failed",
+                        "text" : error
+                    };
+                }
+            ).then((data)=>{
+                console.log(data);
+                ResponseData=data;
             });
+            if (ResponseData["icon"] == "success") {
+                Swal.fire({
+                    position: 'center',
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    showConfirmButton: false,
+                    timer: 1500 
+                });
+                await sleep(2300);
+                window.location.assign("@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID="latest"})");  //Refresh Page
+                return true;
+            } else {
+                Swal.fire({
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    text: ResponseData["text"]
+                });
+            }
 
-            return true;
+            return false;
         }
         ////////////Start up
         window.onload=()=>{
@@ -599,7 +679,7 @@
             for(var r=1; r<RowNum+1; r++){
                 var inputList=[];
                 r = r.toString();
-                for(var c=1;c<9;c++){
+                for(var c=1;c<8;c++){
                     c=c.toString();
                     var d = DBdata.querySelector(`tbody tr:nth-child(${r}) td:nth-child(${c})`);
                     inputList.push(d.innerHTML.trim());
