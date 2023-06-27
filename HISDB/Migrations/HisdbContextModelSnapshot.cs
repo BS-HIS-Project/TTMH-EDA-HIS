@@ -419,6 +419,9 @@ namespace HISDB.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("DoctorID");
 
+                    b.Property<DateTime>("RegistrationTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("PatientId", "ChaId")
                         .HasName("PK__Doctors___20274777D9BDA64F");
 
@@ -434,43 +437,50 @@ namespace HISDB.Migrations
                         {
                             PatientId = "A118992634",
                             ChaId = "CHA2023053013001001",
-                            DoctorId = "D11201001"
+                            DoctorId = "D11201001",
+                            RegistrationTime = new DateTime(2023, 5, 30, 13, 20, 13, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             PatientId = "O101929955",
                             ChaId = "CHA2023053013001002",
-                            DoctorId = "D11201001"
+                            DoctorId = "D11201001",
+                            RegistrationTime = new DateTime(2023, 5, 30, 13, 25, 13, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             PatientId = "H255590997",
                             ChaId = "CHA2023053013001003",
-                            DoctorId = "D11201002"
+                            DoctorId = "D11201002",
+                            RegistrationTime = new DateTime(2023, 5, 30, 13, 37, 13, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             PatientId = "L198058112",
                             ChaId = "CHA2023053013001004",
-                            DoctorId = "D11201002"
+                            DoctorId = "D11201002",
+                            RegistrationTime = new DateTime(2023, 5, 30, 13, 43, 13, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             PatientId = "S257920071",
                             ChaId = "CHA2023053013001005",
-                            DoctorId = "D11201002"
+                            DoctorId = "D11201002",
+                            RegistrationTime = new DateTime(2023, 5, 30, 13, 50, 13, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             PatientId = "O101929955",
                             ChaId = "CHA2023060613001001",
-                            DoctorId = "D11201001"
+                            DoctorId = "D11201001",
+                            RegistrationTime = new DateTime(2023, 6, 6, 13, 18, 13, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             PatientId = "L198058112",
                             ChaId = "CHA2023060613001002",
-                            DoctorId = "D11201001"
+                            DoctorId = "D11201001",
+                            RegistrationTime = new DateTime(2023, 6, 6, 13, 56, 13, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -661,7 +671,7 @@ namespace HISDB.Migrations
                             Roaid = "PO",
                             StorageConditions = "室溫陰涼乾燥處保存",
                             SuggestedUsage = "對於輕度心衰竭的病人，應每天給藥 0.25~0.75mg，共一星期，接著給予一適當的維持劑量，達到毛地黃化的速度可和緩些",
-                            UnitPrice = 240m,
+                            UnitPrice = 140m,
                             WarningPrecautions = "無資料"
                         },
                         new
@@ -681,7 +691,7 @@ namespace HISDB.Migrations
                             Roaid = "PO",
                             StorageConditions = "儲存於30℃以下避光處",
                             SuggestedUsage = "口服給藥在腎臟、心臟和肝臟移植後應儘速給予 CellCept的起始劑量",
-                            UnitPrice = 240m,
+                            UnitPrice = 40m,
                             WarningPrecautions = "整粒吞服, 勿嚼碎；孕婦禁用；服藥後可能嗜睡或眩暈"
                         },
                         new
@@ -701,7 +711,7 @@ namespace HISDB.Migrations
                             Roaid = "PO",
                             StorageConditions = "儲存於30℃以下避光處",
                             SuggestedUsage = "不建議重度肝功能不全患者使用此藥物",
-                            UnitPrice = 240m,
+                            UnitPrice = 500m,
                             WarningPrecautions = "孕婦禁用；服藥後可能有姿態性低血壓；"
                         },
                         new
@@ -721,7 +731,7 @@ namespace HISDB.Migrations
                             Roaid = "PO",
                             StorageConditions = "儲存於30℃以下避光處",
                             SuggestedUsage = "腎功能受損者不需要調整劑量。接受血液透析治療之病人，亦無需調整劑量",
-                            UnitPrice = 240m,
+                            UnitPrice = 80m,
                             WarningPrecautions = "無資料"
                         });
                 });
@@ -850,6 +860,10 @@ namespace HISDB.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PatientId")
                         .HasName("PK__Patients__970EC346C8B25736");
 
@@ -866,7 +880,8 @@ namespace HISDB.Migrations
                             Gender = "1",
                             Mobile = "0912345678",
                             Nhicard = "000012345678",
-                            PatientName = "水戶黃門"
+                            PatientName = "水戶黃門",
+                            Status = "健保"
                         },
                         new
                         {
@@ -878,7 +893,8 @@ namespace HISDB.Migrations
                             Gender = "1",
                             Mobile = "0965478932",
                             Nhicard = "080009699912",
-                            PatientName = "海綿寶寶"
+                            PatientName = "海綿寶寶",
+                            Status = "健保"
                         },
                         new
                         {
@@ -890,7 +906,8 @@ namespace HISDB.Migrations
                             Gender = "2",
                             Mobile = "0955664477",
                             Nhicard = "123456789011",
-                            PatientName = "晨曦"
+                            PatientName = "晨曦",
+                            Status = "健保"
                         },
                         new
                         {
@@ -902,7 +919,8 @@ namespace HISDB.Migrations
                             Gender = "1",
                             Mobile = "0964973125",
                             Nhicard = "647519785134",
-                            PatientName = "野原新之助"
+                            PatientName = "野原新之助",
+                            Status = "健保"
                         },
                         new
                         {
@@ -914,7 +932,8 @@ namespace HISDB.Migrations
                             Gender = "2",
                             Mobile = "0997919395",
                             Nhicard = "715687493157",
-                            PatientName = "橘子"
+                            PatientName = "橘子",
+                            Status = "健保"
                         });
                 });
 

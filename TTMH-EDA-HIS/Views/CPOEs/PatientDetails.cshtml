@@ -1,10 +1,12 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel
 @{
-    string vdate = $"{Model.chart.Vdate.Year}/{Model.chart.Vdate.Month.ToString()}/{Model.chart.Vdate.Day.ToString()}";
+    
 }
 @section CSS{
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.js"/>
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
+        /* Overwrite theme.css ************************************/
         .CT-tbody-ColorInterval tr > td:first-child {
             padding: 20px 0px 20px 20px;
         }
@@ -14,8 +16,17 @@
         .CT-tbody-ColorInterval tr:nth-of-type(even) > td input{
             background-color: #AAD7D6;
         }
+
+        .CT-tbody-ColorInterval > tr:last-child > td:first-child {
+            border-bottom-left-radius: 0px;
+        }
+
+        .CT-tbody-ColorInterval > tr:last-child > td:last-child {
+            border-bottom-right-radius: 0px;
+        }
+        /* Sections ************************************************/
         .SC-input-button-form_submit {
-            background-color: #4443a3;
+            background-color: #536195;
             border-radius: 10px;
             border: 0px solid;
             color: white;
@@ -29,11 +40,24 @@
         .SC-input-button-form_submit:focus {
             background-color: #5554b4;
         }
+        .SC-RemoveButton {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 20%;
+            right: -30%;
+            background-color: red;
+            vertical-align: middle;
+            text-align: center;
+        }
         .SC-block {
             border:none;
             height:150px;
-            overflow:scroll;
         }
+        .textarea-showcase{
+            padding:3%;
+        }
+        /* Media Adjustment ****************************************/
         @@media (max-width:1700px) {
             .SC-input-button-form_submit{
                 font-size:20px !important;
@@ -90,8 +114,8 @@
                                 就診號
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center">
-                                @Model.chart.ChaId
+                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
+                                @Model.ChaID_Display
                             </div>
                         </div>
                     </div>
@@ -159,7 +183,7 @@
                             </div>
                             <div class="bg-secondary AT-hr"></div>
                             <div name="" id="" class="SC-block AT-bg-fourth AT-fs-40 d-flex align-items-center justify-content-center">
-                                @vdate
+                                @Model.chart.Vdate.ToString("yyyy/MM/dd")
                             </div>
                         </div>
                     </div>
@@ -168,77 +192,87 @@
 
 
             <div class="col-8 MD-adjust-1">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-5 d-flex justify-content-between MD-adjust-2">
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                <div class="row d-flex">
+                    <div class="col-6 d-flex justify-content-between MD-adjust-2">
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;" onclick="SubmitDATA()">
                             送出紀錄
                         </button>
-                        <button class="BS-btn SC-input-button-form_submit btn" style="width:47%;">
+                        <button class="BS-btn SC-input-button-form_submit btn" style="width:38%;">
                             重新列印
+                        </button>
+                        <button id="dito" onclick="DitoExchange()" class="BS-btn SC-input-button-form_submit btn" style="width:15%;">
+                            D
                         </button>
                     </div>
                     <div class="col-6 d-flex justify-content-between MD-adjust-2">
 
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.FirstChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &lt;&lt;
+                            <i class="fa-solid fa-arrow-left"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.PreviousChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &lt;
+                            <i class="fa-solid fa-arrow-left"></i>
                         </a>
-                        <div class="dropdown-center" style="width:35%;margin-left:5%;">
+                        <div class="dropdown-center" style="width:40%;margin-left:5%;">
                             <button class="SC-input-button-form_submit BS-btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                就診紀錄
+                                @Model.VDate_Display
                             </button>
                             <ul class="dropdown-menu ">
-                                @for(int i = 0; i < Model.RecordsOfvdate.Count; i++)
+                                @for(int i = 0; i < Model.RecordsOfVDate.Count; i++)
                                 {
-                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID})" class="dropdown-item AT-fs-25">@Model.RecordsOfvdate[i]</a></li>
+                                    <li><a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.RecordsOfChaID[i]})" class="dropdown-item AT-fs-25">@Model.RecordsOfVDate[i]</a></li>
                                 }
                             </ul>
                         </div>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.NextChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &gt;
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
                         <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=Model.CaseHistory,ChaID=Model.LastChart})" class="BS-btn SC-input-button-form_submit btn" style="width:13%">
-                            &gt;&gt;
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>            
                     </div>           
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-6">
+                    <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
                                 病患自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100"  style="resize:none;">@Model.chart.Subject</textarea>
+                            <textarea name="" id="current-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 MD-adjust-2">
                         <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
                             <div class="AT-fs-30 text-secondary px-3 py-2">
-                                過去病史(History)
+                                歷史自述(Subject)
                             </div>
                             <div class="bg-secondary AT-hr"></div>
-                            <div name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="overflow:scroll;">
-                                @Model.chart.History
+                            <div name="" id="history-subject" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Subject</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6 MD-adjust-2">
+                        <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                                醫生檢查(Object)
                             </div>
+                            <div class="bg-secondary AT-hr"></div>
+                            <textarea name="" id="current-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex align-items-center justify-content-center overflow-auto w-100 textarea-showcase" style="resize:none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-6 MD-adjust-2">
+                        <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
+                            <div class="AT-fs-30 text-secondary px-3 py-2">
+                                歷史檢查(Object)
+                            </div>
+                            <div class="bg-secondary AT-hr"></div>
+                            <div name="" id="history-object" class="SC-block AT-bg-fourth AT-fs-25 d-flex overflow-auto w-100 textarea-showcase">@Model.chart.Object</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col">
-                        <div class="AT-rounded-1 AT-bg-fourth" style="height:230px;">
-                            <div class="AT-fs-30 text-secondary px-3 py-2">
-                                入院經過(Object)
-                            </div>
-                            <div class="bg-secondary AT-hr"></div>
-                            <textarea name="" id="" class="SC-block AT-bg-fourth AT-fs-35 d-flex align-items-center justify-content-center w-100" style="resize:none;">@Model.chart.Object</textarea>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row p-2 mt-2">
                     <table class="">
@@ -270,81 +304,109 @@
                                 </th>
                             </tr>
                         </thead>
-                        @{
-                            int DrugRowIndex = -1;
-                        }
                         <tbody class="CT-tbody-ColorInterval">
-                            @foreach(TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.Drugs)
-                            {
-                                <tr>
-                                    <td id="Drugs-0-@(++DrugRowIndex)">
-                                        @i.DrugID
-                                    </td>
-                                    <td id="Drugs-1-@DrugRowIndex">
-                                        @i.DrugName
-                                    </td>
-                                    <td id="Drugs-2-@DrugRowIndex">
-                                        @i.DosID
-                                    </td>
-                                    <td id="Drugs-3-@DrugRowIndex">
-                                        @i.Freq
-                                    </td>
-                                    <td id="Drugs-4-@DrugRowIndex">
-                                        @i.Quantity
-                                    </td>
-                                    <td id="Drugs-5-@DrugRowIndex">
-                                        @i.Days
-                                    </td>
-                                    <td id="Drugs-6-@DrugRowIndex">
-                                        @i.Total
-                                    </td>
-                                    <td id="Drugs-7-@DrugRowIndex">
-                                        @i.Remark
-                                    </td>
-                                </tr>
-                            }
+                            
                         </tbody>
+						<tr>
+                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-left"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+							<th class="text-white AT-bg-primary AT-fs-30"></th>
+                            <th class="text-white AT-bg-primary AT-fs-30">
+                                <button class="BS-btn AT-bg-third btn w-100" onclick="AddInputRow()">
+                                    <i class="fa-solid fa-plus AT-fs-25"></i>
+                                </button>
+                            </th>
+                            <th class="text-white AT-bg-primary AT-fs-30">
+                                <button class="BS-btn AT-bg-third btn w-100" onclick="RemoveInputRow()">
+                                    <i class="fa-solid fa-xmark AT-fs-25"></i>
+                                </button>
+                            </th>
+                            <th class="text-white AT-bg-primary AT-fs-30 AT-rounded-1-bottom-right"></th>
+                        </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--Template Back-end-->
+<table id="DBdrugs-injection" style="display:none;">
+	<tbody>
+        @foreach (TTMH_EDA_HIS.ViewModels.CPOEsPatientDetailsViewModel_DrugTableTD i in Model.Drugs)
+        {
+            <tr>
+                <td>
+                    @i.DrugID
+                </td>
+                <td>
+                    @i.DrugName
+                </td>
+                <td>
+                    @i.DosID
+                </td>
+                <td>
+                    @i.Freq
+                </td>
+                <td>
+                    @i.Quantity
+                </td>
+                <td>
+                    @i.Days
+                </td>
+                <td>
+                    @i.Total
+                </td>
+                <td>
+                    @i.Remark
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 @section Script{
+    <script src="~/lib/font-awesome/js/all.js"></script>
     <script>
-        let DrugRowIndex = @DrugRowIndex ; //Backend to Frontend
+        ////////////Global Variables
+        let DrugRowIndex = 0 ;
+        let RowCount = 0;
         let tbody = document.querySelector(".CT-tbody-ColorInterval");
-
-        function AddInputRow() {
+        ////////////Functions
+        function AddInputRow(InputList) {
+            DrugRowIndex++;
+            RowCount++;
             let api_controller = `https://${location.hostname}:${location.port}/api/CPOEsAPI/`;
             let td_placeholder=["DrugID","DrugName","DosID","Freq","Quty","Days","Total","Remark"];
             let api_href = [api_controller + "SearchDrugID", api_controller + "SearchDrugName", api_controller+"SearchDosID"];
-            DrugRowIndex++;
             let entry_tr=document.createElement("tr");
+            entry_tr.setAttribute("id", `tr-Drugs-${DrugRowIndex}`);
             for(var i=0;i<8;i++){
                 let id = `Drugs-${i}-${DrugRowIndex}`;
 
                 let td=document.createElement("td");
                 td.setAttribute("id",id);
                 
-
                 let form_group=document.createElement("div");
                 form_group.setAttribute("class","form-group");
 
-
                 let entry=document.createElement("input");
                 entry.setAttribute("id","input-"+id);
-                entry.setAttribute("list","data-"+id);
+                entry.setAttribute("list","datalist-"+id);
                 entry.setAttribute("type","text");
                 entry.setAttribute("style","width:85%;border:none;opacity:0.5;");
                 entry.setAttribute("class","form-control AT-fs-25");
                 entry.setAttribute("placeholder",td_placeholder[i]);
+                if (InputList != null) {
+                    entry.setAttribute("value", InputList[i]);
+                }
                 if(i>=3 && i<=6){
                     entry.setAttribute("type","number");
+                    entry.setAttribute("min","0");
                 }
 
                 let datalist=document.createElement("datalist");
-                datalist.setAttribute("id","data-"+id);
+                datalist.setAttribute("id","datalist-"+id);
                 
                 if (i<3){
                     let current_row=DrugRowIndex;
@@ -352,7 +414,7 @@
                     let href=api_href[i];
                     entry.addEventListener("input",()=>{
                         let input = document.getElementById("input-"+id);
-                        let datalist = document.getElementById("data-"+id);
+                        let datalist = document.getElementById("datalist-"+id);
                         let input_value = input.value;
                         fetch(href,{
                             method:"POST",
@@ -373,28 +435,52 @@
                         ).then(
                             (data)=>{
                                 console.log(`${href} \n`+JSON.stringify(data));
-                                let Alloptions=document.querySelectorAll(`#data-${id} > option`);
+                                let Alloptions=document.querySelectorAll(`#datalist-${id} > option`);
                                 for(var k of Alloptions){
                                     k.remove();
                                 }
-                                for(var j of data["result"]) {
+                                for(var j of data["results"]) {
                                     var option=document.createElement("option");
                                     option.innerHTML=j;
-                                    option.setAttribute("id",`#option-${id} > option`);
+                                    option.setAttribute("id", `option-${id}`);
                                     datalist.appendChild(option);
                                 }
-                                if(input_value==data["result"][0]){
+                                if(input_value==data["results"][0]){
                                     if(current_col==0){
                                         document.getElementById(`input-Drugs-1-${current_row}`).value=data["relatives"][0];
                                     }
                                     if(current_col==1){
                                         document.getElementById(`input-Drugs-0-${current_row}`).value=data["relatives"][0];
                                     }
+                                }else{
+                                    if (current_col == 0) {
+                                        document.getElementById(`input-Drugs-1-${current_row}`).value = "";
+                                    }
+                                    if (current_col == 1) {
+                                        document.getElementById(`input-Drugs-0-${current_row}`).value = "";
+                                    }
                                 }
                             }
                         );
                     });
                 }
+
+                if(i==7){
+                    td.setAttribute("style", "position:relative;");
+                    var CurrentRowIndex = DrugRowIndex;
+                    var RemoveBtn=document.createElement("button");
+                    RemoveBtn.setAttribute("class", "BS-btn btn SC-RemoveButton");
+                    RemoveBtn.addEventListener("click",()=>{
+                        RemoveInputRow(`tr-Drugs-${CurrentRowIndex}`);
+                    });
+
+                    var font=document.createElement("i");
+                    font.setAttribute("class", "fa-solid fa-trash-can AT-fs-25");
+
+                    RemoveBtn.appendChild(font);
+                    td.appendChild(RemoveBtn);
+                }
+
                 form_group.appendChild(entry);
                 form_group.appendChild(datalist);
                 td.appendChild(form_group);
@@ -403,7 +489,123 @@
             tbody.appendChild(entry_tr);
         }
 
+        function RemoveInputRow(id){
+            if(arguments.length==0){
+                if (RowCount - 1 >= 0) {
+                    var lastrow = tbody.lastChild;
+                    tbody.removeChild(lastrow);
+                    RowCount--;
+                }
+            } else {
+                var row = document.getElementById(id);
+                tbody.removeChild(row);
+                RowCount--;
+            }
+        }
+
+        function GetCurrentDrugs(){
+            var result=[];
+            var RowNum = tbody.rows.length;
+            for (var r = 1; r < RowNum + 1; r++) {
+                var inputobj = {};
+                var val="";
+                var rr = r.toString();
+                for (var c = 1; c < 9; c++) {
+                    var cc = c.toString();
+                    var d = tbody.querySelector(`tr:nth-child(${rr}) td:nth-child(${cc}) input`);
+                    val = d.value.trim();
+                    switch(c){
+                        case 1:
+                            inputobj["drugId"] = val;
+                            break;
+                        case 3:
+                            inputobj["dosId"] = val;
+                            break;
+                        case 5:
+                            inputobj["quantity"] = val;
+                            break;
+                        case 6:
+                            inputobj["days"] = val; 
+                            break;
+                        case 8:
+                            inputobj["remark"] = val;
+                            break;
+                    }
+                }
+                result.push(inputobj);
+            }
+            return result;
+        }
+
+        function DitoExchange(){
+            var CurrentSubject = document.getElementById("current-subject");
+            var HistorySubject = document.getElementById("history-subject");
+            var CurrentObject = document.getElementById("current-object");
+            var HistoryObject = document.getElementById("history-object");
+
+            CurrentSubject.value += HistorySubject.innerHTML;
+            CurrentObject.value += HistoryObject.innerHTML;
+        }
+
+        function SubmitDATA(){
+            var DoctorID = "@Model.DoctorID";
+            var PatientID = "@Model.PatientID";
+            var ChaID = "@Model.chart.ChaId";
+            var Drugs = GetCurrentDrugs();
+
+            for(var i of Drugs){
+                if (i["drugId"].trim() == "" ||
+                    i["dosId"].trim() == "" ||
+                    i["quantity"].trim() == "" ||
+                    i["days"].trim() == ""
+                ) {
+                    alert("格式錯誤或未填入資料");
+                    return false;
+                }
+            }
+
+
+            var info = {
+                "topic": "my-topic",
+                "key": "string",
+                "message": {
+                    "doctorId": DoctorID,
+                    "patientId": PatientID,
+                    "chaId": ChaID,
+                    "chartsDrugsDosages": Drugs
+                }
+            };
+            console.log("Data Submited");
+            console.log(info);
+
+            fetch("http://server.nicklu89.com:7777/KafkaAPI/api/KafkaProducerDoctor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                redirect: "follow",
+                credentials: "include",
+                timeout: 5000,
+                body: JSON.stringify(info)
+            });
+
+            return true;
+        }
+        ////////////Start up
         window.onload=()=>{
+            var DBdata = document.getElementById("DBdrugs-injection");
+            var RowNum = DBdata.rows.length;
+            for(var r=1; r<RowNum+1; r++){
+                var inputList=[];
+                r = r.toString();
+                for(var c=1;c<9;c++){
+                    c=c.toString();
+                    var d = DBdata.querySelector(`tbody tr:nth-child(${r}) td:nth-child(${c})`);
+                    inputList.push(d.innerHTML.trim());
+                }
+                AddInputRow(inputList);
+            }
             AddInputRow();
         };
     </script>

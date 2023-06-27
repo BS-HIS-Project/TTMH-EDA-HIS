@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  consumerterminal:
+    image: ${DOCKER_REGISTRY-}consumerterminal
+    build:
+      context: .
+      dockerfile: ConsumerTerminal/Dockerfile
+
+  kafkawebapi:
+    image: ${DOCKER_REGISTRY-}kafkawebapi
+    build:
+      context: .
+      dockerfile: KafkaWebAPI/Dockerfile
+    ports:
+      - "9093:80"
+      - "9094:443"
+
+
+  ttmh-eda-his:
+    image: ${DOCKER_REGISTRY-}ttmhedahis
+    build:
+      context: .
+      dockerfile: TTMH-EDA-HIS/Dockerfile
+    ports:
+      - "9095:80"
+      - "9096:443"
+

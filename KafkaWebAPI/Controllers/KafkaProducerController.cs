@@ -11,18 +11,26 @@ namespace KafkaWebAPI.Controllers
     [ApiController]
     public class KafkaProducerController : ControllerBase
     {
-        [HttpPost]
-        public void KafkaProducer([FromBody] KafkaProducerViewModel value)
+        [HttpGet]
+        public IActionResult Test()
         {
-            KafkaProducer controller = new KafkaProducer("server.nicklu89.com:9092");
-            controller.Produce(value.Topic ?? "no-topic", value.Key ?? "no-key", value.Message ?? "no-message"); // topic, message
+            return Ok("HAHAHAHAH");
         }
 
         [HttpPost]
-        public void KafkaProducerDoctor([FromBody] KafkaProducerDoctorViewModel value)
+        public IActionResult KafkaProducer([FromBody] KafkaProducerViewModel value)
         {
             KafkaProducer controller = new KafkaProducer("server.nicklu89.com:9092");
-            controller.Produce(value.Topic ?? "no-topic", value.Key ?? "no-key", JsonSerializer.Serialize(value.Message) ?? "no-message"); // topic, message
+            controller.Produce(value.Topic ?? "no-topic", value.Key ?? "no-key", value.Message ?? "no-message"); // topic, message
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult KafkaProducerDoctor([FromBody] KafkaProducerDoctorViewModel value)
+        {
+            KafkaProducer controller = new KafkaProducer("server.nicklu89.com:9092");
+            controller.Produce(value.Topic ?? "no-topic", value.Key ?? "no-key", System.Text.Json.JsonSerializer.Serialize(value.Message) ?? "no-message"); // topic, message
+            return Ok();
         }
     }
 }
