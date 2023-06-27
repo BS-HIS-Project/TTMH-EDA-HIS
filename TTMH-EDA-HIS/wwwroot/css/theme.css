@@ -95,7 +95,30 @@
 .AT-fs-25 {
     font-size: 25px !important;
 }
-
+.AT-w-10 {
+    width: 10% !important;
+}
+.AT-w-15 {
+    width: 10% !important;
+}
+.AT-w-20 {
+    width: 20% !important;
+}
+.AT-w-25 {
+    width: 10% !important;
+}
+.AT-w-30 {
+    width: 30% !important;
+}
+.AT-w-40 {
+    width: 40% !important;
+}
+.AT-w-45 {
+    width: 10% !important;
+}
+.AT-w-50 {
+    width: 50% !important;
+}
 
 .AT-rounded-1 {
     border-radius: 20px !important;
