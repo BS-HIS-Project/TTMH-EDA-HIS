@@ -136,3 +136,4 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
         Console.WriteLine($"Received message: {consumeResult.Message.Value}");
     }
 }
+
