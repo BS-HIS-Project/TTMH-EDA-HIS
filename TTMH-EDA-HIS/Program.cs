@@ -3,6 +3,7 @@ using HISDB.Data;
 using TTMH_EDA_HIS.Interfaces;
 using TTMH_EDA_HIS.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration.GetConnectionString("HISDBContext");
@@ -40,6 +41,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "HtmlPages")),
+    RequestPath = "/HtmlPages"
+});
 
 app.UseRouting();
 
