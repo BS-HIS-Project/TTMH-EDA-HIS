@@ -12,7 +12,7 @@ namespace TTMH_EDA_HIS.Controllers
         {
             _logger = logger;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

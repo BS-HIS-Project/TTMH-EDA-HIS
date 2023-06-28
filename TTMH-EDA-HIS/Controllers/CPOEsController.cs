@@ -19,14 +19,14 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction("ChartList");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public async Task<IActionResult> ChartList(int? page)
         {
@@ -55,7 +55,7 @@ namespace TTMH_EDA_HIS.Controllers
             return View(vm);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<IActionResult> ChartList(CPOEsChartListViewModel vm)
         {
@@ -77,7 +77,7 @@ namespace TTMH_EDA_HIS.Controllers
             return View(vm);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public async Task<IActionResult> PatientDetails(string? CaseHistory, string? ChaID)
         {

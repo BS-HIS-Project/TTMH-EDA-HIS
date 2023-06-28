@@ -17,7 +17,7 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<CPOEsAPISearchKeywordsViewModel_Response> SearchDrugID(CPOEsAPISearchKeywordsViewModel vm)
         {
@@ -45,7 +45,7 @@ namespace TTMH_EDA_HIS.Controllers
             return response;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<CPOEsAPISearchKeywordsViewModel_Response> SearchDrugName(CPOEsAPISearchKeywordsViewModel vm)
         {
@@ -73,7 +73,7 @@ namespace TTMH_EDA_HIS.Controllers
             return response;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<CPOEsAPISearchKeywordsViewModel_Response> SearchDosID(CPOEsAPISearchKeywordsViewModel vm)
         {
