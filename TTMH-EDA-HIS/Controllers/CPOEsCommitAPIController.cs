@@ -20,7 +20,7 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Doctor")]
         [HttpPost("[action]")]
         public async Task<IActionResult> CommitDrugs(CPOEsCommitAPICommitDrugsViewModel vm)
         {
@@ -184,7 +184,8 @@ namespace TTMH_EDA_HIS.Controllers
                 });
             }
         }
-
+        [Authorize(Roles = "Doctor")]
+        [HttpPost("[action]")]
         private async Task<string> PrintPrescription(CPOEsCommitAPIPrescriptionViewModel vm)
         {
             try

@@ -19,7 +19,7 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
             _hashService = hashService;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
 			string? role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
@@ -109,27 +109,5 @@ namespace TTMH_EDA_HIS.Controllers
 		{
 			return View();
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 }
