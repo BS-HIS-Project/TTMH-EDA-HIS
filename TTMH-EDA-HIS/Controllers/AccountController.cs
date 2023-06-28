@@ -22,14 +22,23 @@ namespace TTMH_EDA_HIS.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Login");
-        }
+			string? role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+			switch (role)
+			{
+				case "Doctor":
+					return RedirectToAction("ChartList", "CPOEs");
+				case "Pharmacist":
+					return RedirectToAction("PharmacyDetails", "Pharmacy");
+				default:
+					return RedirectToAction("Login");
+			}
+		}
         [HttpGet]
         public IActionResult Login()
         {
 			if (User.Identity.IsAuthenticated)
 			{
-				return RedirectToAction("Index", "CPOEs");
+				return RedirectToAction("Index", "Account");
 			}
 			else
 			{
@@ -85,7 +94,7 @@ namespace TTMH_EDA_HIS.Controllers
 					new ClaimsPrincipal(identity),
 					properties
 				);
-				return RedirectToAction("ChartList", "CPOEs");
+				return RedirectToAction("Index", "Account");
 			};
 			return View(vm);
 		}
