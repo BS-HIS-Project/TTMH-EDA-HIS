@@ -81,45 +81,63 @@ namespace TTMH_EDA_HIS.Controllers
         [HttpGet]
         public async Task<IActionResult> PatientDetails(string? CaseHistory, string? ChaID)
         {
-            if(CaseHistory == null)
+            CPOEsPatientDetailsViewModel vm = new CPOEsPatientDetailsViewModel();
+			Patient? patient = null;
+            IEnumerable<string>? ChaIDs = null;
+            Chart[]? charts = null;
+            DoctorsPatientsChart? dpc = null;
+            bool isLatest = false;
+			if (CaseHistory == null && ChaID == null)
             {
                 return NotFound();
             }
-            Patient? patient=await _context.Patients.FirstOrDefaultAsync(x=>x.CaseHistory == CaseHistory);
-            if(patient == null) 
+            else if (CaseHistory == null && ChaID != null)
             {
-                return NotFound(); 
-            }
-
-            IEnumerable<string> ChaIDs = (
-                from i in _context.DoctorsPatientsCharts
-                where i.PatientId == patient.PatientId
-                select i.ChaId
-            );
-            Chart[] charts = await (
-                from i in _context.Charts
-                join j in ChaIDs on i.ChaId equals j
-                orderby i.Vdate descending
-                select i
-            ).ToArrayAsync();
-
-
-            CPOEsPatientDetailsViewModel vm = new CPOEsPatientDetailsViewModel();
-
-            if (ChaID == "latest" || ChaID == null)
-            {
-                vm.chart = charts[0];
-            }
-            else
-            {
-                vm.chart = charts.FirstOrDefault(x => x.ChaId == ChaID);
+                vm.chart = await _context.Charts.FindAsync(ChaID);
                 if (vm.chart == null)
                 {
                     return NotFound();
                 }
-            }
-            DoctorsPatientsChart dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == vm.chart.ChaId);
-            Employee doctor = await _context.Employees.FindAsync(dpc.DoctorId);
+				dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
+				patient = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == dpc.PatientId);
+			}
+			else
+			{
+				patient = await _context.Patients.FirstOrDefaultAsync(x => x.CaseHistory == CaseHistory);
+				if (patient == null)
+				{
+					return NotFound();
+				}
+				if (ChaID == "latest" || ChaID == null)
+				{
+                    isLatest = true;
+				}
+				else
+				{
+					vm.chart = await _context.Charts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
+					if (vm.chart == null)
+					{
+						return NotFound();
+					}
+					dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
+				}
+			}
+			ChaIDs = (
+					from i in _context.DoctorsPatientsCharts
+					where i.PatientId == patient.PatientId
+					select i.ChaId
+				);
+			charts = await (
+				from i in _context.Charts
+				join j in ChaIDs on i.ChaId equals j
+				orderby i.Vdate descending
+				select i
+			).ToArrayAsync();
+            if (isLatest) { 
+                vm.chart = charts[0];
+				dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == charts[0].ChaId);
+			}
+			Employee? doctor = await _context.Employees.FindAsync(dpc.DoctorId);
             DateTime zerotime = new DateTime(1, 1, 1);
             TimeSpan ageSpan = DateTime.Now - patient.BirthDate;
             int age = (zerotime + ageSpan).Year - 1;
@@ -138,8 +156,8 @@ namespace TTMH_EDA_HIS.Controllers
             List<ChartsDrugsDosage>? cdds = await (from i in _context.ChartsDrugsDosages where i.ChaId == vm.chart.ChaId select i).ToListAsync();
             foreach (var i in cdds)
             {
-                Drug drug = await _context.Drugs.FindAsync(i.DrugId);
-                Dosage dosage = await _context.Dosages.FindAsync(i.DosId);
+                Drug? drug = await _context.Drugs.FindAsync(i.DrugId);
+                Dosage? dosage = await _context.Dosages.FindAsync(i.DosId);
                 RoutesOfAdminstration? roa = await _context.RoutesOfAdminstrations.FindAsync(drug.Roaid);
                 drugs.Add(new CPOEsPatientDetailsViewModel_DrugTableTD()
                 {
