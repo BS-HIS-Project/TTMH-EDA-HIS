@@ -3,19 +3,16 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    string Role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+    string? Role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
     string RoleDisplay = "";
-    if (Role == "Doctor")
+    switch (Role)
     {
-        RoleDisplay = "醫生";
-    }
-    else if (Role == "Pharmacist")
-    {
-        RoleDisplay = "藥師";
-    }
-    else if (Role == "Employee")
-    {
-        RoleDisplay = "員工";
+        case "Doctor":
+            RoleDisplay = "醫生";break;
+        case "Pharmacist":
+            RoleDisplay = "藥師";break;
+        case "Employee":
+            RoleDisplay = "員工";break;
     }
 }
 @if(User.Identity.IsAuthenticated)
