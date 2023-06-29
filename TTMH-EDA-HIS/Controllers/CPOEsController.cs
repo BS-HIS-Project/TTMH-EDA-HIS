@@ -86,28 +86,57 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 return RedirectToAction("ChartList");
             }
-            string content = vm.content.Trim().ToUpper();
+            string[] contents = vm.content.Trim().ToUpper().Split(" ");
             vm.ChartInfos = new List<CPOEsChartListViewModel_ChartInfos>();
 
-
-            Patient[] patients=await(
-                from pat in _context.Patients
-                where (
-                    pat.PatientId.ToUpper().Contains(content) ||
-                    pat.PatientName.ToUpper().Contains(content) ||
-                    pat.CaseHistory.ToUpper().Contains(content)
-                ) select pat
-            ).Take(10).ToArrayAsync();
-            foreach (Patient patient in patients)
+            foreach(string content in contents)
             {
-                string[]? chaIDss = await (
-                    from dpc in _context.DoctorsPatientsCharts
-                    where dpc.PatientId==patient.PatientId
-                    orderby dpc.ChaId descending
-                    select dpc.ChaId
+                Patient[] patients = await (
+                    from pat in _context.Patients
+                    where (
+                        pat.PatientId.ToUpper().Contains(content) ||
+                        pat.PatientName.ToUpper().Contains(content) ||
+                        pat.CaseHistory.ToUpper().Contains(content)
+                    )
+                    select pat
                 ).Take(10).ToArrayAsync();
-                foreach(var chaID in chaIDss)
+                foreach (Patient patient in patients)
                 {
+                    string[]? chaIDss = await (
+                        from dpc in _context.DoctorsPatientsCharts
+                        where dpc.PatientId == patient.PatientId
+                        orderby dpc.ChaId descending
+                        select dpc.ChaId
+                    ).Take(10).ToArrayAsync();
+                    foreach (var chaID in chaIDss)
+                    {
+                        CPOEsChartListViewModel_ChartInfos infos = new CPOEsChartListViewModel_ChartInfos()
+                        {
+                            ChaID = chaID,
+                            CaseHistory = patient.CaseHistory,
+                            PatientName = patient.PatientName,
+                            Gender = patient.Gender
+                        };
+                        if (!vm.ChartInfos.Any(x => x.ChaID == infos.ChaID))
+                        {
+                            vm.ChartInfos.Add(infos);
+                        }
+                    }
+                }
+
+                string[] chaIDs = await (
+                    from cha in _context.Charts
+                    where cha.ChaId.ToUpper().Contains(content)
+                    select cha.ChaId
+                ).Take(10).ToArrayAsync();
+                foreach (string chaID in chaIDs)
+                {
+                    string? patientID = await (
+                        from dpc in _context.DoctorsPatientsCharts
+                        where dpc.ChaId == chaID
+                        select dpc.PatientId
+                    ).FirstOrDefaultAsync();
+                    Patient? patient = await _context.Patients.FindAsync(patientID);
                     CPOEsChartListViewModel_ChartInfos infos = new CPOEsChartListViewModel_ChartInfos()
                     {
                         ChaID = chaID,
@@ -115,31 +144,11 @@ namespace TTMH_EDA_HIS.Controllers
                         PatientName = patient.PatientName,
                         Gender = patient.Gender
                     };
-                    vm.ChartInfos.Add(infos);
+                    if (!vm.ChartInfos.Any(x => x.ChaID == infos.ChaID))
+                    {
+                        vm.ChartInfos.Add(infos);
+                    }
                 }
-            }
-
-            string[] chaIDs = await (
-                from cha in _context.Charts
-                where cha.ChaId.ToUpper().Contains(content)
-                select cha.ChaId
-            ).Take(10).ToArrayAsync();
-            foreach(string chaID in chaIDs)
-            {
-                string? patientID = await (
-                    from dpc in _context.DoctorsPatientsCharts
-                    where dpc.ChaId==chaID
-                    select dpc.PatientId
-                ).FirstOrDefaultAsync();
-                Patient? patient = await _context.Patients.FindAsync(patientID);
-                CPOEsChartListViewModel_ChartInfos infos = new CPOEsChartListViewModel_ChartInfos() 
-                {
-                    ChaID = chaID,
-                    CaseHistory = patient.CaseHistory,
-                    PatientName = patient.PatientName,
-                    Gender = patient.Gender
-                };
-                vm.ChartInfos.Add(infos);
             }
 
             vm.ChartInfos = vm.ChartInfos.Skip(0).Take(15).ToList();
