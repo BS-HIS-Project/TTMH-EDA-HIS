@@ -43,8 +43,31 @@ namespace TTMH_EDA_HIS.Controllers
                 page *= 6;
                 page -= 6;
             }
-            CPOEsChartListViewModel vm = new CPOEsChartListViewModel();  
-            vm.Patients = await _context.Patients.Skip((int)page).Take(6).ToListAsync();
+            CPOEsChartListViewModel vm = new CPOEsChartListViewModel();
+            
+            vm.ChartInfos = new List<CPOEsChartListViewModel_ChartInfos>();
+            string[] chartIDs = await (
+                from cha in _context.Charts
+                orderby cha.Vdate descending
+                select cha.ChaId
+            ).Skip((int)page).Take(6).ToArrayAsync();
+            foreach (string i in chartIDs) 
+            {
+                string? patientsID = await (
+                    from dpc in _context.DoctorsPatientsCharts
+                    where dpc.ChaId == i
+                    select dpc.PatientId
+                ).FirstOrDefaultAsync();
+                Patient? patient = await _context.Patients.FindAsync(patientsID);
+                CPOEsChartListViewModel_ChartInfos infos = new CPOEsChartListViewModel_ChartInfos()
+                {
+                    ChaID = i,
+                    CaseHistory = patient.CaseHistory,
+                    PatientName = patient.PatientName,
+                    Gender = patient.Gender
+                };    
+                vm.ChartInfos.Add(infos);
+            }
             vm.content = "";
             vm.UseButtonGp = true;
             vm.previous_page=dpage-1;
@@ -63,15 +86,63 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 return RedirectToAction("ChartList");
             }
-            List<Patient> result=await(
-                from i in _context.Patients
+            string content = vm.content.Trim().ToUpper();
+            vm.ChartInfos = new List<CPOEsChartListViewModel_ChartInfos>();
+
+
+            Patient[] patients=await(
+                from pat in _context.Patients
                 where (
-                    i.PatientId.ToUpper().Contains(vm.content.ToUpper()) ||
-                    i.PatientName.ToUpper().Contains(vm.content.ToUpper()) ||
-                    i.CaseHistory.ToUpper().Contains(vm.content.ToUpper())
-                ) select i
-            ).ToListAsync();
-            vm.Patients = result;
+                    pat.PatientId.ToUpper().Contains(content) ||
+                    pat.PatientName.ToUpper().Contains(content) ||
+                    pat.CaseHistory.ToUpper().Contains(content)
+                ) select pat
+            ).Take(10).ToArrayAsync();
+            foreach (Patient patient in patients)
+            {
+                string[]? chaIDss = await (
+                    from dpc in _context.DoctorsPatientsCharts
+                    where dpc.PatientId==patient.PatientId
+                    orderby dpc.ChaId descending
+                    select dpc.ChaId
+                ).Take(10).ToArrayAsync();
+                foreach(var chaID in chaIDss)
+                {
+                    CPOEsChartListViewModel_ChartInfos infos = new CPOEsChartListViewModel_ChartInfos()
+                    {
+                        ChaID = chaID,
+                        CaseHistory = patient.CaseHistory,
+                        PatientName = patient.PatientName,
+                        Gender = patient.Gender
+                    };
+                    vm.ChartInfos.Add(infos);
+                }
+            }
+
+            string[] chaIDs = await (
+                from cha in _context.Charts
+                where cha.ChaId.ToUpper().Contains(content)
+                select cha.ChaId
+            ).Take(10).ToArrayAsync();
+            foreach(string chaID in chaIDs)
+            {
+                string? patientID = await (
+                    from dpc in _context.DoctorsPatientsCharts
+                    where dpc.ChaId==chaID
+                    select dpc.PatientId
+                ).FirstOrDefaultAsync();
+                Patient? patient = await _context.Patients.FindAsync(patientID);
+                CPOEsChartListViewModel_ChartInfos infos = new CPOEsChartListViewModel_ChartInfos() 
+                {
+                    ChaID = chaID,
+                    CaseHistory = patient.CaseHistory,
+                    PatientName = patient.PatientName,
+                    Gender = patient.Gender
+                };
+                vm.ChartInfos.Add(infos);
+            }
+
+            vm.ChartInfos = vm.ChartInfos.Skip(0).Take(15).ToList();
             vm.content = "";
             vm.UseButtonGp = false;
             return View(vm);
