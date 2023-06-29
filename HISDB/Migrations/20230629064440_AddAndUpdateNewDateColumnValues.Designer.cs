@@ -4,6 +4,7 @@ using HISDB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HISDB.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    partial class HisdbContextModelSnapshot : ModelSnapshot
+    [Migration("20230629064440_AddAndUpdateNewDateColumnValues")]
+    partial class AddAndUpdateNewDateColumnValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -420,6 +423,7 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "O101929955",
                             Payable = 650m,
+                            PaymentTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -429,6 +433,7 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "S257920071",
                             Payable = 650m,
+                            PaymentTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         });
                 });
@@ -1115,12 +1120,14 @@ namespace HISDB.Migrations
                         new
                         {
                             PresNo = "PRE2023062910001001",
+                            DrugDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "O101929955",
                             PhaId = "P11201002"
                         },
                         new
                         {
                             PresNo = "PRE2023062920001002",
+                            DrugDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "S257920071",
                             PhaId = "P11201002"
                         });

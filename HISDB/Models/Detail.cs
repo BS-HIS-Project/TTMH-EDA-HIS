@@ -16,6 +16,9 @@ public partial class Detail
 
     public string PatientId { get; set; } = null!;
 
+    //繳費時間
+    public DateTime? PaymentTime { get; set; }
+
     public virtual Cashier Cas { get; set; } = null!;
 
     public virtual Patient Patient { get; set; } = null!;
