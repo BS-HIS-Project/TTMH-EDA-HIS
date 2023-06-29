@@ -3,12 +3,26 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    string Role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+    string RoleDisplay = "";
+    if (Role == "Doctor")
+    {
+        RoleDisplay = "醫生";
+    }
+    else if (Role == "Pharmacist")
+    {
+        RoleDisplay = "藥師";
+    }
+    else if (Role == "Employee")
+    {
+        RoleDisplay = "員工";
+    }
 }
 @if(User.Identity.IsAuthenticated)
 {
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item px-4">
-            <a class="nav-link h2 text-white" href="#">@User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.GivenName).Value</a>
+            <a class="nav-link h2 text-white" href="#">@User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.GivenName).Value@RoleDisplay</a>
         </li>
         <li class="nav-item px-4">
             <a class="nav-link h2 text-white" asp-controller="Account" asp-action="Logout">登出</a>

@@ -4,6 +4,7 @@ using HISDB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HISDB.Migrations
 {
     [DbContext(typeof(HisdbContext))]
-    partial class HisdbContextModelSnapshot : ModelSnapshot
+    [Migration("20230627160940_UpdateColumnValues")]
+    partial class UpdateColumnValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,24 +146,6 @@ namespace HISDB.Migrations
                             Object = "心臟病",
                             Subject = "有些緩和了",
                             Vdate = new DateTime(2023, 6, 6, 10, 20, 13, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            ChaId = "CHA2023062910001001",
-                            DepartmentName = "心臟內科",
-                            History = "先天心臟病",
-                            Object = "心臟病",
-                            Subject = "有些緩和了",
-                            Vdate = new DateTime(2023, 6, 29, 10, 29, 14, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            ChaId = "CHA2023062920001002",
-                            DepartmentName = "心臟內科",
-                            History = "先天心臟病",
-                            Object = "心臟病",
-                            Subject = "有些緩和了",
-                            Vdate = new DateTime(2023, 6, 29, 20, 47, 16, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -276,26 +261,6 @@ namespace HISDB.Migrations
                             Quantity = 1.0,
                             Remark = "無",
                             Total = 9.0
-                        },
-                        new
-                        {
-                            ChaId = "CHA2023062910001001",
-                            DrugId = "046404",
-                            Days = 3,
-                            DosId = "Q6H",
-                            Quantity = 1.0,
-                            Remark = "無",
-                            Total = 9.0
-                        },
-                        new
-                        {
-                            ChaId = "CHA2023062920001002",
-                            DrugId = "046404",
-                            Days = 3,
-                            DosId = "Q6H",
-                            Quantity = 1.0,
-                            Remark = "無",
-                            Total = 9.0
                         });
                 });
 
@@ -327,9 +292,6 @@ namespace HISDB.Migrations
                     b.Property<decimal>("Payable")
                         .HasColumnType("decimal(20, 0)");
 
-                    b.Property<DateTime?>("PaymentTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<decimal>("Registration")
                         .HasColumnType("decimal(20, 0)");
 
@@ -350,7 +312,6 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "A118992634",
                             Payable = 650m,
-                            PaymentTime = new DateTime(2023, 5, 30, 9, 29, 13, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -360,7 +321,6 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "O101929955",
                             Payable = 650m,
-                            PaymentTime = new DateTime(2023, 5, 30, 10, 2, 13, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -370,7 +330,6 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "H255590997",
                             Payable = 650m,
-                            PaymentTime = new DateTime(2023, 5, 30, 15, 28, 13, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -380,7 +339,6 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "L198058112",
                             Payable = 650m,
-                            PaymentTime = new DateTime(2023, 5, 30, 15, 50, 13, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -390,7 +348,6 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "S257920071",
                             Payable = 650m,
-                            PaymentTime = new DateTime(2023, 5, 30, 19, 25, 13, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -400,7 +357,6 @@ namespace HISDB.Migrations
                             MedicalCost = 500m,
                             PatientId = "O101929955",
                             Payable = 650m,
-                            PaymentTime = new DateTime(2023, 6, 6, 19, 45, 13, 0, DateTimeKind.Unspecified),
                             Registration = 150m
                         },
                         new
@@ -409,25 +365,6 @@ namespace HISDB.Migrations
                             CasId = "C11201002",
                             MedicalCost = 500m,
                             PatientId = "L198058112",
-                            Payable = 650m,
-                            PaymentTime = new DateTime(2023, 6, 6, 10, 30, 13, 0, DateTimeKind.Unspecified),
-                            Registration = 150m
-                        },
-                        new
-                        {
-                            DetId = "DET2023062910001001",
-                            CasId = "C11201002",
-                            MedicalCost = 500m,
-                            PatientId = "O101929955",
-                            Payable = 650m,
-                            Registration = 150m
-                        },
-                        new
-                        {
-                            DetId = "DET2023062920001002",
-                            CasId = "C11201002",
-                            MedicalCost = 500m,
-                            PatientId = "S257920071",
                             Payable = 650m,
                             Registration = 150m
                         });
@@ -537,18 +474,6 @@ namespace HISDB.Migrations
                             PatientId = "L198058112",
                             ChaId = "CHA2023060613001002",
                             DoctorId = "D11201001"
-                        },
-                        new
-                        {
-                            PatientId = "O101929955",
-                            ChaId = "CHA2023062910001001",
-                            DoctorId = "D11201002"
-                        },
-                        new
-                        {
-                            PatientId = "S257920071",
-                            ChaId = "CHA2023062920001002",
-                            DoctorId = "D11201002"
                         });
                 });
 
@@ -1036,8 +961,8 @@ namespace HISDB.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime?>("DrugDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("DrugDate")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("PatientId")
                         .IsRequired()
@@ -1066,62 +991,50 @@ namespace HISDB.Migrations
                         new
                         {
                             PresNo = "PRE2023053013001001",
-                            DrugDate = new DateTime(2023, 5, 30, 9, 29, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "A118992634",
                             PhaId = "P11201001"
                         },
                         new
                         {
                             PresNo = "PRE2023053013001002",
-                            DrugDate = new DateTime(2023, 5, 30, 10, 2, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "O101929955",
                             PhaId = "P11201001"
                         },
                         new
                         {
                             PresNo = "PRE2023053013001003",
-                            DrugDate = new DateTime(2023, 5, 30, 15, 28, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "H255590997",
                             PhaId = "P11201001"
                         },
                         new
                         {
                             PresNo = "PRE2023053013001004",
-                            DrugDate = new DateTime(2023, 5, 30, 15, 50, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "L198058112",
                             PhaId = "P11201001"
                         },
                         new
                         {
                             PresNo = "PRE2023053013001005",
-                            DrugDate = new DateTime(2023, 5, 30, 19, 25, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "S257920071",
                             PhaId = "P11201001"
                         },
                         new
                         {
                             PresNo = "PRE2023060613001001",
-                            DrugDate = new DateTime(2023, 6, 6, 19, 45, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "O101929955",
                             PhaId = "P11201002"
                         },
                         new
                         {
                             PresNo = "PRE2023060613001002",
-                            DrugDate = new DateTime(2023, 6, 6, 10, 30, 13, 0, DateTimeKind.Unspecified),
+                            DrugDate = new DateTime(2023, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PatientId = "L198058112",
-                            PhaId = "P11201002"
-                        },
-                        new
-                        {
-                            PresNo = "PRE2023062910001001",
-                            PatientId = "O101929955",
-                            PhaId = "P11201002"
-                        },
-                        new
-                        {
-                            PresNo = "PRE2023062920001002",
-                            PatientId = "S257920071",
                             PhaId = "P11201002"
                         });
                 });

@@ -7,8 +7,7 @@ using HISDB.Models;
 using TTMH_EDA_HIS.ViewModels;
 using HISDB;
 using Microsoft.AspNetCore.Authorization;
-
-
+using System.Collections.Immutable;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -164,25 +163,25 @@ namespace TTMH_EDA_HIS.Controllers
                 vm.RecordsOfChaID.Add(charts[i].ChaId);
                 vm.RecordsOfVDate.Add(charts[i].Vdate.ToString("yyyy/MM/dd"));
             }
-            vm.FirstChart = charts[0].ChaId;
-            vm.LastChart = charts[charts.Length - 1].ChaId;
+            vm.FirstChart = charts[charts.Length - 1].ChaId;
+            vm.LastChart = charts[0].ChaId;
 
-            int currentIndex = Array.IndexOf(charts, vm.chart.ChaId);
-            if(currentIndex-1 >= 0)
+            int currentIndex = charts.ToList().FindIndex(x=>x.ChaId==vm.chart.ChaId);
+            if (currentIndex + 1 <= charts.Length - 1)
             {
-                vm.PreviousChart = charts[currentIndex-1].ChaId;
+                vm.PreviousChart = charts[currentIndex + 1].ChaId;
             }
             else
             {
-                vm.PreviousChart = charts[0].ChaId;
+                vm.PreviousChart = charts[charts.Length - 1].ChaId;
             }
-            if(currentIndex+1 < charts.Length-1)
+            if (currentIndex-1 >= 0)
             {
-                vm.NextChart = charts[currentIndex + 2].ChaId;
+                vm.NextChart = charts[currentIndex-1].ChaId;
             }
             else
             {
-                vm.NextChart = charts[charts.Length - 1].ChaId;
+                vm.NextChart = charts[0].ChaId;
             }
             vm.VDate_Display = vm.chart.Vdate.ToString("yyyy/MM/dd");
             vm.ChaID_Display = vm.chart.ChaId.Substring(vm.chart.ChaId.Length-3,3);

@@ -6,8 +6,8 @@ namespace HISDB.Models;
 public partial class Prescription
 {
     public string PresNo { get; set; } = null!;
-
-    public DateTime DrugDate { get; set; }
+    //領藥時間
+    public DateTime? DrugDate { get; set; }
 
     public string PhaId { get; set; } = null!;
 

@@ -10,9 +10,6 @@ public partial class DoctorsPatientsChart
     public string PatientId { get; set; } = null!;
 
     public string ChaId { get; set; } = null!;
-    //報到時間
-    public DateTime RegistrationTime { get; set; }
-
     public virtual Chart Cha { get; set; } = null!;
 
     public virtual Doctor Doctor { get; set; } = null!;
