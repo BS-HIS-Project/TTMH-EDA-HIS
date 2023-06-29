@@ -97,6 +97,10 @@ namespace TTMH_EDA_HIS.Controllers
 
                 foreach (CPOEsCommitAPICommitDrugsViewModel_Drugs i in vm.Drugs)
                 {
+                    if(i.Remark == "")
+                    {
+                        i.Remark = "無";
+                    }
                     ChartsDrugsDosage cdd = new ChartsDrugsDosage()
                     {
                         ChaId = chart.ChaId,
@@ -142,6 +146,10 @@ namespace TTMH_EDA_HIS.Controllers
                 };
                 foreach (CPOEsCommitAPICommitDrugsViewModel_Drugs i in vm.Drugs)
                 {
+                    if (i.Remark == "")
+                    {
+                        i.Remark = "無";
+                    }
                     pvm.Message.ChartsDrugsDosages.Add(new CPOEsCommitAPIPrescriptionViewModel_ChartsDrugsDosage()
                     {
                         DrugId = i.DrugID,
