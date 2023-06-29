@@ -16,17 +16,16 @@
                 font-size: 25px !important;
             }
 
-            .MD-adjust-3 p{
+            .MD-adjust-3 p {
                 font-size: 15px !important;
             }
-            
         }
 
-       /* @@media (max-width:900px) {
-            .MD-adjust-3 p{
-                font-size: 50px !important;
-            }
-        }*/
+        /* @@media (max-width:900px) {
+                    .MD-adjust-3 p{
+                        font-size: 50px !important;
+                    }
+                }*/
 
         .SC-input-button-form_submit {
             background-color: #4443a3;
@@ -207,9 +206,22 @@
     <script>
         function SearchKey(event) {
             var search = document.getElementById("search");
+            var DrugDate = @Model.DrugDate;
+
             if (event.key == "Enter") {
-                //window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch/${search.value}`);
-                window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
+                //window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
+                if (`${DrugDate}` = null) {
+                    window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
+                }
+                //else {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: 'Oops...',
+                //        text: '輸入值有錯或是已領過藥了',
+                //        footer: '<a href="">Why do I have this issue?</a>'
+                //    })
+                //}
+
             }
         }
 

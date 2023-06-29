@@ -104,6 +104,7 @@ namespace TTMH_EDA_HIS.Controllers
                 return NotFound();
             }
             vm.PresNo = pres.PresNo;
+            vm.DrugDate = pres.DrugDate;
 
             Patient patient = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == pres.PatientId);
             vm.Patient = patient;
@@ -155,6 +156,8 @@ namespace TTMH_EDA_HIS.Controllers
             DateTime zerotime = new DateTime(1, 1, 1);
             TimeSpan ageSpan = DateTime.Now - patient.BirthDate;
             vm.age = (zerotime + ageSpan).Year - 1;
+
+
 
 
 

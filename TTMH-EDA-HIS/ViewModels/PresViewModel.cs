@@ -30,6 +30,12 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("就診日期")]
         public string? Vdate { get; set; }
         public List<PresViewModel_Drug> Drugs { get; set; }
+
+        //繳費時間
+        public DateTime? PaymentTime { get; set; }
+
+        //領藥時間
+        public DateTime? DrugDate { get; set; }
     }
     public class PresViewModel_Drug 
     {
