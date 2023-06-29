@@ -393,8 +393,8 @@ public partial class HisdbContext : DbContext
             new Prescription { PresNo= "PRE2023053013001005", DrugDate=new DateTime(2023,05,30, 19, 25, 13), PhaId= "P11201001", PatientId= "S257920071" },
             new Prescription { PresNo= "PRE2023060613001001", DrugDate=new DateTime(2023,06,06, 19, 45, 13), PhaId= "P11201002", PatientId= "O101929955" },
             new Prescription { PresNo= "PRE2023060613001002", DrugDate=new DateTime(2023,06,06, 10, 30, 13), PhaId= "P11201002", PatientId= "L198058112" },
-            new Prescription { PresNo= "PRE2023062910001001", DrugDate= new DateTime(), PhaId= "P11201002", PatientId= "O101929955" },
-            new Prescription { PresNo= "PRE2023062920001002", DrugDate= new DateTime(), PhaId= "P11201002", PatientId= "S257920071" }
+            new Prescription { PresNo= "PRE2023062910001001", DrugDate= null, PhaId= "P11201002", PatientId= "O101929955" },
+            new Prescription { PresNo= "PRE2023062920001002", DrugDate= null, PhaId= "P11201002", PatientId= "S257920071" }
         );
         //用藥頻率
         modelBuilder.Entity<Dosage>().HasData(
@@ -441,8 +441,8 @@ public partial class HisdbContext : DbContext
             new Detail { DetId= "DET2023053013001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071", PaymentTime= new DateTime(2023,05,30, 19, 25, 13) },
             new Detail { DetId= "DET2023060613001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= new DateTime(2023,06,06, 19, 45, 13) },
             new Detail { DetId= "DET2023060613001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "L198058112", PaymentTime= new DateTime(2023,06,06, 10, 30, 13) },
-            new Detail { DetId= "DET2023062910001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= new DateTime() },
-            new Detail { DetId= "DET2023062920001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "S257920071", PaymentTime= new DateTime() }
+            new Detail { DetId= "DET2023062910001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= null},
+            new Detail { DetId= "DET2023062920001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "S257920071", PaymentTime= null}
         );
 
         OnModelCreatingPartial(modelBuilder);

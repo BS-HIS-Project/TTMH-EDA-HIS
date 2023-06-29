@@ -7,7 +7,7 @@ public partial class Prescription
 {
     public string PresNo { get; set; } = null!;
     //領藥時間
-    public Nullable<DateTime> DrugDate { get; set; }
+    public DateTime? DrugDate { get; set; }
 
     public string PhaId { get; set; } = null!;
 

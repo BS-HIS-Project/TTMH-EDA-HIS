@@ -15,8 +15,9 @@ public partial class Detail
     public string CasId { get; set; } = null!;
 
     public string PatientId { get; set; } = null!;
+
     //繳費時間
-    public Nullable<DateTime> PaymentTime { get; set; }
+    public DateTime? PaymentTime { get; set; }
 
     public virtual Cashier Cas { get; set; } = null!;
 
