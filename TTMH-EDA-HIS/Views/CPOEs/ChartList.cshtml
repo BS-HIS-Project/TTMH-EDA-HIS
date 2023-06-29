@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
         .CT-tbody-ColorInterval > tr > td {
-            font-size: 30px;
+            font-size: 27px;
         }
     </style>
 }
@@ -46,7 +46,7 @@
             {
                 <tr>
                     <td>
-                        @i.ChaID
+                        @i.ChaID.Substring(i.ChaID.Length-3)
                     </td>
                     <td>
                         @i.CaseHistory
@@ -78,11 +78,11 @@
         <div class="container-lg col-11 py-4">
             <div class="row">
                 <div class="btn-group mx-auto" style="width:300px">
-                    <a asp-route-page="@Model.previous_page" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">上一頁</a>
-                    <a asp-route-page="@Model.page1" class="btn text-white AT-bg-secondary-emphasis active" aria-current="page">@Model.page1</a>
-                    <a asp-route-page="@Model.page2" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">@Model.page2</a>
-                    <a asp-route-page="@Model.page3" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">@Model.page3</a>
-                    <a asp-route-page="@Model.next_page" class="btn AT-bg-primary-emphasis AT-fg-secondary-emphasis">下一頁</a>
+                    <a asp-route-page="@Model.previous_page" class="btn AT-bg-primary-deep AT-fg-secondary-emphasis">上一頁</a>
+                    <a asp-route-page="@Model.page1" class="btn AT-bg-primary AT-fg-secondary-emphasis">@Model.page1</a>
+                    <a asp-route-page="@Model.page2" class="btn AT-bg-primary AT-fg-secondary-emphasis">@Model.page2</a>
+                    <a asp-route-page="@Model.page3" class="btn AT-bg-primary AT-fg-secondary-emphasis">@Model.page3</a>
+                    <a asp-route-page="@Model.next_page" class="btn AT-bg-primary-deep AT-fg-secondary-emphasis">下一頁</a>
                 </div>
             </div>
         </div>
