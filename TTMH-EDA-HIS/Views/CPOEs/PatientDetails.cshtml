@@ -573,21 +573,23 @@
             var ResponseData;
             var Drugs = GetCurrentDrugs();
 
-            for(var i of Drugs){
-                if (i["DrugID"].trim() == "" ||
-                    i["DosID"].trim() == "" ||
-                    i["Quantity"].trim() == "" ||
-                    i["Days"].trim() == "" ||
-                    i["Total"].trim() == "" 
-                ) {
+            switch(ValidationCode){
+                case 1 :
                     console.log("格式錯誤或未填入資料");
                     Swal.fire({
                         icon: "warning",
-                        title: "資料條件不符",
-                        text: "格式錯誤或未填入資料",
+                        title: "有欄位未填入資料",
+                        text: ""
                     });
                     return false;
-                }
+                case 2 :
+                    console.log("格式錯誤或未填入資料");
+                    Swal.fire({
+                        icon: "warning",
+                        title: "DrugID不能重複",
+                        text: ""
+                    });
+                    return false;
             }
             Swal.fire({
                 icon: 'info',
@@ -677,6 +679,43 @@
 
             return false;
         }
+        function CheckValidField(){
+            var RowNum = tbody.rows.length;
+            var tempCode = 0;
+            for (var r = 1; r < RowNum + 1; r++) {
+                var rr = r.toString();
+                var isRowFieldNullOrDuplicated = false;
+                for (var c = 1; c < 7; c++) {
+                    var cc = c.toString();
+                    var d = tbody.querySelector(`tr:nth-child(${rr}) td:nth-child(${cc}) input`);
+                    var dd = d.value.trim();
+                    if (isRowFieldNullOrDuplicated) {
+                        d.setAttribute("style", "width:85%;border:none;opacity:0.5;color:red;");
+                        continue;
+                    } else {
+                        d.setAttribute("style", "width:85%;border:none;opacity:0.5;color:black;");
+                    }
+                    if (dd == "") {
+                        isRowFieldNullOrDuplicated = true;
+                        tempCode = 1;
+                        c = 0;
+                    }
+                    var drugs = GetCurrentDrugs();
+                    var countDuplicated = 0;
+                    for (var cdrug of drugs) {
+                        if (dd == cdrug["DrugID"]) {
+                            countDuplicated++;
+                        }
+                    }
+                    if (countDuplicated > 1) {
+                        isRowFieldNullOrDuplicated = true;
+                        tempCode = 2;
+                        c = 0;
+                    }
+                }
+            }
+            ValidationCode = tempCode;
+        }
         ////////////Start up
         window.onload=()=>{
             var DBdata = document.getElementById("DBdrugs-injection");
@@ -694,37 +733,7 @@
             AddInputRow();
 
             setInterval(() => {
-                var RowNum = tbody.rows.length;
-                for (var r = 1; r < RowNum + 1; r++) {
-                    var rr = r.toString();
-                    var isRowFieldNullOrDuplicated = false;
-                    for (var c = 1; c < 7; c++) {
-                        var cc = c.toString();
-                        var d = tbody.querySelector(`tr:nth-child(${rr}) td:nth-child(${cc}) input`);
-                        var dd = d.value.trim();
-                        if (isRowFieldNullOrDuplicated) {
-                            d.setAttribute("style", "width:85%;border:none;opacity:0.5;color:red;");
-                            continue;
-                        }else{
-                            d.setAttribute("style", "width:85%;border:none;opacity:0.5;color:black;");
-                        }
-                        if (dd==""){
-                            isRowFieldNullOrDuplicated = true;
-                            c=0;
-                        }
-                        var drugs=GetCurrentDrugs();
-                        var countDuplicated = 0;
-                        for(var cdrug of drugs){
-                            if(dd==cdrug["DrugID"]){
-                                countDuplicated++;
-                            }
-                        }
-                        if(countDuplicated>1){
-                            isRowFieldNullOrDuplicated=true;
-                            c=0;
-                        }
-                    }
-                }
+                CheckValidField();
             }, 600);
         };
     </script>
