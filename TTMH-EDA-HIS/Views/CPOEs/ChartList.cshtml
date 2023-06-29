@@ -42,11 +42,11 @@
             </tr>
         </thead>
         <tbody class="CT-tbody-ColorInterval">
-            @foreach(Patient i in Model.Patients)
+            @foreach(CPOEsChartListViewModel_ChartInfos i in Model.ChartInfos)
             {
                 <tr>
                     <td>
-                        @i.PatientId
+                        @i.ChaID
                     </td>
                     <td>
                         @i.CaseHistory
@@ -65,7 +65,7 @@
                     <td>
                     </td>
                     <td>
-                        <a href="@Url.Action("PatientDetails","CPOEs",new{CaseHistory=i.CaseHistory,ChaID="latest"})" class="text-white BS-btn AT-bg-primary-deep btn btn-lg">進入看診</a>
+                        <a href="@Url.Action("PatientDetails","CPOEs",new{ChaID=i.ChaID})" class="text-white BS-btn AT-bg-primary-deep btn btn-lg">進入看診</a>
                     </td>
                 </tr>
             }
