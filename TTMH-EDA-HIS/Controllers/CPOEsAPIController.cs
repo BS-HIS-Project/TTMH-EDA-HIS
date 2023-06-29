@@ -24,6 +24,7 @@ namespace TTMH_EDA_HIS.Controllers
             string[] results = await (
                 from i in _context.Drugs
                 where i.DrugId.ToUpper().Contains(vm.SearchKey.ToUpper())
+                orderby i.DrugId
                 select i.DrugId
             ).Skip(0).Take(10).ToArrayAsync();
             List<string> relatives = new List<string>();
@@ -52,6 +53,7 @@ namespace TTMH_EDA_HIS.Controllers
             string[] results = await (
                  from i in _context.Drugs
                  where i.DrugName.ToUpper().Contains(vm.SearchKey.ToUpper())
+                 orderby i.DrugName
                  select i.DrugName
              ).Skip(0).Take(10).ToArrayAsync();
             List<string> relatives = new List<string>();
@@ -80,6 +82,7 @@ namespace TTMH_EDA_HIS.Controllers
             string[] results = await (
                 from i in _context.Dosages
                 where i.DosId.ToUpper().Contains(vm.SearchKey.ToUpper())
+                orderby i.DosId
                 select i.DosId
             ).Skip(0).Take(10).ToArrayAsync();
             if (results.Length == 0)

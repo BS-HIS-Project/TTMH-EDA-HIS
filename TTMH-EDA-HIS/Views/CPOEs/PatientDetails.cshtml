@@ -447,10 +447,10 @@
                                 for(var k of Alloptions){
                                     k.remove();
                                 }
-                                for(var j of data["results"]) {
+                                for(var j in data["results"]) {
                                     var option=document.createElement("option");
-                                    option.innerHTML=j;
-                                    option.setAttribute("id", `option-${id}`);
+                                    option.innerHTML=data["results"][j];
+                                    option.setAttribute("id", `option-${id}-${j}`);
                                     datalist.appendChild(option);
                                 }
                                 if(input_value==data["results"][0]){
