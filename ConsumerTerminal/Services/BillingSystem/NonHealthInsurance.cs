@@ -1,36 +1,35 @@
-﻿using System;
+﻿using HISDB.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HISDB.Models;
-using HISDB.Data;
 
-namespace ConsumerTerminal.Services
+namespace ConsumerTerminal.Services.BillingSystem
 {
-    // 有健保
-    public class HealthInsurance : Billing
+    public class NonHealthInsurance : Billing
     {
         private readonly HisdbContext _context;
         private string PatientId { get; set; }
         private string ChargeId { get; set; }
 
         private PartialServices _partialServices { get; set; }
-        public HealthInsurance(string PatientId, string ChargeId) : base()
+        public NonHealthInsurance(string PatientId, string ChargeId) : base()
         {
             _context = new HisdbContext();
 
             this.PatientId = PatientId;
             this.ChargeId = ChargeId;
 
-            if(ChackPatient())
+            if (ChackPatient())
             {
                 _partialServices = new PartialServices(PatientId);
-            } else
+            }
+            else
             {
                 throw new Exception("Patient not found");
             }
-            
+
         }
 
         private bool ChackPatient()
@@ -45,15 +44,12 @@ namespace ConsumerTerminal.Services
                 return true;
             }
         }
-
-        // 藥費
-        public override Decimal DrugFee()
+        public override decimal DrugFee()
         {
             return 0;
         }
 
-        // 部分負擔費
-        public override Decimal PartialPayment()
+        public override decimal PartialPayment()
         {
             int age = _partialServices.GetAge();
 
@@ -61,11 +57,10 @@ namespace ConsumerTerminal.Services
             else return 240;
         }
 
-        // 掛號費
-        public override Decimal RegistrationFee()
+        public override decimal RegistrationFee()
         {
-            Decimal temp = 0;
-            Decimal total = 0;
+            decimal temp = 0;
+            decimal total = 0;
 
             if (DateTime.Now.DayOfWeek != DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
             {
@@ -76,18 +71,19 @@ namespace ConsumerTerminal.Services
                 temp = 30;
             }
 
-            if(_partialServices.GetAge() >= 70)
+            if (_partialServices.GetAge() >= 70)
             {
                 total = 100;
-            } else
+            }
+            else
             {
                 total = 150;
             }
-            
+
             return total - temp;
         }
 
-        public override Decimal DiagnosticFee()
+        public override decimal DiagnosticFee()
         {
             return 500;
         }

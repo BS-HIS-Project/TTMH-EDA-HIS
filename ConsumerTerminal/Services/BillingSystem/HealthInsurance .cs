@@ -1,20 +1,22 @@
-﻿using HISDB.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HISDB.Models;
+using HISDB.Data;
 
-namespace ConsumerTerminal.Services
+namespace ConsumerTerminal.Services.BillingSystem
 {
-    public class NonHealthInsurance : Billing
+    // 有健保
+    public class HealthInsurance : Billing
     {
         private readonly HisdbContext _context;
         private string PatientId { get; set; }
         private string ChargeId { get; set; }
 
         private PartialServices _partialServices { get; set; }
-        public NonHealthInsurance(string PatientId, string ChargeId) : base()
+        public HealthInsurance(string PatientId, string ChargeId) : base()
         {
             _context = new HisdbContext();
 
@@ -44,12 +46,15 @@ namespace ConsumerTerminal.Services
                 return true;
             }
         }
-        public override Decimal DrugFee()
+
+        // 藥費
+        public override decimal DrugFee()
         {
             return 0;
         }
 
-        public override Decimal PartialPayment()
+        // 部分負擔費
+        public override decimal PartialPayment()
         {
             int age = _partialServices.GetAge();
 
@@ -57,10 +62,11 @@ namespace ConsumerTerminal.Services
             else return 240;
         }
 
-        public override Decimal RegistrationFee()
+        // 掛號費
+        public override decimal RegistrationFee()
         {
-            Decimal temp = 0;
-            Decimal total = 0;
+            decimal temp = 0;
+            decimal total = 0;
 
             if (DateTime.Now.DayOfWeek != DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
             {
@@ -83,7 +89,7 @@ namespace ConsumerTerminal.Services
             return total - temp;
         }
 
-        public override Decimal DiagnosticFee()
+        public override decimal DiagnosticFee()
         {
             return 500;
         }
