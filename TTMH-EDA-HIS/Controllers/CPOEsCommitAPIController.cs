@@ -192,8 +192,6 @@ namespace TTMH_EDA_HIS.Controllers
                 });
             }
         }
-        [Authorize(Roles = "Doctor")]
-        [HttpPost("[action]")]
         private async Task<string> PrintPrescription(CPOEsCommitAPIPrescriptionViewModel vm)
         {
             try
