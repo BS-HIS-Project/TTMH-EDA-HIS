@@ -359,16 +359,20 @@ public partial class HisdbContext : DbContext
             new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "O101929955", ChaId= "CHA2023060613001001" },
             new DoctorsPatientsChart { DoctorId="D11201001", PatientId= "L198058112", ChaId= "CHA2023060613001002" },
             new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "O101929955", ChaId= "CHA2023062910001001" },
-            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA2023062920001002" }
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "S257920071", ChaId= "CHA2023062920001002" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "AC12345678", ChaId= "CHA2023063011001001" },
+            new DoctorsPatientsChart { DoctorId="D11201002", PatientId= "HD12345678", ChaId= "CHA2023063016001002" }
         );
         //病人
         modelBuilder.Entity<Patient>().HasData(
             // PAT + NOWDATE + 小時 + 診間號 + (病患)序號
-            new Patient { PatientId="A118992634", Nhicard="000012345678", CaseHistory="PAT2016061013001001", PatientName= "水戶黃門", BirthDate= new DateTime(1999,06,07), Gender="1", Blood="A", Address="台北市", Mobile="0912345678", Status="健保" },
-            new Patient { PatientId="O101929955", Nhicard="080009699912", CaseHistory="PAT2016061013001002", PatientName="海綿寶寶", BirthDate= new DateTime(1997,05,26), Gender="1", Blood="A", Address="新竹市", Mobile="0965478932", Status = "健保" },
-            new Patient { PatientId="H255590997", Nhicard="123456789011", CaseHistory="PAT2016122513001003", PatientName="晨曦", BirthDate= new DateTime(1997,08,13), Gender="2", Blood="AB", Address="桃園市", Mobile="0955664477", Status = "健保" },
-            new Patient { PatientId="L198058112", Nhicard="647519785134", CaseHistory="PAT2017052613001004", PatientName="野原新之助", BirthDate= new DateTime(1992,12,22), Gender="1", Blood="O", Address="台中市", Mobile="0964973125", Status = "健保" },
-            new Patient { PatientId="S257920071", Nhicard="715687493157", CaseHistory="PAT2017081113001005", PatientName= "橘子", BirthDate= new DateTime(2000,02,29), Gender="2", Blood="O", Address="高雄市", Mobile="0997919395", Status = "健保" }
+            new Patient { PatientId="A118992634", Nhicard="000012345678", CaseHistory="PAT2016061013001001", PatientName= "水戶黃門", BirthDate= new DateTime(1999,06,07), Gender="1", Blood="A", Address="台北市", Mobile="0912345678", Status= "HealthInsurance" },
+            new Patient { PatientId="O101929955", Nhicard="080009699912", CaseHistory="PAT2016061013001002", PatientName="海綿寶寶", BirthDate= new DateTime(1997,05,26), Gender="1", Blood="A", Address="新竹市", Mobile="0965478932", Status = "HealthInsurance" },
+            new Patient { PatientId="H255590997", Nhicard="123456789011", CaseHistory="PAT2016122513001003", PatientName="晨曦", BirthDate= new DateTime(1997,08,13), Gender="2", Blood="AB", Address="桃園市", Mobile="0955664477", Status = "HealthInsurance" },
+            new Patient { PatientId="L198058112", Nhicard="647519785134", CaseHistory="PAT2017052613001004", PatientName="野原新之助", BirthDate= new DateTime(1992,12,22), Gender="1", Blood="O", Address="台中市", Mobile="0964973125", Status = "HealthInsurance" },
+            new Patient { PatientId="S257920071", Nhicard="715687493157", CaseHistory="PAT2017081113001005", PatientName= "橘子", BirthDate= new DateTime(2000,02,29), Gender="2", Blood="O", Address="高雄市", Mobile="0997919395", Status = "HealthInsurance" },
+            new Patient { PatientId="AC12345678", Nhicard= null, CaseHistory="PAT2018081113001001", PatientName= "鮭魚", BirthDate= new DateTime(1982,09,10), Gender="1", Blood="B", Address="台南市", Mobile="0997224115", Status = "Japan" },
+            new Patient { PatientId="HD12345678", Nhicard= null, CaseHistory="PAT2019081113001001", PatientName= "鯨魚", BirthDate= new DateTime(2000,08,08), Gender="2", Blood="AB", Address="新北市", Mobile="0912847214", Status = "Korea" }
         );
         //就診
         modelBuilder.Entity<Chart>().HasData(
@@ -381,7 +385,9 @@ public partial class HisdbContext : DbContext
             new Chart { ChaId="CHA2023060613001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,06, 19, 39, 13), Subject="吃完藥會頭暈", Object="心臟病", History= "先天心臟病" },
             new Chart { ChaId="CHA2023060613001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,06, 10, 20, 13), Subject="有些緩和了", Object="心臟病", History= "先天心臟病" },
             new Chart { ChaId= "CHA2023062910001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,29, 10, 29, 14), Subject="有些緩和了", Object="心臟病", History= "先天心臟病" },
-            new Chart { ChaId= "CHA2023062920001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,29, 20, 47, 16), Subject="有些緩和了", Object="心臟病", History= "先天心臟病" }
+            new Chart { ChaId= "CHA2023062920001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,29, 20, 47, 16), Subject="有些緩和了", Object="心臟病", History= "先天心臟病" },
+            new Chart { ChaId= "CHA2023063011001001", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,30, 11, 27, 16), Subject="有些緩和了", Object="心臟病", History= "先天心臟病" },
+            new Chart { ChaId= "CHA2023063016001002", DepartmentName= "心臟內科", Vdate=new DateTime(2023,06,30, 16, 07, 30), Subject="有些緩和了", Object="心臟病", History= "先天心臟病" }
         );
         //藥單
         modelBuilder.Entity<Prescription>().HasData(
@@ -434,15 +440,15 @@ public partial class HisdbContext : DbContext
         //繳費單
         modelBuilder.Entity<Detail>().HasData(
             // DET + NOWDATE + 診間號 + (繳費條碼)序號
-            new Detail { DetId= "DET2023053013001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634", PaymentTime= new DateTime(2023,05,30, 09, 29, 13) },
-            new Detail { DetId= "DET2023053013001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955", PaymentTime= new DateTime(2023,05,30, 10, 02, 13) },
-            new Detail { DetId= "DET2023053013001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997", PaymentTime= new DateTime(2023,05,30, 15, 28, 13) },
-            new Detail { DetId= "DET2023053013001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112", PaymentTime= new DateTime(2023,05,30, 15, 50, 13) },
-            new Detail { DetId= "DET2023053013001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071", PaymentTime= new DateTime(2023,05,30, 19, 25, 13) },
-            new Detail { DetId= "DET2023060613001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= new DateTime(2023,06,06, 19, 45, 13) },
-            new Detail { DetId= "DET2023060613001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "L198058112", PaymentTime= new DateTime(2023,06,06, 10, 30, 13) },
-            new Detail { DetId= "DET2023062910001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= null},
-            new Detail { DetId= "DET2023062920001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "S257920071", PaymentTime= null}
+            new Detail { DetId= "DET2023053013001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634", PaymentTime= new DateTime(2023,05,30, 09, 29, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955", PaymentTime= new DateTime(2023,05,30, 10, 02, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997", PaymentTime= new DateTime(2023,05,30, 15, 28, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112", PaymentTime= new DateTime(2023,05,30, 15, 50, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071", PaymentTime= new DateTime(2023,05,30, 19, 25, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023060613001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= new DateTime(2023,06,06, 19, 45, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023060613001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "L198058112", PaymentTime= new DateTime(2023,06,06, 10, 30, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023062910001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= null, Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023062920001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "S257920071", PaymentTime= null, Diagnostic = null, PartialPayment = null }
         );
 
         OnModelCreatingPartial(modelBuilder);
