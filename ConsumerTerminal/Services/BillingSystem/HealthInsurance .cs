@@ -12,18 +12,13 @@ namespace ConsumerTerminal.Services.BillingSystem
     public class HealthInsurance : Billing
     {
         private readonly HisdbContext _context;
-        private string PatientId { get; set; }
-        private string ChargeId { get; set; }
 
         private PartialServices _partialServices { get; set; }
-        public HealthInsurance(string PatientId, string ChargeId) : base()
+        public HealthInsurance(string PatientId) : base(PatientId)
         {
             _context = new HisdbContext();
 
-            this.PatientId = PatientId;
-            this.ChargeId = ChargeId;
-
-            if (ChackPatient())
+            if(ChackPatient())
             {
                 _partialServices = new PartialServices(PatientId);
             }
@@ -33,20 +28,6 @@ namespace ConsumerTerminal.Services.BillingSystem
             }
 
         }
-
-        private bool ChackPatient()
-        {
-            var _patient = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault();
-            if (_patient == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
         // 藥費
         public override decimal DrugFee()
         {
@@ -54,7 +35,7 @@ namespace ConsumerTerminal.Services.BillingSystem
         }
 
         // 部分負擔費
-        public override decimal PartialPayment()
+        public override Decimal PartialPayment()
         {
             int age = _partialServices.GetAge();
 
@@ -63,10 +44,10 @@ namespace ConsumerTerminal.Services.BillingSystem
         }
 
         // 掛號費
-        public override decimal RegistrationFee()
+        public override Decimal RegistrationFee()
         {
-            decimal temp = 0;
-            decimal total = 0;
+            Decimal temp = 0;
+            Decimal total = 0;
 
             if (DateTime.Now.DayOfWeek != DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
             {
@@ -77,21 +58,20 @@ namespace ConsumerTerminal.Services.BillingSystem
                 temp = 30;
             }
 
-            if (_partialServices.GetAge() >= 70)
+            if(_partialServices.GetAge() >= 70)
             {
                 total = 100;
-            }
-            else
+            } else
             {
                 total = 150;
             }
-
+            
             return total - temp;
         }
 
-        public override decimal DiagnosticFee()
+        public override Decimal DiagnosticFee()
         {
-            return 500;
+            return 0;
         }
     }
 }
