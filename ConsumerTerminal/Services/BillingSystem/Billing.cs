@@ -65,6 +65,11 @@ namespace ConsumerTerminal.Services.BillingSystem
             else return 240;
         }
 
+        public Decimal Total()
+        {
+            return RegistrationFee() + PartialPayment() + DrugFee() + DiagnosticFee();
+        }
+
         // 藥費
         public abstract Decimal DrugFee();
         // 診察費
