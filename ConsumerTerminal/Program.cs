@@ -8,8 +8,6 @@ using ConsumerTerminal.Services.BillingSystem;
 
 var _context = new HisdbContext();
 
-//Console.WriteLine("請輸入GroupId");
-//var inputGroupId = Console.ReadLine();
 var inputGroupId = "G001";
 
 ConsumerConfig config = new ConsumerConfig
@@ -53,7 +51,6 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
         catch (Exception e)
         {
             Console.WriteLine(e);
-            //Console.WriteLine($"Received message: {consumeResult.Message.Value} NOT Doctor VM");
         }
 
         Console.WriteLine($"Received message: {consumeResult.Message.Value}");
