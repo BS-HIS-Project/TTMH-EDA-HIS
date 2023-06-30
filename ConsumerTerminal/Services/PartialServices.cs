@@ -11,12 +11,10 @@ namespace ConsumerTerminal.Services
     public class PartialServices
     {
         private readonly HisdbContext _context;
-        private string PatientId { get; set; }
         private Patient _patient { get; set; }
 
         public PartialServices(string PatientId)
         {
-            this.PatientId = PatientId;
             _context = new HisdbContext();
 
             _patient = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault() ?? new Patient();
