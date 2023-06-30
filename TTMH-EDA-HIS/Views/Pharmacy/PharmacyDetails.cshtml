@@ -116,8 +116,8 @@
                     <p class="AT-fs-25 text-white lh-lg text-end">@Model.Vdate</p>
                 </div>
                 <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end"></p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end"></p>
+                    <p class="AT-fs-25 text-white lh-lg text-end" style="display: none">領藥時間</p>&nbsp;
+                    <p class="AT-fs-25 text-white lh-lg text-end" style="display: none">@Model.DrugDate</p>
                 </div>
             </div>
         </div>
@@ -201,16 +201,19 @@
             </button>
         </div>
     </div>
+    @*var DrugDate = @Model.DrugDate;*@
 </div>
 @section Script{
     <script>
+        const DrugDate = "@Model.DrugDate";
+
         function SearchKey(event) {
             var search = document.getElementById("search");
-            var DrugDate = @Model.DrugDate;
+            
 
             if (event.key == "Enter") {
                 //window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
-                if (`${DrugDate}` = null) {
+                if (DrugDate = null) {
                     window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
                 }
                 //else {
