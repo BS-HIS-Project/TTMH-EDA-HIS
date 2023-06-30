@@ -24,7 +24,9 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
     consumer.Subscribe("my-topic");
     
     var CashierId = "C11201001";
+    var PhamacistId = "P11201001";
     var ClinicNumber = 1;
+    var DrugNumber = 1;
     var PaymentBarcode = 1;
 
     while (true)
@@ -40,9 +42,12 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                 Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
             } else
             {
+                DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData);
+
                 PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData);
+
                 CreateCDDs(JsonData);
-                
+
             }
         }
         catch (Exception e)
@@ -133,6 +138,10 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
         Registration = _billing.RegistrationFee(),
         // 藥費
         MedicalCost = _billing.DrugFee(),
+        // 部分負擔
+        PartialPayment = _billing.PartialPayment(),
+        // 診察費
+        Diagnostic = _billing.DiagnosticFee(),
         // 應繳金額
         Payable = _billing.Total(),
 
@@ -154,4 +163,31 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
 
     Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
     return PaymentBarcode;
+}
+
+int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, DoctorMessage? JsonData)
+{
+    var _Prescription = new Prescription()
+    {
+        // PRE + NOWDATE + 小時 + 診間號 + (領藥號)序號
+        PresNo = $"PRE{DateTime.Now.ToString("yyyyMMddHH")}{DrugNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}",
+        PhaId = PhamacistId,
+        PatientId = JsonData.PatientId
+    };
+
+    DrugNumber++;
+
+    while (_context.Prescriptions.Find(_Prescription.PresNo) != null)
+    {
+        Console.WriteLine($"Prescription: {_Prescription.PresNo} 新增已存在");
+        _Prescription.PresNo = $"PRE{DateTime.Now.ToString("yyyyMMddHH")}{DrugNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}";
+        DrugNumber++;
+    }
+
+    _context.Prescriptions.Add(_Prescription);
+    _context.SaveChanges();
+
+    Console.WriteLine($"Prescription: {_Prescription.PresNo} 成功新增");
+
+    return DrugNumber;
 }
