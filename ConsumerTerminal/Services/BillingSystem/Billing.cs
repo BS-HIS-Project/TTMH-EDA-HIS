@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 using HISDB.Models;
 using HISDB.Data;
 
-namespace ConsumerTerminal.Services
+namespace ConsumerTerminal.Services.BillingSystem
 {
     public abstract class Billing
     {
 
         // 掛號費
-        public abstract Decimal RegistrationFee();
+        public abstract decimal RegistrationFee();
         // 藥費
-        public abstract Decimal DrugFee();
+        public abstract decimal DrugFee();
         // 部分負擔費
-        public abstract Decimal PartialPayment();
+        public abstract decimal PartialPayment();
         // 診察費
-        public abstract Decimal DiagnosticFee();
+        public abstract decimal DiagnosticFee();
     }
 
 
