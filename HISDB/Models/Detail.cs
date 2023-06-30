@@ -18,6 +18,10 @@ public partial class Detail
 
     //繳費時間
     public DateTime? PaymentTime { get; set; }
+    // 部分負擔
+    public decimal? PartialPayment { get; set; }
+    //診察費
+    public decimal? Diagnostic { get; set; }
 
     public virtual Cashier Cas { get; set; } = null!;
 
