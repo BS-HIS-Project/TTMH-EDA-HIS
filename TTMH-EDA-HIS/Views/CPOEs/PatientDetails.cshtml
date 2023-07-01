@@ -590,6 +590,14 @@
                         text: ""
                     });
                     return false;
+                case 3:
+                    console.log("DosID不正確");
+                    Swal.fire({
+                        icon: "warning",
+                        title: "DosID不正確",
+                        text: ""
+                    });
+                    return false;
             }
             Swal.fire({
                 icon: 'info',
@@ -711,6 +719,17 @@
                         isRowFieldNullOrDuplicated = true;
                         tempCode = 2;
                         c = 0;
+                    }
+                    if (c == 3) {
+                        var RowIDsplit = d.id.split("-");
+                        var optionFirst = document.getElementById(`option-Drugs-2-${RowIDsplit[RowIDsplit.length - 1]}-0`);
+                        if (optionFirst != null) {
+                            if(optionFirst.innerHTML!=dd){
+                                isRowFieldNullOrDuplicated = true;
+                                tempCode = 3;
+                                c = 0;
+                            }
+                        }   
                     }
                 }
             }

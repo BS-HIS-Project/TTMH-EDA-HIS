@@ -162,6 +162,7 @@ namespace TTMH_EDA_HIS.Controllers
                 }
 
                 string response = await PrintPrescription(pvm);
+
                 if (response == null) { 
                     throw new Exception("Connection Failed"); 
                 }
@@ -192,8 +193,6 @@ namespace TTMH_EDA_HIS.Controllers
                 });
             }
         }
-        [Authorize(Roles = "Doctor")]
-        [HttpPost("[action]")]
         private async Task<string> PrintPrescription(CPOEsCommitAPIPrescriptionViewModel vm)
         {
             try
