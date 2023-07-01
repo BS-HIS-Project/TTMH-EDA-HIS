@@ -5,6 +5,7 @@ using HISDB.Models;
 using HISDB.Data;
 using HISDB;
 using ConsumerTerminal.Services.BillingSystem;
+using ConsumerTerminal.Services.PrintSystem;
 
 var _context = new HisdbContext();
 
@@ -26,6 +27,7 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
     var ClinicNumber = 1;
     var DrugNumber = 1;
     var PaymentBarcode = 1;
+    string PresNo;
 
     while (true)
     {
@@ -40,12 +42,17 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                 Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
             } else
             {
-                DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData);
+                DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
                 PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData);
 
                 CreateCDDs(JsonData);
 
+
+                foreach(var data in JsonData.ChartsDrugsDosages)
+                {
+                    var _MBSer = new MedicineBagServices(JsonData.ChaId, data.DrugId, JsonData.PatientId, PresNo);
+                }
             }
         }
         catch (Exception e)
@@ -162,7 +169,7 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
     return PaymentBarcode;
 }
 
-int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, DoctorMessage? JsonData)
+int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, DoctorMessage? JsonData, out string PresNo)
 {
     var _Prescription = new Prescription()
     {
@@ -186,5 +193,6 @@ int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, 
 
     Console.WriteLine($"Prescription: {_Prescription.PresNo} 成功新增");
 
+    PresNo = _Prescription.PresNo;
     return DrugNumber;
 }

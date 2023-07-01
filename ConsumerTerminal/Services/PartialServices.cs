@@ -28,5 +28,11 @@ namespace ConsumerTerminal.Services
             if (birthDate.Date > today.AddYears(-age)) age--;
             return age;
         }
+
+        public string GetGender()
+        {
+            if (_patient.Gender == "1") return "男";
+            else return "女";
+        }
     }
 }
