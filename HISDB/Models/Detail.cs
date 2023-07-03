@@ -22,6 +22,8 @@ public partial class Detail
     public decimal? PartialPayment { get; set; }
     //診察費
     public decimal? Diagnostic { get; set; }
+    //藥品部分負擔
+    public decimal? DrugPartialPayment { get; set; }
 
     public virtual Cashier Cas { get; set; } = null!;
 
