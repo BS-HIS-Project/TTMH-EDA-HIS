@@ -38,7 +38,7 @@
                         </div>
                         <div class="FM-bd-Prescription">
                             <div class="row">
-                                <div class="text-danger py-3 ps-4 FM-fs-30">領藥號 : #ChaID</div>
+                                <div class="text-danger py-3 ps-4 FM-fs-30">領藥號 : #PresNo </div>
                             </div>
                             <div class="row py-2 FM-hr-top_bottom">
                                 <div class="col">
@@ -47,7 +47,7 @@
                                             病例編號：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #PatientID
+                                            #CaseHistory
                                         </div>
                                     </div>
                                     <div class="row">
@@ -63,7 +63,7 @@
                                             看診醫生：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #DName
+                                            #DoctorName
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                             病患姓名：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #PName
+                                            #PatientName
                                         </div>
                                     </div>
                                     <div class="row">
@@ -81,7 +81,7 @@
                                             年齡：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #Year
+                                            #Age
                                         </div>
                                     </div>
                                     <div class="row">
@@ -89,7 +89,7 @@
                                             看診日期：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #Vdate
+                                            #VDate
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                             性別：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            Male
+                                            #Gender
                                         </div>
                                     </div>
                                 </div>
@@ -110,24 +110,38 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col FM-fs-20 text-black" style="height:250px;">
-                                    Lorem ipsum dolor sit amet sconsectetur adipisicing elit. Officiis sunt, consectetur rerum sequi magnam consequatur nulla fugiat sit molestiae, nesciunt assumenda quo tempore voluptates! Ab ad cum distinctio asperiores consequatur!
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit
+                                <div class="col FM-fs-20 text-black" style="height:160px;">
+                                    #Object
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="FM-fs-25 py-2 FM-fg-secondary">
-                                    藥品
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col FM-fs-20 text-black" style="height:270px;">
-                                    Lorem ipsum dolor sit amet sconsectetur adipisicing elit. Officiis sunt, consectetur rerum sequi magnam consequatur nulla fugiat sit molestiae, nesciunt assumenda quo tempore voluptates! Ab ad cum distinctio asperiores consequatur!
-                                </div>
+                                <table class="FM-table-PaymentSlip-drugs" style="width:100%;border-top:3px solid #015958;">
+                                    <thead>
+                                        <tr>
+                                            <th>藥品名稱</th>
+                                            <th>用法</th>
+                                            <th>次量</th>
+                                            <th>天數</th>
+                                            <th>總量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="FM-hr-top_bottom" style="height:365px;">
+                                        <tr>
+                                            <td>#DrugName</td>
+                                            <td>#DrugId</td>
+                                            <td>#CDDsQty</td>
+                                            <td>#CDDsDays</td>
+                                            <td>#CDDsTotal</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>    
                             <div class="row d-flex flex-row-reverse">
-                                <div class="col-3 FM-fs-20 text-start FM-fg-secondary">
-                                    藥劑師 : 李小熊
+                                <div class="col-4 FM-fs-20 text-start FM-fg-secondary pt-1">
+                                    藥劑師 : 
+                                    <span class="text-black">
+                                        #PharmacistName
+                                    </span>
                                 </div>
                             </div>    
                         </div>
