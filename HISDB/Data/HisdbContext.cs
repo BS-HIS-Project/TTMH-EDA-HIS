@@ -440,15 +440,15 @@ public partial class HisdbContext : DbContext
         //繳費單
         modelBuilder.Entity<Detail>().HasData(
             // DET + NOWDATE + 診間號 + (繳費條碼)序號
-            new Detail { DetId= "DET2023053013001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "A118992634", PaymentTime= new DateTime(2023,05,30, 09, 29, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023053013001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "O101929955", PaymentTime= new DateTime(2023,05,30, 10, 02, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023053013001003", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "H255590997", PaymentTime= new DateTime(2023,05,30, 15, 28, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023053013001004", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "L198058112", PaymentTime= new DateTime(2023,05,30, 15, 50, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023053013001005", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201001", PatientId= "S257920071", PaymentTime= new DateTime(2023,05,30, 19, 25, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023060613001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= new DateTime(2023,06,06, 19, 45, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023060613001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "L198058112", PaymentTime= new DateTime(2023,06,06, 10, 30, 13), Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023062910001001", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= null, Diagnostic = null, PartialPayment = null },
-            new Detail { DetId= "DET2023062920001002", Registration=150, MedicalCost=500, Payable=650, CasId= "C11201002", PatientId= "S257920071", PaymentTime= null, Diagnostic = null, PartialPayment = null }
+            new Detail { DetId= "DET2023053013001001", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201001", PatientId= "A118992634", PaymentTime= new DateTime(2023,05,30, 09, 29, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001002", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201001", PatientId= "O101929955", PaymentTime= new DateTime(2023,05,30, 10, 02, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001003", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201001", PatientId= "H255590997", PaymentTime= new DateTime(2023,05,30, 15, 28, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001004", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201001", PatientId= "L198058112", PaymentTime= new DateTime(2023,05,30, 15, 50, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023053013001005", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201001", PatientId= "S257920071", PaymentTime= new DateTime(2023,05,30, 19, 25, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023060613001001", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= new DateTime(2023,06,06, 19, 45, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023060613001002", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201002", PatientId= "L198058112", PaymentTime= new DateTime(2023,06,06, 10, 30, 13), Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023062910001001", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201002", PatientId= "O101929955", PaymentTime= null, Diagnostic = null, PartialPayment = null },
+            new Detail { DetId= "DET2023062920001002", Registration=150, MedicalCost=500, DrugPartialPayment= null, Payable=650, CasId= "C11201002", PatientId= "S257920071", PaymentTime= null, Diagnostic = null, PartialPayment = null }
         );
 
         OnModelCreatingPartial(modelBuilder);
