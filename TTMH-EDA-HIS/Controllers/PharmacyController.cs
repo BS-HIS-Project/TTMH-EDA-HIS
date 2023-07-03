@@ -44,6 +44,11 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 return RedirectToAction("PharmacyDetails", "Pharmacy", new { PresNo = "paid" });
             }
+            //Detail detail = await _context.Details.FirstOrDefaultAsync(x=>x.PatientId == prescription.PatientId);
+            //if(detail.PaymentTime != null)
+            //{
+            //    return RedirectToAction("PharmacyDetails", "Pharmacy", new { PresNo = "nopay" });
+            //}
 
             return RedirectToAction("PharmacyDetails", "Pharmacy", new {PresNo = q});
         }
@@ -53,24 +58,27 @@ namespace TTMH_EDA_HIS.Controllers
         [HttpPost]
         public async Task<IActionResult> PharmacyDetails(PresViewModel presvm)
         {
-            if (presvm.content == null || presvm.content == "")
+            Prescription? prescription = await _context.Prescriptions.FirstOrDefaultAsync(pre=>pre.PresNo== presvm.PresNo);
+            if(prescription == null)
             {
-                return RedirectToAction("PharmacyDetails");
+                return NotFound();
             }
-            Patient patient = await _context.Patients.FirstOrDefaultAsync(p => p.CaseHistory == presvm.content);
-            if(patient == null)
-            {
-                Prescription prescription = await _context.Prescriptions.FirstOrDefaultAsync(pre=>pre.PresNo==presvm.content);
-                patient = await _context.Patients.FirstOrDefaultAsync(p=>p.PatientId==prescription.PatientId);
-            }
-
+            prescription.DrugDate= DateTime.Now;
+            
 
             PresViewModel vm = new PresViewModel()
             {
-                Patient= patient ?? new Patient(),
-                content = ""
+                Patient = new Patient(),
+                PresNo = "",
+                age = 0,
+                birthday = "",
+                docsName = "",
+                Vdate = "",
+                Drugs = new List<PresViewModel_Drug>(),
+                StatusCode = 3, //Message Success
+                PaymentTime = DateTime.Now
             };
-                        
+            await _context.SaveChangesAsync();
             return View(vm);
         }
 
@@ -87,21 +95,22 @@ namespace TTMH_EDA_HIS.Controllers
                 PresViewModel empty = new PresViewModel()
                 {
                     Patient = new Patient(),
-                    content = "",
                     PresNo = "",
                     age = 0,
                     birthday="",
                     docsName = "",
                     Vdate = "",
                     Drugs = new List<PresViewModel_Drug>(),
-                    StatusCode = 0
+                    StatusCode = 0,
+                    PaymentTime = DateTime.Now
                 };
                 switch (PresNo)
                 {
                     case "paid":
                         empty.StatusCode = 1;break;
                     case "NoResult":
-                        empty.StatusCode = 2;break;
+                        empty.StatusCode = 2;break;                    
+
                 }
                 return View(empty);
             }
@@ -165,12 +174,13 @@ namespace TTMH_EDA_HIS.Controllers
             vm.age = (zerotime + ageSpan).Year - 1;
 
 
-
-
-
-
-
-
+            DateTime? paymentTime = await (
+                from d in _context.Details
+                where d.PatientId == patient.PatientId
+                orderby d.DetId descending
+                select d.PaymentTime
+            ).FirstOrDefaultAsync();
+            vm.PaymentTime = paymentTime;
 
 
             return View(vm);

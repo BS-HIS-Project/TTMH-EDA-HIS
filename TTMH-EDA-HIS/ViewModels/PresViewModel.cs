@@ -7,7 +7,6 @@ namespace TTMH_EDA_HIS.ViewModels
     public class PresViewModel
     {
         public Patient? Patient { get; set; }
-        public string? content { get; set; }
 
         [DisplayName("領藥號")]
         public string? PresNo { get; set; }
@@ -21,6 +20,7 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("就診日期")]
         public string? Vdate { get; set; }
 
+        //確認id狀態
         public int StatusCode { get; set; } = 0;
         public List<PresViewModel_Drug> Drugs { get; set; }
 

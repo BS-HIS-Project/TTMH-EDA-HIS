@@ -23,10 +23,10 @@
         }
 
         /* @@media (max-width:900px) {
-                    .MD-adjust-3 p{
-                        font-size: 50px !important;
-                    }
-                }*/
+                            .MD-adjust-3 p{
+                                font-size: 50px !important;
+                            }
+                        }*/
 
         .SC-input-button-form_submit {
             background-color: #4443a3;
@@ -49,6 +49,12 @@
     </style>
 }
 @*大框架*@
+<div class="container" id="DisplayNotYetPaid">
+    <div class="alert alert-danger" role="alert">
+        此病患尚未繳費!!
+    </div>
+</div>
+
 <div class="container-lg">
     <!-- 搜尋 -->
     <div class="row my-3 mx-5 d-flex justify-content-center">
@@ -60,8 +66,6 @@
         </form>*@
         @*第二版*@
         <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control m-3 AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入領藥號">
-
-
     </div>
     <!-- 病人資訊 -->
     <div class="row d-flex justify-content-center">
@@ -196,20 +200,22 @@
         <div class="col-8"></div>
         @*按鈕*@
         <div class="col-4 d-flex justify-content-center">
-            <form asp-action="PharmacyDetails" asp-route-id="" method="post">
+            <form asp-action="PharmacyDetails" method="post">
+                <input type="text" asp-for="PresNo"  value="@Model.PresNo" style="display:none;">
                 <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
                     @*id="Post"*@
                     完成領藥
                 </button>
-            </form>                
+            </form>
         </div>
-    </div>    
+    </div>
 </div>
 @section Script{
     <script src="~/lib/sweetalert2/sweetalert2.all.js"></script>
     <script>
-        const DrugDate = "@Model.DrugDate";
+
         const StatusCode = @Model.StatusCode;
+        const PaymentTime = "@Model.PaymentTime";
 
         function SearchKey(event) {
             var search = document.getElementById("search");
@@ -218,27 +224,40 @@
             }
         }
 
-        window.onload=()=>{
+        window.onload = () => {
             switch (StatusCode) {
                 case 1: //Paid
                     Swal.fire({
-                        icon: 'error',
+                        icon: 'warning',
                         title: 'Oops...',
-                        text: '已領過藥了',
+                        text: '已領藥過了',
                         //footer: '<a href="">Why do I have this issue?</a>'
                     });
                     break;
                 case 2: //No Result
                     Swal.fire({
-                        icon: 'warning',
+                        icon: 'error',
                         title: 'Oops...',
                         text: '查無資料',
                         //footer: '<a href="">Why do I have this issue?</a>'
                     });
                     break;
+                case 3:
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '完成領藥',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    break;
+            }
+            $("#DisplayNotYetPaid").hide();
+            if (PaymentTime == ""){
+                $("#DisplayNotYetPaid").slideDown("slow");
+
             }
         }
 
     </script>
 }
-

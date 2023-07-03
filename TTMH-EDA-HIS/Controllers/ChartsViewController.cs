@@ -32,8 +32,12 @@ namespace TTMH_EDA_HIS.Controllers
             Detail detail = await _context.Details.FirstOrDefaultAsync(x => x.DetId == q);
             if (detail == null)
             {
-                return RedirectToAction("ChartsDetails"); //補要指向的Action
-            }            
+                return RedirectToAction("ChartsDetails", "ChartsView", new { DetId = "NoResult"}); 
+            }
+            if(detail.PaymentTime != null)
+            {
+                return RedirectToAction("ChartsDetails", "ChartsView", new { DetId = "paid" });
+            }
 
             return RedirectToAction("ChartsDetails", "ChartsView", new { DetId = q }); //Action名字, controller名稱不用加controller
         }
@@ -43,23 +47,25 @@ namespace TTMH_EDA_HIS.Controllers
         [HttpPost]
         public async Task<IActionResult> ChartsDetails(ChartsViewModel chavm)
         {
-            if (chavm.content == null || chavm.content == "")
+            Detail? detail = await _context.Details.FirstOrDefaultAsync(det => det.DetId == chavm.DetId);
+            if(detail == null)
             {
-                return RedirectToAction("ChartsDetails");
+                return NotFound();
             }
-
-            Patient patient = await _context.Patients.FirstOrDefaultAsync(p => p.CaseHistory == chavm.content);
-            if (patient == null)
-            {
-                Detail detail = await _context.Details.FirstOrDefaultAsync(det=>det.DetId == chavm.content);
-                patient = await _context.Patients.FirstOrDefaultAsync(p => p.PatientId == detail.PatientId);                
-            }
-
+            detail.PaymentTime = DateTime.Now;
             ChartsViewModel vm = new ChartsViewModel()
             {
-                Patient = patient ?? new Patient(),
-                content = ""
-            };            
+                Patient = new Patient(),
+                DetId = "",
+                age = 0,
+                birthday = "",
+                docsName = "",
+                Vdate = "",
+                Drugs = new List<ChartsViewModel_Drug>(),
+                StatusCode = 3, //Message Success
+                PaymentTime = DateTime.Now
+            };
+            await _context.SaveChangesAsync();
 
             return View(vm);
         }
@@ -72,7 +78,7 @@ namespace TTMH_EDA_HIS.Controllers
         {
             ChartsViewModel vm = new ChartsViewModel();            
 
-            if (DetId == null)
+            if (DetId == null || DetId == "paid" || DetId == "NoResult")
             {
                 ChartsViewModel empty = new ChartsViewModel()
                 {
@@ -83,8 +89,18 @@ namespace TTMH_EDA_HIS.Controllers
                     birthday = "",
                     docsName = "",
                     Vdate = "",
-                    //Drugs = new List<PresViewModel_Drug>()
+                    StatusCode = 0,
+                    PaymentTime = DateTime.Now
                 };
+                switch (DetId)
+                {
+                    case "paid":
+                        empty.StatusCode = 1; break;
+                    case "NoResult":
+                        empty.StatusCode = 2; break;
+                }
+
+
                 return View(empty);
             }
 

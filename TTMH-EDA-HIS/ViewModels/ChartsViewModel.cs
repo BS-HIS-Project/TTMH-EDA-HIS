@@ -46,6 +46,9 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("應繳金額")]
         public decimal? Payable {  get; set; }
 
+        //確認id狀態
+        public int StatusCode { get; set; } = 0;
+
         public List<ChartsViewModel_Drug> Drugs { get; set; }
 
         public class ChartsViewModel_Drug

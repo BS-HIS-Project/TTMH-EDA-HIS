@@ -4,6 +4,7 @@
 }
 
 @section CSS{
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.css" />
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
         @@media (max-width:1780px) {
@@ -53,13 +54,17 @@
                         }
                         @if (status == "HealthInsurance")                        {
                             <p class="AT-fs-25 text-white lh-lg">
-                                健保
+                                <div class="align-middle">
+                                    健保
+                                </div>
                             </p>
                         }
                         else
                         {
                             <p class="AT-fs-25 text-white lh-lg">
-                                非健保
+                                <div class="align-middle">
+                                    非健保
+                                </div>
                             </p>
                         }
                     </div>
@@ -171,12 +176,13 @@
                 <div class="col-8"></div>
                 @*按鈕*@
                 <div class="col-4 d-flex justify-content-center">
-
-                    <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
-                        @*id="Post"*@
-                        完成繳費
-                    </button>
-
+                    <form asp-action="ChartsDetails" method="post">
+                        <input type="text" asp-for="DetId" value="@Model.DetId" style="display:none;">
+                        <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
+                            @*id="Post"*@
+                            完成繳費
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -184,26 +190,46 @@
 </div>
 
 @section Script{
+    <script src="~/lib/sweetalert2/sweetalert2.all.js"></script>
     <script>
+
+        const StatusCode = @Model.StatusCode;
+        //const PaymentTime = "Model.PaymentTime.ToString()"";
 
         function SearchKey(event) {
             var search = document.getElementById("search");
-
-
             if (event.key == "Enter") {
                 window.location.assign(`https://${location.hostname}:${location.port}/ChartsView/ChartsDetailsSearch?q=${search.value}`);
-                //if (DrugDate = null) {
-                //    window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
-                //}
-                //else {
-                //    Swal.fire({
-                //        icon: 'error',
-                //        title: 'Oops...',
-                //        text: '輸入值有錯或是已領過藥了',
-                //        footer: '<a href="">Why do I have this issue?</a>'
-                //    })
-                //}
+            }
+        }
 
+        window.onload = () => {
+            switch (StatusCode) {
+                case 1: //Paid
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: '已繳費過了',
+                        //footer: '<a href="">Why do I have this issue?</a>'
+                    });
+                    break;
+                case 2: //No Result
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '查無資料',
+                        //footer: '<a href="">Why do I have this issue?</a>'
+                    });
+                    break;
+                case 3:
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '完成繳費',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    break;
             }
         }
 
