@@ -1,4 +1,5 @@
 ﻿using HISDB.Data;
+using HISDB.Models;
 using IronPdf.Rendering;
 using System;
 using System.Collections.Generic;
@@ -44,29 +45,37 @@ namespace ConsumerTerminal.Services.PrintSystem
             var chart = _context.Charts.Where(c => c.ChaId == ChaId).FirstOrDefault();
             var drug = _context.Drugs.Where(d => d.DrugId == DrugId).FirstOrDefault();
             var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
-            var pharmacy = _context.Employees.Where(p => p.EmployeeId == pres.PhaId).FirstOrDefault();
+            var detail = (
+                from dt in _context.Details
+                where dt.PatientId == pat.PatientId
+                orderby dt.PaymentTime descending
+                select dt
+            ).FirstOrDefault();
+            var cashierName = (
+                from em in _context.Employees
+                where em.EmployeeId==detail.CasId
+                select em.EmployeeName
+            ).FirstOrDefault();
+
 
             var PatSer = new PartialServices(PatientId);
 
-            _match.Add(new MatchData { htmlStr = "#PatientId", pdfStr = pat.PatientId.ToString() });
-            _match.Add(new MatchData { htmlStr = "#BirthDate", pdfStr = DateTimeToYMD(pat.BirthDate) });
-            _match.Add(new MatchData { htmlStr = "#DoctorName", pdfStr = Doctor.EmployeeName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PatientName", pdfStr = pat.PatientName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PatientYear", pdfStr = PatSer.GetAge().ToString() });
-            _match.Add(new MatchData { htmlStr = "#Vdate", pdfStr = DateTimeToYMD(chart.Vdate) });
+            _match.Add(new MatchData { htmlStr = "#CaseHistory", pdfStr = pat.CaseHistory });
+            _match.Add(new MatchData { htmlStr = "#PatientName", pdfStr = pat.PatientName });
             _match.Add(new MatchData { htmlStr = "#Gender", pdfStr = PatSer.GetGender() });
-            _match.Add(new MatchData { htmlStr = "#DrugName", pdfStr = drug.DrugName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#Appearance", pdfStr = drug.Appearance.ToString() });
-            _match.Add(new MatchData { htmlStr = "#GenericName", pdfStr = drug.GenericName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#Dcontent", pdfStr = drug.Dcontent.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DosageFreq", pdfStr = dosage.Freq.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsQty", pdfStr = CDDs.Quantity.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsDays", pdfStr = CDDs.Days.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugWarningPrecautions", pdfStr = drug.WarningPrecautions.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugClinicalUses", pdfStr = drug.ClinicalUses.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugAdverseReactions", pdfStr = drug.AdverseReactions.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsTotal", pdfStr = CDDs.Total.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PhaName", pdfStr = pharmacy.EmployeeName.ToString() });
+            _match.Add(new MatchData { htmlStr = "#BirthDate", pdfStr = pat.BirthDate.ToString("yyyy/MM/dd") });
+            _match.Add(new MatchData { htmlStr = "#Age", pdfStr = PatSer.GetAge().ToString() });
+            _match.Add(new MatchData { htmlStr = "#DoctorName", pdfStr = Doctor.EmployeeName});
+            _match.Add(new MatchData { htmlStr = "#VDate", pdfStr = chart.Vdate.ToString("yyyy/MM/dd")});
+            _match.Add(new MatchData { htmlStr = "#Registration", pdfStr = detail.Registration.ToString()});
+            _match.Add(new MatchData { htmlStr = "#MedicalCost", pdfStr = detail.MedicalCost.ToString()});
+            _match.Add(new MatchData { htmlStr = "#PartialPayment", pdfStr = detail.PartialPayment.ToString()});
+            _match.Add(new MatchData { htmlStr = "#Diagnostic", pdfStr = detail.Diagnostic.ToString()});
+            _match.Add(new MatchData { htmlStr = "#DrugPartialPayment", pdfStr =  detail.DrugPartialPayment.ToString()});
+            _match.Add(new MatchData { htmlStr = "#Payable", pdfStr =  detail.Payable.ToString()});
+            _match.Add(new MatchData { htmlStr = "#DetID", pdfStr =  detail.DetId});
+            _match.Add(new MatchData { htmlStr = "#CashierName", pdfStr =  cashierName});
+            _match.Add(new MatchData { htmlStr = "#PaymentTime", pdfStr = detail.PaymentTime?.ToString("yyyy/MM/dd")});
         }
 
         private static string DateTimeToYMD(DateTime dateTime)
