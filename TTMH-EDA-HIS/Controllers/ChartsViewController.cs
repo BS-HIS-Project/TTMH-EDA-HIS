@@ -88,12 +88,22 @@ namespace TTMH_EDA_HIS.Controllers
                 return View(empty);
             }
 
-            Detail detail = await _context.Details.FirstOrDefaultAsync(det=>det.DetId==DetId);
+            Detail detail = await _context.Details.FirstOrDefaultAsync(det=>det.DetId==DetId);           
             if(detail == null)
             {
                 return NotFound();
             }
             vm.DetId = detail.DetId;
+
+            vm.PaymentTime = detail.PaymentTime;
+            vm.Registration = detail.Registration;
+            vm.PartialPayment = detail.PartialPayment;
+            vm.DrugPartialPayment = detail.DrugPartialPayment;
+            vm.Diagnostic = detail.Diagnostic;
+            vm.MedicalCost = detail.MedicalCost;
+            vm.Payable = detail.Payable;
+
+
 
             Patient patient = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == detail.PatientId);
             vm.Patient = patient;

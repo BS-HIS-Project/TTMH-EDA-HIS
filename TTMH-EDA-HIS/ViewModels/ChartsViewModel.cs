@@ -29,13 +29,23 @@ namespace TTMH_EDA_HIS.ViewModels
         [DisplayName("繳費時間")]
         public DateTime? PaymentTime { get; set; }
         [DisplayName("掛號費")]
-        public string? Registration { get; set; }
+        public decimal? Registration { get; set; }
 
         [DisplayName("部分負擔")]
         public decimal? PartialPayment { get; set; }
 
+        [DisplayName("藥品部分負擔")]
+        public decimal? DrugPartialPayment { get; set;}
+
         [DisplayName("診察費")]
         public decimal? Diagnostic { get; set; }
+
+        [DisplayName("藥費")]
+        public decimal? MedicalCost { get; set; }
+
+        [DisplayName("應繳金額")]
+        public decimal? Payable {  get; set; }
+
         public List<ChartsViewModel_Drug> Drugs { get; set; }
 
         public class ChartsViewModel_Drug

@@ -143,11 +143,11 @@
                     <!-- 金額內容 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary"></div>
-@*                        //<p class="h4 text-black lh-lg">@Model.Detail.Registration</p>
-                        //<p class="h4 text-black lh-lg">@Model.Detail.Diagnostic</p>
-                        //<p class="h4 text-black lh-lg">@Model.Detail.PartialPayment</p>
-                        //<p class="h4 text-black lh-lg">lorem</p>
-                        //<p class="h4 text-black lh-lg">@Model.Detail.MedicalCost</p>                        *@
+                        <p class="h4 text-black lh-lg">@Model.Registration</p>
+                        <p class="h4 text-black lh-lg">@Model.Diagnostic</p>
+                        <p class="h4 text-black lh-lg">@Model.PartialPayment</p>
+                        <p class="h4 text-black lh-lg">@Model.DrugPartialPayment</p>
+                        <p class="h4 text-black lh-lg">@Model.MedicalCost</p>                        
                     </div>
                 </div>
                 <hr class="BS-border border-3 opacity-75" />
@@ -160,7 +160,7 @@
                     <!-- 應繳金額 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary">
-                            @*應繳金額：@Model*@
+                            應繳金額：@Model.Payable
                         </div>
                     </div>
                 </div>
