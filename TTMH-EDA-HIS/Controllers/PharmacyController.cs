@@ -21,15 +21,10 @@ namespace TTMH_EDA_HIS.Controllers
 
         }
 
-        //領藥列表
+        [HttpGet]
         public IActionResult Index()
         {
-
-            return View();
-        }
-        public async Task<IActionResult> Details()
-        {
-            return View();
+            return RedirectToAction("PharmacyDetails");
         }
 
         [Authorize]
@@ -43,10 +38,14 @@ namespace TTMH_EDA_HIS.Controllers
             Prescription prescription = await _context.Prescriptions.FirstOrDefaultAsync(x => x.PresNo == q);
             if(prescription == null)
             {
-                return RedirectToAction("PharmacyDetails");
+                return RedirectToAction("PharmacyDetails", "Pharmacy", new { PresNo = "NoResult" });
+            }
+            if(prescription.DrugDate != null)
+            {
+                return RedirectToAction("PharmacyDetails", "Pharmacy", new { PresNo = "paid" });
             }
 
-            return RedirectToAction("PharmacyDetails", "Pharmacy", new {PresNo=q});
+            return RedirectToAction("PharmacyDetails", "Pharmacy", new {PresNo = q});
         }
 
 
@@ -83,7 +82,7 @@ namespace TTMH_EDA_HIS.Controllers
         {
             PresViewModel vm = new PresViewModel();
 
-            if (PresNo == null)
+            if (PresNo == null || PresNo=="paid" || PresNo=="NoResult")
             {
                 PresViewModel empty = new PresViewModel()
                 {
@@ -94,8 +93,16 @@ namespace TTMH_EDA_HIS.Controllers
                     birthday="",
                     docsName = "",
                     Vdate = "",
-                    Drugs = new List<PresViewModel_Drug>()
+                    Drugs = new List<PresViewModel_Drug>(),
+                    StatusCode = 0
                 };
+                switch (PresNo)
+                {
+                    case "paid":
+                        empty.StatusCode = 1;break;
+                    case "NoResult":
+                        empty.StatusCode = 2;break;
+                }
                 return View(empty);
             }
             Prescription pres = await _context.Prescriptions.FirstOrDefaultAsync(pre=>pre.PresNo == PresNo);

@@ -4,6 +4,7 @@
 }
 
 @section CSS{
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.css" />
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
         @@media (max-width:1080px) {
@@ -195,36 +196,46 @@
         <div class="col-8"></div>
         @*按鈕*@
         <div class="col-4 d-flex justify-content-center">
-            <button class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
-                @*id="Post"*@
-                完成領藥
-            </button>
+            <form asp-action="PharmacyDetails" asp-route-id="" method="post">
+                <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
+                    @*id="Post"*@
+                    完成領藥
+                </button>
+            </form>                
         </div>
-    </div>
-    @*var DrugDate = @Model.DrugDate;*@
+    </div>    
 </div>
 @section Script{
+    <script src="~/lib/sweetalert2/sweetalert2.all.js"></script>
     <script>
         const DrugDate = "@Model.DrugDate";
+        const StatusCode = @Model.StatusCode;
 
         function SearchKey(event) {
             var search = document.getElementById("search");
-            
-
             if (event.key == "Enter") {
                 window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
-                //if (DrugDate = null) {
-                //    window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
-                //}
-                //else {
-                //    Swal.fire({
-                //        icon: 'error',
-                //        title: 'Oops...',
-                //        text: '輸入值有錯或是已領過藥了',
-                //        footer: '<a href="">Why do I have this issue?</a>'
-                //    })
-                //}
+            }
+        }
 
+        window.onload=()=>{
+            switch (StatusCode) {
+                case 1: //Paid
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '已領過藥了',
+                        //footer: '<a href="">Why do I have this issue?</a>'
+                    });
+                    break;
+                case 2: //No Result
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: '查無資料',
+                        //footer: '<a href="">Why do I have this issue?</a>'
+                    });
+                    break;
             }
         }
 

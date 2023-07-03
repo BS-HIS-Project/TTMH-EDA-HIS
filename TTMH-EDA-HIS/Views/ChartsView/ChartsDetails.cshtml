@@ -44,75 +44,75 @@
     <div class="row" style="height: 100%">
         @*病人個資*@
         <div class="col-3">
-            <div class="ED-media-1 py-3 row me-5 AT-bg-secondary-emphasis AT-rounded-1 rounded-4" style="width:450px;height:550px;">
+            <div class="ED-media-1 py-3 row me-5 AT-bg-secondary-emphasis AT-rounded-1 rounded-4" style="width:510px;height:620px;">
                 <div class="col-5">
                     @*<p class="h4 text-white align-content-center SC-btn AT-rounded-1">健保</p>*@
-                    <div class="d-flex justify-content-center badge AT-bg-primary-deep AT-fs-25 text-wrap" style="width: 7rem;height: 3rem;">
-                        @if (Model.Patient.Status == "HealthInsurance")
-                        {
-                            <p class="AT-fs-25 text-white lh-lg text-end">
+                    <div class="d-flex justify-content-center badge AT-bg-primary-deep AT-fs-25 text-wrap" style="width: 115px;height: 48px;">
+                        @{
+                            var status = Model.Patient.Status ?? "";
+                        }
+                        @if (status == "HealthInsurance")                        {
+                            <p class="AT-fs-25 text-white lh-lg">
                                 健保
                             </p>
                         }
                         else
                         {
-                            <p class="AT-fs-25 text-white lh-lg text-end">
+                            <p class="AT-fs-25 text-white lh-lg">
                                 非健保
                             </p>
                         }
                     </div>
-                    <p class="h4 text-white lh-lg text-end">繳費條號</p>
-                    <p class="h4 text-white lh-lg text-end">病例編號</p>
-                    <p class="h4 text-white lh-lg text-end">病患姓名</p>
-                    <p class="h4 text-white lh-lg text-end">性別</p>
-                    <p class="h4 text-white lh-lg text-end">出生年月日</p>
-                    <p class="h4 text-white lh-lg text-end">年齡</p>
-                    <p class="h4 text-white lh-lg text-end">看診醫生</p>
-                    <p class="h4 text-white lh-lg text-end">看診日期</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">繳費條號</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">病例編號</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">病患姓名</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">性別</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">出生年月日</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">年齡</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">看診醫生</p>
+                    <p class="AT-fs-25 text-white lh-lg text-end mt-3">看診日期</p>
                 </div>
-                <div class="col-7">
-                    <p class="h4 text-white lh-lg"></p>
-                    @*<p class="h4 text-white lh-lg pt-5">@Model.Detail.DetId</p>*@
-                    <p class="h4 text-white lh-lg">@Model.Patient.CaseHistory</p>
-                    <p class="h4 text-white lh-lg">@Model.Patient.PatientName</p>
-                    <p class="h4 text-white lh-lg">
-                        @if (Model.Patient.Gender == "1")
-                        {
-                        <p class="AT-fs-25 text-white lh-lg text-end">
+                <div class="col-6">
+                    <p class="AT-fs-25 text-white lh-lg"></p>
+                    <p class="AT-fs-25 text-white lh-lg pt-5">@Model.DetId</p>
+                    <p class="AT-fs-25 text-white lh-lg">@Model.Patient.CaseHistory</p>
+                    <p class="AT-fs-25 text-white lh-lg">@Model.Patient.PatientName</p>
+                    @if (Model.Patient.Gender == "1")
+                    {
+                        <p class="AT-fs-25 text-white lh-lg">
                             男
                         </p>
-                        }
-                        else if (Model.Patient.Gender == "2")
-                        {
-                        <p class="AT-fs-25 text-white lh-lg text-end">
+                    }
+                    else if (Model.Patient.Gender == "2")
+                    {
+                        <p class="AT-fs-25 text-white lh-lg">
                             女
                         </p>
-                        }
-                    </p>
-                    <p class="h4 text-white lh-lg">@Model.birthday</p>
-                    <p class="h4 text-white lh-lg">@Model.age</p>
-                    <p class="h4 text-white lh-lg">@Model.docsName</p>
-                    <p class="h4 text-white lh-lg">@Model.Vdate</p>
+                    }
+                    <p class="AT-fs-25 text-white lh-lg">@Model.birthday</p>
+                    <p class="AT-fs-25 text-white lh-lg">@Model.age</p>
+                    <p class="AT-fs-25 text-white lh-lg">@Model.docsName</p>
+                    <p class="AT-fs-25 text-white lh-lg">@Model.Vdate</p>
                 </div>
             </div>
         </div>
 
         @*查詢/批價內容*@
-        <div class="col-9 row px-3">
+        <div class="col-9 d-flex justify-content-center row">
             @*輸入框*@
-            <div class="row mx-3">
+            <div class="row ms-3 d-flex justify-content-center">
                 @*第一版*@
-                @*<form class="d-flex row">                    
-                    <div class="form-group col ">                        
-                        <input type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費號/病例編號"> 
-                    </div>
+                @*<form class="d-flex row">
+                <div class="form-group col ">
+                <input type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費號/病例編號">
+                </div>
                 </form>*@
                 @*第二版*@
-                <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control m-3 AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費條號">
+                <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control m-3 AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費條號" style="width: 90%">
             </div>
             @*批價內容*@
             <!-- 圓角 + background -->
-            <div class="row AT-rounded-1 AT-bg-fourth m-3 ms-5 d-flex justify-content-center" style="width: 95%">
+            <div class="row AT-rounded-1 AT-bg-fourth m-3 ms-5 d-flex justify-content-center" style="width: 85%">
                 <div class="d-flex flex-row">
                     <!-- 項目 -->
                     <div class="col-6 pt-3">
@@ -133,21 +133,21 @@
                     <!-- 項目內容 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary">
-                            <p class="h4 text-black lh-lg">掛號費</p>
-                            <p class="h4 text-black lh-lg">診察費</p>
-                            <p class="h4 text-black lh-lg">部分負擔</p>
-                            <p class="h4 text-black lh-lg">藥品部分負擔</p>
-                            <p class="h4 text-black lh-lg">藥費</p>                                                        
+                            <p class="AT-fs-25 text-black lh-lg">掛號費</p>
+                            <p class="AT-fs-25 text-black lh-lg">診察費</p>
+                            <p class="AT-fs-25 text-black lh-lg">部分負擔</p>
+                            <p class="AT-fs-25 text-black lh-lg">藥品部分負擔</p>
+                            <p class="AT-fs-25 text-black lh-lg">藥費</p>
                         </div>
                     </div>
                     <!-- 金額內容 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary"></div>
-                        <p class="h4 text-black lh-lg">@Model.Registration</p>
-                        <p class="h4 text-black lh-lg">@Model.Diagnostic</p>
-                        <p class="h4 text-black lh-lg">@Model.PartialPayment</p>
-                        <p class="h4 text-black lh-lg">@Model.DrugPartialPayment</p>
-                        <p class="h4 text-black lh-lg">@Model.MedicalCost</p>                        
+                        <p class="AT-fs-25 text-black lh-lg">@Model.Registration</p>
+                        <p class="AT-fs-25 text-black lh-lg">@Model.Diagnostic</p>
+                        <p class="AT-fs-25 text-black lh-lg">@Model.PartialPayment</p>
+                        <p class="AT-fs-25 text-black lh-lg">@Model.DrugPartialPayment</p>
+                        <p class="AT-fs-25 text-black lh-lg">@Model.MedicalCost</p>
                     </div>
                 </div>
                 <hr class="BS-border border-3 opacity-75" />
@@ -171,10 +171,12 @@
                 <div class="col-8"></div>
                 @*按鈕*@
                 <div class="col-4 d-flex justify-content-center">
-                    <button class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
+
+                    <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
                         @*id="Post"*@
                         完成繳費
                     </button>
+
                 </div>
             </div>
         </div>
@@ -182,7 +184,7 @@
 </div>
 
 @section Script{
-    <script>        
+    <script>
 
         function SearchKey(event) {
             var search = document.getElementById("search");

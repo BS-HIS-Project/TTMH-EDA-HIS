@@ -20,6 +20,8 @@ namespace TTMH_EDA_HIS.ViewModels
         public string? docsName { get; set; }
         [DisplayName("就診日期")]
         public string? Vdate { get; set; }
+
+        public int StatusCode { get; set; } = 0;
         public List<PresViewModel_Drug> Drugs { get; set; }
 
         //繳費時間

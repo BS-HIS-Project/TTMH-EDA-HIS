@@ -19,7 +19,7 @@ namespace TTMH_EDA_HIS.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("ChartsDetails");
         }
         [Authorize]
         [HttpGet]
