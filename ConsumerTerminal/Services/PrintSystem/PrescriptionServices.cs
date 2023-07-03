@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsumerTerminal.Services.PrintSystem
 {
-    public class PrescriptionServicers : DataProcessing
+    public class PrescriptionServices : DataProcessing
     {
         public override void ChangeData()
         {
@@ -22,7 +22,5 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             throw new NotImplementedException();
         }
-    }
-    {
     }
 }
