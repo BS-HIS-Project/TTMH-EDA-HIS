@@ -128,6 +128,7 @@ body {
 .FM-table-PaymentSlip-drugs td:first-child,th:first-child{
     text-align: start;
     width: 40%;
+    padding-left: 10px;
 }
 .FM-table-PaymentSlip-drugs td,th{
     padding: 10px 0px;
@@ -135,7 +136,7 @@ body {
     font-size: 23px;
     font-weight: bold;
     text-align: center;
-    width:12%;
+    width:15%;
 }
 .FM-table-PaymentSlip-signs{
     border:3px #015958 solid;
