@@ -41,7 +41,8 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             if (JsonData == null)
             {
                 Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
-            } else
+            } 
+            else
             {
                 DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
@@ -118,7 +119,7 @@ void CreateCDDs(DoctorMessage? JsonData)
 
             _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * (double)_ChartsDrugsDosage.Days);
 
-            if (_context.ChartsDrugsDosages.Find(_ChartsDrugsDosage.ChaId, _ChartsDrugsDosage.DrugId) != null)
+            if (_context.ChartsDrugsDosages.Where(c => c.ChaId == _ChartsDrugsDosage.ChaId && c.DrugId == _ChartsDrugsDosage.DrugId).FirstOrDefault() != null)
             {
                 Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId}, {_ChartsDrugsDosage.DrugId} 新增已存在");
             }

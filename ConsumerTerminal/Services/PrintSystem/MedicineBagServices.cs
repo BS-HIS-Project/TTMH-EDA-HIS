@@ -46,7 +46,7 @@ namespace ConsumerTerminal.Services.PrintSystem
 
         public void setMatchData()
         {
-            var CDDs = _context.ChartsDrugsDosages.Where(cdd => cdd.ChaId == ChaId && cdd.DrugId == DrugId).FirstOrDefault();
+            var CDDs = _context.ChartsDrugsDosages.Find(ChaId, DrugId);
             var pat = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault();
             var pres = _context.Prescriptions.Where(p => p.PresNo == PresNo).FirstOrDefault();
             var DPCs = _context.DoctorsPatientsCharts.Where(dpc => dpc.ChaId == ChaId).FirstOrDefault();
@@ -115,8 +115,8 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             StreamReader sr = new StreamReader(FileName, Encoding.UTF8);
 
-            String line;
-            line = sr.ReadLine();
+            string? line = null;
+            line = sr.ReadLineAsync().Result;
             while (line != null)
             {
                 _data.Add(line.ToString());
@@ -124,6 +124,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sr.Close();
+            sr.Dispose();
         }
 
         public override void OutputPDF(string FileName)

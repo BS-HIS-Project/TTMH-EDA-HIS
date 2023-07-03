@@ -111,8 +111,8 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             StreamReader sr = new StreamReader(FileName, Encoding.UTF8);
 
-            String line;
-            line = sr.ReadLine();
+            string? line = null;
+            line = sr.ReadLineAsync().Result;
             while (line != null)
             {
                 _data.Add(line.ToString());
@@ -120,6 +120,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sr.Close();
+            sr.Dispose();
         }
 
         public override void OutputPDF(string FileName)
@@ -153,7 +154,7 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             _drugListTemp.Add("<tr>");
             _drugListTemp.Add("<td class=\"drugName\">#DrugName</td>");
-            _drugListTemp.Add("<td class=\"drugId\">#DrugId</td>");
+            _drugListTemp.Add("<td class=\"dosId\">#DosId</td>");
             _drugListTemp.Add("<td class=\"CDDsQty\">#CDDsQty</td>");
             _drugListTemp.Add("<td class=\"CDDsDays\">#CDDsDays</td>");
             _drugListTemp.Add("<td class=\"CDDsTotal\">#CDDsTotal</td>");
@@ -170,8 +171,8 @@ namespace ConsumerTerminal.Services.PrintSystem
 
                     if(temp2.Contains("#DrugName"))
                         temp2 = temp2.Replace("#DrugName", drug.DrugName);
-                    else if(temp2.Contains("#DrugId"))
-                        temp2 = temp2.Replace("#DrugId", drug.DrugId);
+                    else if(temp2.Contains("#DosId"))
+                        temp2 = temp2.Replace("#DosId", drug.DosId);
                     else if(temp2.Contains("#CDDsQty"))
                         temp2 = temp2.Replace("#CDDsQty", drug.CDDsQty);
                     else if(temp2.Contains("#CDDsDays"))
@@ -202,7 +203,7 @@ namespace ConsumerTerminal.Services.PrintSystem
                 _drugList.Add(new DrugList
                 {
                     DrugName = DrugName,
-                    DrugId = DrugId,
+                    DosId = CDDs.DosId,
                     CDDsQty = CDDs.Quantity.ToString(),
                     CDDsDays = CDDs.Days.ToString(),
                     CDDsTotal = CDDs.Total.ToString()
@@ -213,7 +214,7 @@ namespace ConsumerTerminal.Services.PrintSystem
         private class DrugList
         {
             public string DrugName { get; set; }
-            public string DrugId { get; set; }
+            public string DosId { get; set; }
             public string CDDsQty { get; set; }
             public string CDDsDays { get; set; }
             public string CDDsTotal { get; set; }

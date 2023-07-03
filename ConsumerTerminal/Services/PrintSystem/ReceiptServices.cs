@@ -78,7 +78,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             _match.Add(new MatchData { htmlStr = "#DrugClinicalUses", pdfStr = drug.ClinicalUses.ToString() });
             _match.Add(new MatchData { htmlStr = "#DrugAdverseReactions", pdfStr = drug.AdverseReactions.ToString() });
             _match.Add(new MatchData { htmlStr = "#CDDsTotal", pdfStr = CDDs.Total.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PhaName", pdfStr = pharmacy.EmployeeName.ToString() });
+            //_match.Add(new MatchData { htmlStr = "#PhaName", pdfStr = pharmacy.EmployeeName.ToString() });
         }
 
         private static string DateTimeToYMD(DateTime dateTime)
