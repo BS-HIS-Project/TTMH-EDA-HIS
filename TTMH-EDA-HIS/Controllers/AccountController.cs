@@ -29,8 +29,10 @@ namespace TTMH_EDA_HIS.Controllers
 					return RedirectToAction("ChartList", "CPOEs");
 				case "Pharmacist":
 					return RedirectToAction("PharmacyDetails", "Pharmacy");
+				case "Employee":
+					return RedirectToAction("Index", "ChartsView");
 				default:
-					return RedirectToAction("Login");
+					return RedirectToAction("Login","Account");
 			}
 		}
         [HttpGet]

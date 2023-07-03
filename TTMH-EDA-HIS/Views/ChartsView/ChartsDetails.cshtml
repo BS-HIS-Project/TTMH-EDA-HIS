@@ -59,7 +59,7 @@
                             <p class="AT-fs-25 text-white lh-lg text-end">
                                 非健保
                             </p>
-                        }                      
+                        }
                     </div>
                     <p class="h4 text-white lh-lg text-end">繳費條號</p>
                     <p class="h4 text-white lh-lg text-end">病例編號</p>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-7">
                     <p class="h4 text-white lh-lg"></p>
-                    <p class="h4 text-white lh-lg pt-5">@Model.DetId</p>
+                    @*<p class="h4 text-white lh-lg pt-5">@Model.Detail.DetId</p>*@
                     <p class="h4 text-white lh-lg">@Model.Patient.CaseHistory</p>
                     <p class="h4 text-white lh-lg">@Model.Patient.PatientName</p>
                     <p class="h4 text-white lh-lg">
@@ -101,13 +101,14 @@
         <div class="col-9 row px-3">
             @*輸入框*@
             <div class="row mx-3">
-                <form class="d-flex row">
-                    @*asp-action="ChartList" asp-route-id="" method="post" *@
-                    <div class="form-group col ">
-                        @* method="post"*@
-                        <input type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費號/病例編號"> @*asp-for="content"*@
+                @*第一版*@
+                @*<form class="d-flex row">                    
+                    <div class="form-group col ">                        
+                        <input type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費號/病例編號"> 
                     </div>
-                </form>
+                </form>*@
+                @*第二版*@
+                <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control m-3 AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費條號">
             </div>
             @*批價內容*@
             <!-- 圓角 + background -->
@@ -132,31 +133,21 @@
                     <!-- 項目內容 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary">
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
-                            <p class="h4 text-black lh-lg">lorem</p>
+                            <p class="h4 text-black lh-lg">掛號費</p>
+                            <p class="h4 text-black lh-lg">診察費</p>
+                            <p class="h4 text-black lh-lg">部分負擔</p>
+                            <p class="h4 text-black lh-lg">藥品部分負擔</p>
+                            <p class="h4 text-black lh-lg">藥費</p>                                                        
                         </div>
                     </div>
                     <!-- 金額內容 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary"></div>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
-                        <p class="h4 text-black lh-lg">lorem</p>
+@*                        //<p class="h4 text-black lh-lg">@Model.Detail.Registration</p>
+                        //<p class="h4 text-black lh-lg">@Model.Detail.Diagnostic</p>
+                        //<p class="h4 text-black lh-lg">@Model.Detail.PartialPayment</p>
+                        //<p class="h4 text-black lh-lg">lorem</p>
+                        //<p class="h4 text-black lh-lg">@Model.Detail.MedicalCost</p>                        *@
                     </div>
                 </div>
                 <hr class="BS-border border-3 opacity-75" />
@@ -169,7 +160,7 @@
                     <!-- 應繳金額 -->
                     <div class="col-6">
                         <div class="AT-fs-30 text-secondary">
-                            應繳金額
+                            @*應繳金額：@Model*@
                         </div>
                     </div>
                 </div>
@@ -189,3 +180,30 @@
         </div>
     </div>
 </div>
+
+@section Script{
+    <script>        
+
+        function SearchKey(event) {
+            var search = document.getElementById("search");
+
+
+            if (event.key == "Enter") {
+                window.location.assign(`https://${location.hostname}:${location.port}/ChartsView/ChartsDetailsSearch?q=${search.value}`);
+                //if (DrugDate = null) {
+                //    window.location.assign(`https://${location.hostname}:${location.port}/Pharmacy/PharmacyDetailsSearch?q=${search.value}`);
+                //}
+                //else {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: 'Oops...',
+                //        text: '輸入值有錯或是已領過藥了',
+                //        footer: '<a href="">Why do I have this issue?</a>'
+                //    })
+                //}
+
+            }
+        }
+
+    </script>
+}
