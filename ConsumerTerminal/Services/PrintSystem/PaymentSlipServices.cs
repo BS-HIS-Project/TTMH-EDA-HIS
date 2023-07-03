@@ -1,47 +1,50 @@
-﻿using System;
+﻿using HISDB.Data;
+using IronPdf.Rendering;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HISDB.Models;
-using HISDB.Data;
-using Confluent.Kafka;
-using IronPdf.Rendering;
-using Microsoft.SqlServer.Server;
 
 namespace ConsumerTerminal.Services.PrintSystem
 {
-    public class MedicineBagServices : DataProcessing
+    public class PaymentSlipServices : DataProcessing
     {
         private readonly HisdbContext _context;
 
         private readonly List<string> _data;
         private readonly List<string> _output;
+        private readonly List<string> _drugListTemp;
         private readonly List<MatchData> _match;
+        private readonly List<DrugList> _drugList;
 
         private readonly string ChaId;
         private readonly string DrugId;
         private readonly string PatientId;
         private readonly string PresNo;
+        private readonly string DetId;
 
-        public MedicineBagServices(string chaId,string drugId, string patientId, string presNo)
+        public PaymentSlipServices(string chaId, string drugId, string patientId, string presNo, string detId)
         {
             _context = new HisdbContext();
 
             _data = new List<string>();
             _output = new List<string>();
+            _drugListTemp = new List<string>();
             _match = new List<MatchData>();
-            
+            _drugList = new List<DrugList>();
+
             ChaId = chaId;
             DrugId = drugId;
             PatientId = patientId;
             PresNo = presNo;
+            DetId = detId;
 
-            //InputHTML(@".\..\..\..\Forms\MedicineBag.html");
+            //InputHTML(@".\..\..\..\Forms\PaymentSlip.html");
             //setMatchData();
             //ChangeData();
-            //OutputPDF(@$".\..\..\..\PDF\藥袋\MedicineBag{patientId}{chaId}.pdf");
+            //OutputPDF(@$".\..\..\..\PDF\藥袋\PaymentSlip{patientId}{chaId}.pdf");
+            
         }
 
         public void setMatchData()
@@ -61,25 +64,15 @@ namespace ConsumerTerminal.Services.PrintSystem
             var PatSer = new PartialServices(PatientId);
 
             _match.Add(new MatchData { htmlStr = "#PresNo", pdfStr = PresNo.Substring(length - 3) });
+            _match.Add(new MatchData { htmlStr = "#DetId", pdfStr = DetId.Substring(DetId.Length - 3) });
             _match.Add(new MatchData { htmlStr = "#PatientId", pdfStr = pat.PatientId.ToString() });
             _match.Add(new MatchData { htmlStr = "#BirthDate", pdfStr = DateTimeToYMD(pat.BirthDate) });
             _match.Add(new MatchData { htmlStr = "#DoctorName", pdfStr = Doctor.EmployeeName.ToString() });
             _match.Add(new MatchData { htmlStr = "#PatientName", pdfStr = pat.PatientName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PatientYear", pdfStr = PatSer.GetAge().ToString() });
+            _match.Add(new MatchData { htmlStr = "#Age", pdfStr = PatSer.GetAge().ToString() });
             _match.Add(new MatchData { htmlStr = "#Vdate", pdfStr = DateTimeToYMD(chart.Vdate) });
             _match.Add(new MatchData { htmlStr = "#Gender", pdfStr = PatSer.GetGender() });
-            _match.Add(new MatchData { htmlStr = "#DrugName", pdfStr = drug.DrugName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#Appearance", pdfStr = drug.Appearance.ToString() });
-            _match.Add(new MatchData { htmlStr = "#GenericName", pdfStr = drug.GenericName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#Dcontent", pdfStr = drug.Dcontent.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DosageFreq", pdfStr = dosage.Freq.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsQty", pdfStr = CDDs.Quantity.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsDays", pdfStr = CDDs.Days.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugWarningPrecautions", pdfStr = drug.WarningPrecautions.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugClinicalUses", pdfStr = drug.ClinicalUses.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugAdverseReactions", pdfStr = drug.AdverseReactions.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsTotal", pdfStr = CDDs.Total.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PhaName", pdfStr = pharmacy.EmployeeName.ToString() });
+            _match.Add(new MatchData { htmlStr = "#object", pdfStr = chart.Object.ToString() });
         }
 
         private static string DateTimeToYMD(DateTime dateTime)
@@ -129,7 +122,7 @@ namespace ConsumerTerminal.Services.PrintSystem
         public override void OutputPDF(string FileName)
         {
             Random rnd = new Random();
-            string path = @$".\..\..\..\HTML\MedicineBag{rnd.Next(Int32.MinValue, Int32.MaxValue)}.html";
+            string path = @$".\..\..\..\HTML\PaymentSlip{rnd.Next(Int32.MinValue, Int32.MaxValue)}.html";
 
             StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8);
 
@@ -146,6 +139,37 @@ namespace ConsumerTerminal.Services.PrintSystem
             renderer.RenderingOptions.MarginBottom = 35; // millimeters
             var pdf = renderer.RenderUrlAsPdf(path);
             pdf.SaveAs(FileName);
+        }
+
+        public void setDrugListTemp()
+        {
+            _drugListTemp.Add("<tr>");
+            _drugListTemp.Add("<td class=\"drugName\">#DrugName</td>");
+            _drugListTemp.Add("<td class=\"drugId\">#DrugId</td>");
+            _drugListTemp.Add("<td class=\"CDDsQty\">#CDDsQty</td>");
+            _drugListTemp.Add("<td class=\"CDDsDays\">#CDDsDays</td>");
+            _drugListTemp.Add("<td class=\"CDDsTotal\">#CDDsTotal</td>");
+            _drugListTemp.Add("</tr>");
+        }
+
+        public void AddDrugList(string DrugName, string DrugId, string CDDsQty, 
+                                string CDDsDays, string CDDsTotal)
+        {
+            _drugList.Add(new DrugList { 
+                DrugName = DrugName, 
+                DrugId = DrugId, 
+                CDDsQty = CDDsQty, 
+                CDDsDays = CDDsDays, 
+                CDDsTotal = CDDsTotal });
+        }
+
+        private class DrugList
+        {
+            public string DrugName { get; set; }
+            public string DrugId { get; set; }
+            public string CDDsQty { get; set; }
+            public string CDDsDays { get; set; }
+            public string CDDsTotal { get; set; }
         }
     }
 }

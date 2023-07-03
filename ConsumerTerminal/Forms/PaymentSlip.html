@@ -40,10 +40,10 @@
                         <div class="FM-bd-Prescription">
                             <div class="row">
                                 <div class="col-5 text-danger py-3 ps-4 FM-fs-30">
-                                    領藥號 : #ChaID
+                                    領藥號 : #PresNo
                                 </div>
                                 <div class="col-7 text-danger py-3 ps-4 FM-fs-30">
-                                    繳費條號： #xxx
+                                    繳費條號： #DetId
                                 </div>
                             </div>
                             <div class="row py-2 FM-hr-top_bottom">
@@ -69,7 +69,7 @@
                                             看診醫生：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #DName
+                                            #DoctorName
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                             病患姓名：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #PName
+                                            #PatientName
                                         </div>
                                     </div>
                                     <div class="row">
@@ -87,7 +87,7 @@
                                             年齡：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            #Year
+                                            #Age
                                         </div>
                                     </div>
                                     <div class="row">
@@ -105,7 +105,7 @@
                                             性別：
                                         </div>
                                         <div class="FM-fs-20 col-6 py-3">
-                                            Male
+                                            #Gender
                                         </div>
                                     </div>
                                 </div>
@@ -116,9 +116,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col FM-fs-20" style="height:150px;">
-                                    Lorem ipsum dolor sit amet sconsectetur adipisicing elit. Officiis sunt, consectetur rerum sequi magnam consequatur nulla fugiat sit molestiae, nesciunt assumenda quo tempore voluptates! Ab ad cum distinctio asperiores consequatur!
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit
+                                <div class="col FM-fs-20" style="min-height:150px;">
+                                    #object
                                 </div>
                             </div>
                             <table class="FM-table-PaymentSlip-drugs row" style="width:100%;border-top:3px solid #015958;">
@@ -129,41 +128,16 @@
                                         <th>次量</th>
                                         <th>天數</th>
                                         <th>總量</th>
-                                        <th>自費</th>
                                     </tr>
                                 </thead>
-                                <tbody class="FM-hr-top_bottom" style="height:260px;">
+                                <tbody class="FM-hr-top_bottom" style="min-height:260px;">
+                                    <!--#DrugList-->
                                     <tr>
-                                        <td>asddas</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>asddas</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>asddas</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>asddas</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
-                                        <td>dfsdf</td>
+                                        <td>#DrugName</td>
+                                        <td>#DrugId</td>
+                                        <td>#CDDsQty</td>
+                                        <td>#CDDsDays</td>
+                                        <td>#CDDsTotal</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -175,10 +149,14 @@
                                     <td>預估應繳金額</td>
                                 </tr>
                                 <tr style="height: 95px;">
-                                    <td><img src="https://fakeimg.pl/100x100/200"></td>
-                                    <td><img src="https://fakeimg.pl/100x100/200"></td>
-                                    <td><img src="https://fakeimg.pl/100x100/200"></td>
-                                    <td><img src="https://fakeimg.pl/100x100/200"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><p class="mt-4">#Total</p></td>
+                                    <!-- <td><img src="https://fakeimg.pl/100x100/200"></td> -->
+                                    <!-- <td><img src="https://fakeimg.pl/100x100/200"></td> -->
+                                    <!-- <td><img src="https://fakeimg.pl/100x100/200"></td> -->
+                                    <!-- <td><img src="https://fakeimg.pl/100x100/200"></td> -->
                                 </tr>
                             </table>
     

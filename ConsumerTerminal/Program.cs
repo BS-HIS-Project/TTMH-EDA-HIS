@@ -49,10 +49,14 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                 CreateCDDs(JsonData);
 
 
-                foreach(var data in JsonData.ChartsDrugsDosages)
-                {
-                    var _MBSer = new MedicineBagServices(JsonData.ChaId, data.DrugId, JsonData.PatientId, PresNo);
-                }
+                var BagControlSer = new BagControlServices(JsonData, PresNo, JsonData.ChaId);
+                BagControlSer.run();
+
+                // 藥袋內頁列印
+                //foreach(var data in JsonData.ChartsDrugsDosages)
+                //{
+                //    var _MBSer = new MedicineBagServices(JsonData.ChaId, data.DrugId, JsonData.PatientId, PresNo);
+                //}
             }
         }
         catch (Exception e)
@@ -122,7 +126,7 @@ void CreateCDDs(DoctorMessage? JsonData)
                 _context.ChartsDrugsDosages.Add(_ChartsDrugsDosage);
                 _context.SaveChanges();
 
-                Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId} 成功新增");
+                Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId}, {_ChartsDrugsDosage.DrugId} 成功新增");
             }
         }
     }
