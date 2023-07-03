@@ -11,10 +11,13 @@ using System.Runtime;
 
 namespace ConsumerTerminal.Services.PrintSystem
 {
-    public class BagControlServices
+    public class BagControlServices : IDisposable
     {
         private readonly HisdbContext _context;
-        private readonly DoctorMessage doctorMessage;
+
+        private DoctorMessage doctorMessage;
+        private MedicineBagServices MedicineBagSer;
+        private PaymentSlipServices PaymentSlipSer;
 
         private readonly string PresNo;
         private readonly string DetId;
@@ -28,22 +31,38 @@ namespace ConsumerTerminal.Services.PrintSystem
             DetId = detId;
         }
 
+        public void Dispose()
+        {
+            doctorMessage = null;
+        }
+
         public void run()
         {
             int k = 0;
             foreach (var item in doctorMessage.ChartsDrugsDosages)
             {
-                var MedicineBagSer = new MedicineBagServices(doctorMessage.ChaId,
-                                                            item.DrugId, 
-                                                            doctorMessage.PatientId, 
-                                                            PresNo);
+                MedicineBagSer = new MedicineBagServices(doctorMessage.ChaId,
+                                                        item.DrugId, 
+                                                        doctorMessage.PatientId, 
+                                                        PresNo);
                 MedicineBagSer.InputHTML(@".\..\..\..\Forms\MedicineBag.html");
                 MedicineBagSer.setMatchData();
                 MedicineBagSer.ChangeData();
                 MedicineBagSer.OutputPDF(@$".\..\..\..\PDF\藥袋\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
             }
 
-            
+            PaymentSlipSer = new PaymentSlipServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
+            PaymentSlipSer.setDrugList();
+
+            foreach(var item in doctorMessage.ChartsDrugsDosages)
+            {
+                PaymentSlipSer.AddDrugList(item.DrugId);
+            }
+
+            PaymentSlipSer.InputHTML(@".\..\..\..\Forms\PaymentSlip.html");
+            PaymentSlipSer.setMatchData();
+            PaymentSlipSer.ChangeData();
+            PaymentSlipSer.OutputPDF(@$".\..\..\..\PDF\藥袋\PaymentSlip{PresNo}{DetId}.pdf");
         }
     }
 }

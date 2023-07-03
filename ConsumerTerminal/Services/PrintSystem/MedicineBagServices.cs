@@ -53,7 +53,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             var Doctor = _context.Employees.Where(d => d.EmployeeId == DPCs.DoctorId).FirstOrDefault();
             var chart = _context.Charts.Where(c => c.ChaId == ChaId).FirstOrDefault();
             var drug = _context.Drugs.Where(d => d.DrugId == DrugId).FirstOrDefault();
-            var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
+            Dosage? dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
             var pharmacy = _context.Employees.Where(p => p.EmployeeId == pres.PhaId).FirstOrDefault();
 
             int length = PresNo.Length;

@@ -28,6 +28,7 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
     var DrugNumber = 1;
     var PaymentBarcode = 1;
     string PresNo;
+    string detId;
 
     while (true)
     {
@@ -44,12 +45,12 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             {
                 DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
-                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData);
+                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
 
                 CreateCDDs(JsonData);
 
 
-                var BagControlSer = new BagControlServices(JsonData, PresNo, JsonData.ChaId);
+                var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
                 BagControlSer.run();
 
                 // 藥袋內頁列印
@@ -132,7 +133,7 @@ void CreateCDDs(DoctorMessage? JsonData)
     }
 }
 
-int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorMessage? JsonData)
+int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorMessage? JsonData, out string detId)
 {
     ConnectServices connectServices = new ConnectServices();
 
@@ -170,6 +171,8 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
     _context.SaveChanges();
 
     Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
+
+    detId = _detail.DetId;
     return PaymentBarcode;
 }
 
