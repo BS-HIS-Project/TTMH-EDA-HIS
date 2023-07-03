@@ -52,7 +52,7 @@ namespace ConsumerTerminal.Services.BillingSystem
         private bool ChackHealthInsurance(string PatientId)
         {
             var _patient = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault();
-            if (_patient.Status == "健保")
+            if (_patient.Status == "HealthInsurance")
             {
                 return true;
             }
