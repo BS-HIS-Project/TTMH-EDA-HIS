@@ -1,0 +1,159 @@
+body {
+    background-color: white;
+}
+
+
+.FM-bg-primary {
+    background-color: #0CABA8 !important;
+}
+.FM-fg-primary {
+    color: #0CABA8 !important;
+}
+.FM-bg-primary-emphasis {
+    background-color: #0FC2C0 !important;
+}
+.FM-fg-primary-emphasis {
+    color: #0FC2C0 !important;
+}
+.FM-bg-primary-deep {
+    background-color: #008F8C !important;
+}
+.FM-fg-primary-deep {
+    color: #008F8C !important;
+}
+.FM-bg-secondary {
+    background-color: #015958 !important;
+}
+.FM-fg-secondary {
+    color: #015958 !important;
+}
+.FM-bg-secondary-emphasis {
+    background-color: #023535 !important;
+}
+.FM-fg-secondary-emphasis {
+    color: #023535 !important;
+}
+.FM-bg-third {
+    background-color: #536195 !important;
+}
+.FM-fg-third {
+    color: #536195 !important;
+}
+.FM-bg-fourth {
+    background-color: #BCEFEE !important;
+}
+.FM-fg-fourth {
+    color: #BCEFEE !important;
+}
+
+
+.FM-fs-75 {
+    font-size: 75px !important;
+}
+.FM-fs-70 {
+    font-size: 70px !important;
+}
+.FM-fs-50 {
+    font-size: 50px !important;
+}
+.FM-fs-45 {
+    font-size: 50px !important;
+}
+.FM-fs-40 {
+    font-size: 40px !important;
+}
+.FM-fs-35 {
+    font-size: 35px !important;
+}
+.FM-fs-30 {
+    font-size: 30px !important;
+}
+.FM-fs-25 {
+    font-size: 25px !important;
+}
+.FM-fs-20 {
+    font-size: 20px !important;
+}
+.FM-fs-18 {
+    font-size: 18px !important;
+}
+.FM-fs-15 {
+    font-size: 15px !important;
+}
+
+
+.FM-hr {
+    height:2px;
+    width: 100%;
+}
+.FM-hr-top_bottom {
+    border-top:3px solid #015958;
+    border-bottom:3px solid #015958;
+}
+
+
+.FM-dimension-A4_paper{
+    width:210mm;
+    height:297mm;
+    padding:10px 0px 15px 23px;
+    background-color: white;
+}
+.FM-dimension-rotated_A4_paper{
+    width:297mm;
+    height:210mm;
+    padding:20px 30px;
+    background-color: white;
+}
+
+
+.FM-bd-Prescription{
+    height:990px;
+    border:#009895 solid 6px;
+    border-radius:3%;
+    padding:10px 20px ;
+    width:100%;
+}
+.FM-table-PaymentSlip-drugs th{
+    padding: 10px 0px;
+    color: #015958;
+    font-size: 23px;
+    font-weight: bold;
+}
+.FM-table-PaymentSlip-drugs tr{
+    display: flex;
+}
+.FM-table-PaymentSlip-drugs td:nth-child(2),th:nth-child(2){
+    width: 15%;
+}
+.FM-table-PaymentSlip-drugs td:first-child,th:first-child{
+    text-align: start;
+    width: 40%;
+}
+.FM-table-PaymentSlip-drugs td,th{
+    padding: 10px 0px;
+    color: black;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    width:12%;
+}
+.FM-table-PaymentSlip-signs{
+    border:3px #015958 solid;
+}
+.FM-table-PaymentSlip-signs tr{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.FM-table-PaymentSlip-signs td:last-child{
+    width:30%;
+}
+.FM-table-PaymentSlip-signs td{
+    width:23.5%;
+    background-color: gainsboro;
+    text-align: center;
+    border:1px #015958 solid;
+    font-size: 20px;
+    font-weight: bolder;
+    padding:3px;
+}

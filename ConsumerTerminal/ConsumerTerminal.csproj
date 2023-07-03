@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="2.1.1" />
+    <PackageReference Include="IronPdf" Version="2023.6.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +20,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HISDB\HISDB.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HTML\MedicineBag\" />
+    <Folder Include="PDF\藥袋\" />
   </ItemGroup>
 
 </Project>

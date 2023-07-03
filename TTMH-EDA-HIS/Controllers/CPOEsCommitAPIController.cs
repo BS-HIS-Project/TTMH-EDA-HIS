@@ -162,6 +162,7 @@ namespace TTMH_EDA_HIS.Controllers
                 }
 
                 string response = await PrintPrescription(pvm);
+
                 if (response == null) { 
                     throw new Exception("Connection Failed"); 
                 }
