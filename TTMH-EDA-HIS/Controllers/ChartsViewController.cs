@@ -8,6 +8,7 @@ using static TTMH_EDA_HIS.ViewModels.ChartsViewModel;
 
 namespace TTMH_EDA_HIS.Controllers
 {
+    [Authorize(Roles = "Cashier")]
     public class ChartsViewController : Controller
     {
         private readonly HisdbContext _context;
@@ -17,11 +18,13 @@ namespace TTMH_EDA_HIS.Controllers
             _context = context;
 
         }
+        [Authorize(Roles = "Cashier")]
+        [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction("ChartsDetails");
         }
-        [Authorize]
+        [Authorize(Roles = "Cashier")]
         [HttpGet]
         public async Task<IActionResult> ChartsDetailsSearch(string q)
         {
@@ -43,7 +46,7 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Cashier")]
         [HttpPost]
         public async Task<IActionResult> ChartsDetails(ChartsViewModel chavm)
         {
@@ -69,10 +72,8 @@ namespace TTMH_EDA_HIS.Controllers
 
             return View(vm);
         }
-       
 
-
-        [Authorize]
+        [Authorize(Roles = "Cashier")]
         [HttpGet]
         public async Task<IActionResult> ChartsDetails(string? DetId)
         {

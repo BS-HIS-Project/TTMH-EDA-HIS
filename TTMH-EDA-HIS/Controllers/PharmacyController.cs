@@ -11,6 +11,7 @@ using Microsoft.Identity.Client;
 
 namespace TTMH_EDA_HIS.Controllers
 {
+    [Authorize(Roles = "Pharmacist")]
     public class PharmacyController : Controller
     {
         private readonly HisdbContext _context;
@@ -21,13 +22,14 @@ namespace TTMH_EDA_HIS.Controllers
 
         }
 
+        [Authorize(Roles = "Pharmacist")]
         [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction("PharmacyDetails");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Pharmacist")]
         [HttpGet]
         public async Task<IActionResult> PharmacyDetailsSearch(string q)
         {
@@ -54,7 +56,7 @@ namespace TTMH_EDA_HIS.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Pharmacist")]
         [HttpPost]
         public async Task<IActionResult> PharmacyDetails(PresViewModel presvm)
         {
@@ -84,7 +86,7 @@ namespace TTMH_EDA_HIS.Controllers
 
 
 
-        [Authorize]
+        [Authorize(Roles = "Pharmacist")]
         [HttpGet]
         public async Task<IActionResult> PharmacyDetails(string? PresNo)
         {
