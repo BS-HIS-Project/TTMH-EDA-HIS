@@ -37,5 +37,10 @@ namespace ConsumerTerminal.Services.BillingSystem
         {
             return 500;
         }
+
+        public override decimal DrugPartialPayment()
+        {
+            return 0;
+        }
     }
 }

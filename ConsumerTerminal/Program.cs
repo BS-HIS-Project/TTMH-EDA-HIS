@@ -146,6 +146,8 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
         Registration = _billing.RegistrationFee(),
         // 藥費
         MedicalCost = _billing.DrugFee(),
+        // 藥品部分負擔
+        DrugPartialPayment = _billing.DrugPartialPayment(),
         // 部分負擔
         PartialPayment = _billing.PartialPayment(),
         // 診察費

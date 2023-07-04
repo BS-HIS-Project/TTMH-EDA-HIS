@@ -72,6 +72,10 @@ namespace ConsumerTerminal.Services.BillingSystem
 
         // 藥費
         public abstract Decimal DrugFee();
+
+        // 藥品部分負擔費
+        public abstract Decimal DrugPartialPayment();
+
         // 診察費
         public abstract Decimal DiagnosticFee();
 
