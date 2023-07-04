@@ -29,7 +29,7 @@ namespace TTMH_EDA_HIS.Controllers
 					return RedirectToAction("ChartList", "CPOEs");
 				case "Pharmacist":
 					return RedirectToAction("PharmacyDetails", "Pharmacy");
-				case "Employee":
+				case "Cashier":
 					return RedirectToAction("Index", "ChartsView");
 				default:
 					return RedirectToAction("Login","Account");
@@ -69,7 +69,7 @@ namespace TTMH_EDA_HIS.Controllers
 					return View(vm);
                 }
 				string role = "";
-				if (await _context.Doctors.AnyAsync(x => x.DoctorId == user.EmployeeId)) 
+				if (await _context.Doctors.AnyAsync(x => x.DoctorId == user.EmployeeId))
 				{
 					role = "Doctor";
 				}
@@ -77,10 +77,14 @@ namespace TTMH_EDA_HIS.Controllers
 				{
 					role = "Pharmacist";
 				}
+				else if (await _context.Cashiers.AnyAsync(x => x.CasId == user.EmployeeId))
+				{
+					role = "Cashier";
+				}
 				else
 				{
-					role = "Employee";
-				}
+                    role = "Employee";
+                }
 
 				List<Claim> claims = new List<Claim>()
 				{
