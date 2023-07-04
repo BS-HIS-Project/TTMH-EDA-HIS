@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.css" />
     <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
     <style>
-        @@media (max-width:1080px) {
+        @@media (max-width:1360px) {
             .ED-media-1 {
                 margin-top: 30px;
                 width: 100% !important;
@@ -18,15 +18,25 @@
             }
 
             .MD-adjust-3 p {
-                font-size: 15px !important;
+                font-size: 20px !important;
             }
         }
 
-        /* @@media (max-width:900px) {
-                            .MD-adjust-3 p{
-                                font-size: 50px !important;
-                            }
-                        }*/
+        @@media (max-width:1000px) {
+            .ED-media-1 {
+                margin-top: 30px;
+                width: 100% !important;
+            }
+
+            .CT-tbody-ColorInterval tr > td {
+                font-size: 20px !important;
+            }
+
+            .MD-adjust-3 p {
+                font-size: 16px !important;
+            }
+        }
+
 
         .SC-input-button-form_submit {
             background-color: #4443a3;
@@ -50,7 +60,7 @@
 }
 @*大框架*@
 <div class="container" id="DisplayNotYetPaid">
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger text-center AT-fs-25" role="alert">
         此病患尚未繳費!!
     </div>
 </div>

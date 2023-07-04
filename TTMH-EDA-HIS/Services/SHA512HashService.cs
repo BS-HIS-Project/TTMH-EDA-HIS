@@ -13,7 +13,7 @@ namespace TTMH_EDA_HIS.Services
 				return "";
 			}
 			byte[] bytes = SHA512.HashData(Encoding.UTF8.GetBytes(rawString));
-			return bytes.ToString();
-		}
-	}
+			return BitConverter.ToString(bytes).Replace("-", String.Empty);
+        }
+    }
 }
