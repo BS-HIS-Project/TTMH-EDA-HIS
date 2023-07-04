@@ -7,8 +7,8 @@ using HISDB;
 using ConsumerTerminal.Services.BillingSystem;
 using ConsumerTerminal.Services.PrintSystem;
 
-
-var inputGroupId = "G001";
+//var inputGroupId = "G001";
+var inputGroupId = GetGroupId();
 
 ConsumerConfig config = new ConsumerConfig
 {
@@ -49,15 +49,11 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
 
                 CreateCDDs(JsonData);
 
-
-                var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
-                BagControlSer.run();
-
-                // 藥袋內頁列印
-                //foreach(var data in JsonData.ChartsDrugsDosages)
-                //{
-                //    var _MBSer = new MedicineBagServices(JsonData.ChaId, data.DrugId, JsonData.PatientId, PresNo);
-                //}
+                if (inputGroupId == "G02")
+                {
+                    var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
+                    BagControlSer.run();
+                }
             }
         }
         catch (Exception e)
@@ -210,4 +206,16 @@ int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, 
     _context.Dispose();
     PresNo = _Prescription.PresNo;
     return DrugNumber;
+}
+
+string GetGroupId()
+{
+    Console.WriteLine("請選擇服務");
+    Console.WriteLine("1. 醫囑系統");
+    Console.WriteLine("2. 藥局系統");
+    Console.WriteLine("3. 批價系統");
+
+    var GroupIdList = new List<string>() { "G01", "G02", "G03" };
+
+    return GroupIdList[int.Parse(Console.ReadLine() ?? throw new Exception("GroupId is NULL")) - 1];
 }
