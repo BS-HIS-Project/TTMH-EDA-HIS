@@ -7,7 +7,6 @@ using HISDB;
 using ConsumerTerminal.Services.BillingSystem;
 using ConsumerTerminal.Services.PrintSystem;
 
-var _context = new HisdbContext();
 
 var inputGroupId = "G001";
 
@@ -28,6 +27,7 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
     var DrugNumber = 1;
     var PaymentBarcode = 1;
     string PresNo;
+    string detId;
 
     while (true)
     {
@@ -40,16 +40,17 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             if (JsonData == null)
             {
                 Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
-            } else
+            } 
+            else
             {
                 DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
-                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData);
+                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
 
                 CreateCDDs(JsonData);
 
 
-                var BagControlSer = new BagControlServices(JsonData, PresNo, JsonData.ChaId);
+                var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
                 BagControlSer.run();
 
                 // 藥袋內頁列印
@@ -70,6 +71,7 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
 
 void CreateCDDs(DoctorMessage? JsonData)
 {
+    var _context = new HisdbContext();
     if (JsonData.ChartsDrugsDosages != null)
     {
         foreach (var data in JsonData.ChartsDrugsDosages)
@@ -117,7 +119,7 @@ void CreateCDDs(DoctorMessage? JsonData)
 
             _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * (double)_ChartsDrugsDosage.Days);
 
-            if (_context.ChartsDrugsDosages.Find(_ChartsDrugsDosage.ChaId, _ChartsDrugsDosage.DrugId) != null)
+            if (_context.ChartsDrugsDosages.Where(c => c.ChaId == _ChartsDrugsDosage.ChaId && c.DrugId == _ChartsDrugsDosage.DrugId).FirstOrDefault() != null)
             {
                 Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId}, {_ChartsDrugsDosage.DrugId} 新增已存在");
             }
@@ -130,10 +132,12 @@ void CreateCDDs(DoctorMessage? JsonData)
             }
         }
     }
+    _context.Dispose();
 }
 
-int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorMessage? JsonData)
+int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorMessage? JsonData, out string detId)
 {
+    var _context = new HisdbContext();
     ConnectServices connectServices = new ConnectServices();
 
     var _billing = connectServices.GetBilling(JsonData?.PatientId ?? throw new Exception("PatientId is NULL"));
@@ -170,11 +174,17 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
     _context.SaveChanges();
 
     Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
+
+    _billing.close();
+
+    _context.Dispose();
+    detId = _detail.DetId;
     return PaymentBarcode;
 }
 
 int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, DoctorMessage? JsonData, out string PresNo)
 {
+    var _context = new HisdbContext();
     var _Prescription = new Prescription()
     {
         // PRE + NOWDATE + 小時 + 診間號 + (領藥號)序號
@@ -197,6 +207,7 @@ int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, 
 
     Console.WriteLine($"Prescription: {_Prescription.PresNo} 成功新增");
 
+    _context.Dispose();
     PresNo = _Prescription.PresNo;
     return DrugNumber;
 }

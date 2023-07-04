@@ -23,17 +23,22 @@ namespace ConsumerTerminal.Services.BillingSystem
             {
                 if (ChackHealthInsurance(PatientId))
                 {
+                    _context.Dispose();
                     return new HealthInsurance(PatientId);
                 }
                 else
                 {
+                    _context.Dispose();
                     return new NonHealthInsurance(PatientId);
                 }
             }
             else
             {
+                _context.Dispose();
                 throw new Exception("Patient not found");
             }
+
+
         }
 
         private bool ChackPatient(string PatientId)

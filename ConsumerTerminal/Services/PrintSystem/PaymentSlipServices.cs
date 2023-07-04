@@ -16,15 +16,15 @@ namespace ConsumerTerminal.Services.PrintSystem
         private readonly List<string> _output;
         private readonly List<string> _drugListTemp;
         private readonly List<MatchData> _match;
-        private readonly List<DrugList> _drugList;
+
+        private List<DrugList> _drugList;
 
         private readonly string ChaId;
-        private readonly string DrugId;
         private readonly string PatientId;
         private readonly string PresNo;
         private readonly string DetId;
 
-        public PaymentSlipServices(string chaId, string drugId, string patientId, string presNo, string detId)
+        public PaymentSlipServices(string chaId, string patientId, string presNo, string detId)
         {
             _context = new HisdbContext();
 
@@ -35,7 +35,6 @@ namespace ConsumerTerminal.Services.PrintSystem
             _drugList = new List<DrugList>();
 
             ChaId = chaId;
-            DrugId = drugId;
             PatientId = patientId;
             PresNo = presNo;
             DetId = detId;
@@ -44,20 +43,18 @@ namespace ConsumerTerminal.Services.PrintSystem
             //setMatchData();
             //ChangeData();
             //OutputPDF(@$".\..\..\..\PDF\藥袋\PaymentSlip{patientId}{chaId}.pdf");
-            
+            setDrugListTemp();
         }
 
         public void setMatchData()
         {
-            var CDDs = _context.ChartsDrugsDosages.Where(cdd => cdd.ChaId == ChaId && cdd.DrugId == DrugId).FirstOrDefault();
             var pat = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault();
             var pres = _context.Prescriptions.Where(p => p.PresNo == PresNo).FirstOrDefault();
             var DPCs = _context.DoctorsPatientsCharts.Where(dpc => dpc.ChaId == ChaId).FirstOrDefault();
             var Doctor = _context.Employees.Where(d => d.EmployeeId == DPCs.DoctorId).FirstOrDefault();
             var chart = _context.Charts.Where(c => c.ChaId == ChaId).FirstOrDefault();
-            var drug = _context.Drugs.Where(d => d.DrugId == DrugId).FirstOrDefault();
-            var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
             var pharmacy = _context.Employees.Where(p => p.EmployeeId == pres.PhaId).FirstOrDefault();
+            var det = _context.Details.Where(d => d.DetId == DetId).FirstOrDefault();
 
             int length = PresNo.Length;
 
@@ -73,6 +70,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             _match.Add(new MatchData { htmlStr = "#Vdate", pdfStr = DateTimeToYMD(chart.Vdate) });
             _match.Add(new MatchData { htmlStr = "#Gender", pdfStr = PatSer.GetGender() });
             _match.Add(new MatchData { htmlStr = "#object", pdfStr = chart.Object.ToString() });
+            _match.Add(new MatchData { htmlStr = "#Total", pdfStr = det.Payable.ToString() });
         }
 
         private static string DateTimeToYMD(DateTime dateTime)
@@ -91,11 +89,16 @@ namespace ConsumerTerminal.Services.PrintSystem
             {
                 string temp = s;
 
-                foreach (MatchData m in _match)
+                if (s.Contains("#DrugList"))
                 {
-                    if (s.Contains(m.htmlStr))
+                    setDrugListToHTML();
+                }
+                else 
+                {
+                    foreach (MatchData m in _match)
                     {
-                        temp = s.Replace(m.htmlStr, m.pdfStr);
+                        if (s.Contains(m.htmlStr))
+                            temp = s.Replace(m.htmlStr, m.pdfStr);
                     }
                 }
 
@@ -108,8 +111,8 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             StreamReader sr = new StreamReader(FileName, Encoding.UTF8);
 
-            String line;
-            line = sr.ReadLine();
+            string? line = null;
+            line = sr.ReadLineAsync().Result;
             while (line != null)
             {
                 _data.Add(line.ToString());
@@ -117,6 +120,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sr.Close();
+            sr.Dispose();
         }
 
         public override void OutputPDF(string FileName)
@@ -132,6 +136,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sw.Close();
+            sw.Dispose();
 
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.PaperSize = PdfPaperSize.A4;
@@ -141,35 +146,84 @@ namespace ConsumerTerminal.Services.PrintSystem
             pdf.SaveAs(FileName);
         }
 
-        public void setDrugListTemp()
+        public void setDrugList()
+        {
+            _drugList = new List<DrugList>();
+        }
+
+        private void setDrugListTemp()
         {
             _drugListTemp.Add("<tr>");
             _drugListTemp.Add("<td class=\"drugName\">#DrugName</td>");
-            _drugListTemp.Add("<td class=\"drugId\">#DrugId</td>");
+            _drugListTemp.Add("<td class=\"dosId\">#DosId</td>");
             _drugListTemp.Add("<td class=\"CDDsQty\">#CDDsQty</td>");
             _drugListTemp.Add("<td class=\"CDDsDays\">#CDDsDays</td>");
             _drugListTemp.Add("<td class=\"CDDsTotal\">#CDDsTotal</td>");
             _drugListTemp.Add("</tr>");
         }
 
-        public void AddDrugList(string DrugName, string DrugId, string CDDsQty, 
-                                string CDDsDays, string CDDsTotal)
+        private void setDrugListToHTML()
         {
-            _drugList.Add(new DrugList { 
-                DrugName = DrugName, 
-                DrugId = DrugId, 
-                CDDsQty = CDDsQty, 
-                CDDsDays = CDDsDays, 
-                CDDsTotal = CDDsTotal });
+            foreach(var drug in _drugList)
+            {
+                foreach(var temp in _drugListTemp)
+                {
+                    string temp2 = temp;
+
+                    if(temp2.Contains("#DrugName"))
+                        temp2 = temp2.Replace("#DrugName", drug.DrugName);
+                    else if(temp2.Contains("#DosId"))
+                        temp2 = temp2.Replace("#DosId", drug.DosId);
+                    else if(temp2.Contains("#CDDsQty"))
+                        temp2 = temp2.Replace("#CDDsQty", drug.CDDsQty);
+                    else if(temp2.Contains("#CDDsDays"))
+                        temp2 = temp2.Replace("#CDDsDays", drug.CDDsDays);
+                    else if(temp2.Contains("#CDDsTotal"))
+                        temp2 = temp2.Replace("#CDDsTotal", drug.CDDsTotal);
+
+                    _output.Add(temp2);
+                }
+            }
+        }
+
+        public void AddDrugList(string DrugId)
+        {
+            var CDDs = _context.ChartsDrugsDosages.Where(cdd => cdd.ChaId == ChaId && cdd.DrugId == DrugId).FirstOrDefault();
+            var DrugName = _context.Drugs.Where(d => d.DrugId == DrugId).FirstOrDefault().DrugName;
+
+            if (CDDs == null)
+            {
+                new Exception("CDDs is null");
+            } 
+            else if (DrugName == null)
+            {
+                new Exception("DrugName is null");
+            } 
+            else
+            {
+                _drugList.Add(new DrugList
+                {
+                    DrugName = DrugName,
+                    DosId = CDDs.DosId,
+                    CDDsQty = CDDs.Quantity.ToString(),
+                    CDDsDays = CDDs.Days.ToString(),
+                    CDDsTotal = CDDs.Total.ToString()
+                });
+            }
         }
 
         private class DrugList
         {
             public string DrugName { get; set; }
-            public string DrugId { get; set; }
+            public string DosId { get; set; }
             public string CDDsQty { get; set; }
             public string CDDsDays { get; set; }
             public string CDDsTotal { get; set; }
+        }
+
+        public void close()
+        {
+            _context.Dispose();
         }
     }
 }

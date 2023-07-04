@@ -46,14 +46,14 @@ namespace ConsumerTerminal.Services.PrintSystem
 
         public void setMatchData()
         {
-            var CDDs = _context.ChartsDrugsDosages.Where(cdd => cdd.ChaId == ChaId && cdd.DrugId == DrugId).FirstOrDefault();
+            var CDDs = _context.ChartsDrugsDosages.Find(ChaId, DrugId);
             var pat = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault();
             var pres = _context.Prescriptions.Where(p => p.PresNo == PresNo).FirstOrDefault();
             var DPCs = _context.DoctorsPatientsCharts.Where(dpc => dpc.ChaId == ChaId).FirstOrDefault();
             var Doctor = _context.Employees.Where(d => d.EmployeeId == DPCs.DoctorId).FirstOrDefault();
             var chart = _context.Charts.Where(c => c.ChaId == ChaId).FirstOrDefault();
             var drug = _context.Drugs.Where(d => d.DrugId == DrugId).FirstOrDefault();
-            var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
+            Dosage? dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
             var pharmacy = _context.Employees.Where(p => p.EmployeeId == pres.PhaId).FirstOrDefault();
 
             int length = PresNo.Length;
@@ -115,8 +115,8 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             StreamReader sr = new StreamReader(FileName, Encoding.UTF8);
 
-            String line;
-            line = sr.ReadLine();
+            string? line = null;
+            line = sr.ReadLineAsync().Result;
             while (line != null)
             {
                 _data.Add(line.ToString());
@@ -124,6 +124,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sr.Close();
+            sr.Dispose();
         }
 
         public override void OutputPDF(string FileName)
@@ -139,6 +140,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sw.Close();
+            sw.Dispose();
 
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.PaperSize = PdfPaperSize.A4;
@@ -146,6 +148,10 @@ namespace ConsumerTerminal.Services.PrintSystem
             renderer.RenderingOptions.MarginBottom = 35; // millimeters
             var pdf = renderer.RenderUrlAsPdf(path);
             pdf.SaveAs(FileName);
+        }
+        public void close()
+        {
+            _context.Dispose(); 
         }
     }
 }
