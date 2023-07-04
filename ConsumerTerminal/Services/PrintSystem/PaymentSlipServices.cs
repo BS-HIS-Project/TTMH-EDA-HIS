@@ -39,10 +39,6 @@ namespace ConsumerTerminal.Services.PrintSystem
             PresNo = presNo;
             DetId = detId;
 
-            //InputHTML(@".\..\..\..\Forms\PaymentSlip.html");
-            //setMatchData();
-            //ChangeData();
-            //OutputPDF(@$".\..\..\..\PDF\藥袋\PaymentSlip{patientId}{chaId}.pdf");
             setDrugListTemp();
         }
 
