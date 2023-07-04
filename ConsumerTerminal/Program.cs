@@ -67,11 +67,13 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
 
 void CreateCDDs(DoctorMessage? JsonData)
 {
-    var _context = new HisdbContext();
+    
     if (JsonData.ChartsDrugsDosages != null)
     {
         foreach (var data in JsonData.ChartsDrugsDosages)
         {
+            var _context = new HisdbContext();
+
             var _ChartsDrugsDosage = new HISDB.Models.ChartsDrugsDosage()
             {
                 ChaId = JsonData.ChaId ?? throw new Exception("ChaId is NULL"),
@@ -113,7 +115,7 @@ void CreateCDDs(DoctorMessage? JsonData)
                 throw new Exception("Freg is NULL");
             }
 
-            _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * (double)_ChartsDrugsDosage.Days);
+            _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * _ChartsDrugsDosage.Days);
 
             if (_context.ChartsDrugsDosages.Where(c => c.ChaId == _ChartsDrugsDosage.ChaId && c.DrugId == _ChartsDrugsDosage.DrugId).FirstOrDefault() != null)
             {
@@ -126,9 +128,11 @@ void CreateCDDs(DoctorMessage? JsonData)
 
                 Console.WriteLine($"ChartsDrugsDosage: {_ChartsDrugsDosage.ChaId}, {_ChartsDrugsDosage.DrugId} 成功新增");
             }
+
+            _context.Dispose();
         }
     }
-    _context.Dispose();
+   
 }
 
 int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorMessage? JsonData, out string detId)
