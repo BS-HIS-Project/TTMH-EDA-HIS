@@ -103,7 +103,7 @@ namespace TTMH_EDA_HIS.Controllers
                     docsName = "",
                     Vdate = "",
                     Drugs = new List<PresViewModel_Drug>(),
-                    StatusCode = 0,
+                    StatusCode = 4,
                     PaymentTime = DateTime.Now
                 };
                 switch (PresNo)
