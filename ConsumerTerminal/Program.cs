@@ -45,9 +45,9 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             {
                 DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
-                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
-
                 CreateCDDs(JsonData);
+
+                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
 
                 if (inputGroupId == "G02" || inputGroupId == "888")
                 {
@@ -141,6 +141,11 @@ int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorM
     ConnectServices connectServices = new ConnectServices();
 
     var _billing = connectServices.GetBilling(JsonData?.PatientId ?? throw new Exception("PatientId is NULL"));
+    
+    foreach(var data in JsonData.ChartsDrugsDosages)
+    {
+        _billing.AddCDDsList(JsonData.ChaId, data.DrugId);
+    }
 
     Detail _detail = new Detail()
     {

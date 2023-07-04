@@ -28,11 +28,6 @@ namespace ConsumerTerminal.Services.BillingSystem
             }
 
         }
-        // 藥費
-        public override decimal DrugFee()
-        {
-            return 0;
-        }
 
         public override Decimal DiagnosticFee()
         {
@@ -41,7 +36,34 @@ namespace ConsumerTerminal.Services.BillingSystem
 
         public override decimal DrugPartialPayment()
         {
-            return 0;
+            var cost = DrugFee();
+
+
+            switch((int)((cost + 1) / 100))
+            {
+                case 0:
+                    return 0;
+                case 1:
+                    return 20;
+                case 2:
+                    return 40;
+                case 3:
+                    return 60;
+                case 4:
+                    return 80;
+                case 5:
+                    return 100;
+                case 6:
+                    return 120;
+                case 7:
+                    return 140;
+                case 8:
+                    return 160;
+                case 9:
+                    return 180;
+                default:
+                    return 200;
+            }
         }
     }
 }

@@ -28,11 +28,6 @@ namespace ConsumerTerminal.Services.BillingSystem
 
         }
 
-        public override Decimal DrugFee()
-        {
-            return 0;
-        }
-
         public override Decimal DiagnosticFee()
         {
             return 500;
@@ -40,7 +35,7 @@ namespace ConsumerTerminal.Services.BillingSystem
 
         public override decimal DrugPartialPayment()
         {
-            return 0;
+            return DrugFee();
         }
     }
 }

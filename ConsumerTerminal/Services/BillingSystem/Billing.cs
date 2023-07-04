@@ -12,6 +12,7 @@ namespace ConsumerTerminal.Services.BillingSystem
     {
         private readonly HisdbContext _context;
         private PartialServices _partialServices { get; set; }
+        private List<CDDsList> _cddsList { get; set; }
         private string PatientId { get; set; }
 
         public Billing(string PatientId)
@@ -19,6 +20,7 @@ namespace ConsumerTerminal.Services.BillingSystem
             _context = new HisdbContext();
 
             this.PatientId = PatientId;
+            _cddsList = new List<CDDsList>();
 
             if (ChackPatient())
             {
@@ -28,6 +30,7 @@ namespace ConsumerTerminal.Services.BillingSystem
             {
                 throw new Exception("Patient not found");
             }
+
         }
         // 掛號費
         public Decimal RegistrationFee()
@@ -55,7 +58,7 @@ namespace ConsumerTerminal.Services.BillingSystem
 
             return total - temp;
         }
-        
+
         // 部分負擔費
         public Decimal PartialPayment()
         {
@@ -67,11 +70,28 @@ namespace ConsumerTerminal.Services.BillingSystem
 
         public Decimal Total()
         {
-            return RegistrationFee() + PartialPayment() + DrugFee() + DiagnosticFee();
+            return RegistrationFee() + PartialPayment() + DiagnosticFee() + DrugPartialPayment();
         }
 
         // 藥費
-        public abstract Decimal DrugFee();
+        public Decimal DrugFee()
+        {
+            decimal total = 0;
+            foreach (var cdd in _cddsList)
+            {
+                var _drug = _context.Drugs.Where(d => d.DrugId == cdd.DrugId).FirstOrDefault();
+                if (_drug == null)
+                {
+                    throw new Exception("Drug not found");
+                }
+                else
+                {
+                    total += _drug.UnitPrice * (decimal)cdd.Total;
+                }
+            }
+
+            return total;
+        }
 
         // 藥品部分負擔費
         public abstract Decimal DrugPartialPayment();
@@ -95,6 +115,22 @@ namespace ConsumerTerminal.Services.BillingSystem
         public void close()
         {
             _context.Dispose();
+        }
+
+        public void AddCDDsList(string ChaId, string DrugId)
+        {
+            var CDD = _context.ChartsDrugsDosages.Where(c => c.ChaId == ChaId && c.DrugId == DrugId).FirstOrDefault();
+            double Total = CDD.Total;
+            
+            if (Total == 0)
+            {
+                throw new Exception("Total is 0");
+            }
+            else
+            {
+                _cddsList.Add(new CDDsList { ChaId = ChaId, DrugId = DrugId, Total = Total });
+            }
+
         }
     }
 }
