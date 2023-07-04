@@ -105,8 +105,8 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             StreamReader sr = new StreamReader(FileName, Encoding.UTF8);
 
-            String line;
-            line = sr.ReadLine();
+            string? line = null;
+            line = sr.ReadLineAsync().Result;
             while (line != null)
             {
                 _data.Add(line.ToString());
@@ -114,6 +114,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sr.Close();
+            sr.Dispose();
         }
 
         public override void OutputPDF(string FileName)
@@ -211,6 +212,11 @@ namespace ConsumerTerminal.Services.PrintSystem
             public string CDDsQty { get; set; }
             public string CDDsDays { get; set; }
             public string CDDsTotal { get; set; }
+        }
+
+        public void close()
+        {
+            _context.Dispose();
         }
     }
 }

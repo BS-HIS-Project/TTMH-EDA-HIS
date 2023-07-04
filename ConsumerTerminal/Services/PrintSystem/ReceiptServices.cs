@@ -11,18 +11,17 @@ namespace ConsumerTerminal.Services.PrintSystem
 {
     public class ReceiptServices : DataProcessing
     {
-        private readonly HisdbContext _context;
+        private HisdbContext _context;
 
         private readonly List<string> _data;
         private readonly List<string> _output;
         private readonly List<MatchData> _match;
 
         private readonly string ChaId;
-        private readonly string DrugId;
         private readonly string PatientId;
         private readonly string DetId;
 
-        public ReceiptServices(string chaId, string drugId, string patientId, string detId)
+        public ReceiptServices(string chaId, string patientId, string detId)
         {
             _context = new HisdbContext();
 
@@ -31,54 +30,43 @@ namespace ConsumerTerminal.Services.PrintSystem
             _match = new List<MatchData>();
 
             ChaId = chaId;
-            DrugId = drugId;
             PatientId = patientId;
             DetId = detId;
         }
 
         public void setMatchData()
         {
-            var CDDs = _context.ChartsDrugsDosages.Where(cdd => cdd.ChaId == ChaId && cdd.DrugId == DrugId).FirstOrDefault();
+            //var CDDs = _context.ChartsDrugsDosages.Where(cdd => cdd.ChaId == ChaId && cdd.DrugId == DrugId).FirstOrDefault();
             var pat = _context.Patients.Where(p => p.PatientId == PatientId).FirstOrDefault();
             var DPCs = _context.DoctorsPatientsCharts.Where(dpc => dpc.ChaId == ChaId).FirstOrDefault();
             var Doctor = _context.Employees.Where(d => d.EmployeeId == DPCs.DoctorId).FirstOrDefault();
             var chart = _context.Charts.Where(c => c.ChaId == ChaId).FirstOrDefault();
-            var drug = _context.Drugs.Where(d => d.DrugId == DrugId).FirstOrDefault();
-            var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
-            var detail = (
-                from dt in _context.Details
-                where dt.PatientId == pat.PatientId
-                orderby dt.PaymentTime descending
-                select dt
-            ).FirstOrDefault();
-            var cashierName = (
-                from em in _context.Employees
-                where em.EmployeeId==detail.CasId
-                select em.EmployeeName
-            ).FirstOrDefault();
+            //var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
+            var detail = _context.Details.Where(d => d.DetId == DetId).FirstOrDefault();
+            //var cashierName = _context.Employees.Where(e => e.EmployeeId == detail.CashierId).FirstOrDefault().EmployeeName;
+            var cashierName = "";
 
 
             var PatSer = new PartialServices(PatientId);
 
-            _match.Add(new MatchData { htmlStr = "#PatientId", pdfStr = pat.PatientId.ToString() });
-            _match.Add(new MatchData { htmlStr = "#BirthDate", pdfStr = DateTimeToYMD(pat.BirthDate) });
-            _match.Add(new MatchData { htmlStr = "#DoctorName", pdfStr = Doctor.EmployeeName.ToString() });
+            _match.Add(new MatchData { htmlStr = "#CaseHistory", pdfStr = pat.PatientId.ToString() });
             _match.Add(new MatchData { htmlStr = "#PatientName", pdfStr = pat.PatientName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#PatientYear", pdfStr = PatSer.GetAge().ToString() });
-            _match.Add(new MatchData { htmlStr = "#Vdate", pdfStr = DateTimeToYMD(chart.Vdate) });
             _match.Add(new MatchData { htmlStr = "#Gender", pdfStr = PatSer.GetGender() });
-            _match.Add(new MatchData { htmlStr = "#DrugName", pdfStr = drug.DrugName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#Appearance", pdfStr = drug.Appearance.ToString() });
-            _match.Add(new MatchData { htmlStr = "#GenericName", pdfStr = drug.GenericName.ToString() });
-            _match.Add(new MatchData { htmlStr = "#Dcontent", pdfStr = drug.Dcontent.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DosageFreq", pdfStr = dosage.Freq.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsQty", pdfStr = CDDs.Quantity.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsDays", pdfStr = CDDs.Days.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugWarningPrecautions", pdfStr = drug.WarningPrecautions.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugClinicalUses", pdfStr = drug.ClinicalUses.ToString() });
-            _match.Add(new MatchData { htmlStr = "#DrugAdverseReactions", pdfStr = drug.AdverseReactions.ToString() });
-            _match.Add(new MatchData { htmlStr = "#CDDsTotal", pdfStr = CDDs.Total.ToString() });
-            //_match.Add(new MatchData { htmlStr = "#PhaName", pdfStr = pharmacy.EmployeeName.ToString() });
+            _match.Add(new MatchData { htmlStr = "#BirthDate", pdfStr = DateTimeToYMD(pat.BirthDate) });
+            _match.Add(new MatchData { htmlStr = "#Age", pdfStr = PatSer.GetAge().ToString() });
+            _match.Add(new MatchData { htmlStr = "#DoctorName", pdfStr = Doctor.EmployeeName.ToString() ?? ""});
+            _match.Add(new MatchData { htmlStr = "#VDate", pdfStr = DateTimeToYMD(chart.Vdate) });
+            
+            _match.Add(new MatchData { htmlStr = "#Registration", pdfStr = detail.Registration.ToString() ?? ""});
+            _match.Add(new MatchData { htmlStr = "#MedicalCost", pdfStr = detail.MedicalCost.ToString() });
+            _match.Add(new MatchData { htmlStr = "#PartialPayment", pdfStr = detail.PartialPayment.ToString() ?? ""});
+            _match.Add(new MatchData { htmlStr = "#Diagnostic", pdfStr = detail.Diagnostic.ToString() ?? ""});
+            _match.Add(new MatchData { htmlStr = "#DrugPartialPayment", pdfStr = detail.DrugPartialPayment.ToString() ?? ""});
+            _match.Add(new MatchData { htmlStr = "#Payable", pdfStr = detail.Payable.ToString() });
+            _match.Add(new MatchData { htmlStr = "#DetID", pdfStr = DetId.Substring(DetId.Length - 3).ToString() });
+            _match.Add(new MatchData { htmlStr = "#CashierName", pdfStr = cashierName.ToString() });
+            _match.Add(new MatchData { htmlStr = "#PaymentTime", pdfStr = detail.PaymentTime.ToString() ?? "".ToString() });
+
         }
 
         private static string DateTimeToYMD(DateTime dateTime)
@@ -114,8 +102,8 @@ namespace ConsumerTerminal.Services.PrintSystem
         {
             StreamReader sr = new StreamReader(FileName, Encoding.UTF8);
 
-            String line;
-            line = sr.ReadLine();
+            string? line = null;
+            line = sr.ReadLineAsync().Result;
             while (line != null)
             {
                 _data.Add(line.ToString());
@@ -123,6 +111,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sr.Close();
+            sr.Dispose();
         }
 
         public override void OutputPDF(string FileName)
@@ -140,11 +129,16 @@ namespace ConsumerTerminal.Services.PrintSystem
             sw.Close();
 
             var renderer = new ChromePdfRenderer();
-            renderer.RenderingOptions.PaperSize = PdfPaperSize.A4;
-            renderer.RenderingOptions.MarginTop = 33; // millimeters
-            renderer.RenderingOptions.MarginBottom = 35; // millimeters
+            renderer.RenderingOptions.PaperSize = PdfPaperSize.A4Rotated;
+            renderer.RenderingOptions.MarginTop = 0; // millimeters
+            renderer.RenderingOptions.MarginBottom = 0; // millimeters
             var pdf = renderer.RenderUrlAsPdf(path);
             pdf.SaveAs(FileName);
+        }
+
+        public void close()
+        {
+            _context.Dispose();
         }
     }
 }

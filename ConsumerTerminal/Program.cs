@@ -49,7 +49,7 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
 
                 CreateCDDs(JsonData);
 
-                if (inputGroupId == "G02")
+                if (inputGroupId == "G02" || inputGroupId == "888")
                 {
                     var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
                     BagControlSer.run();
@@ -115,7 +115,7 @@ void CreateCDDs(DoctorMessage? JsonData)
                 throw new Exception("Freg is NULL");
             }
 
-            _ChartsDrugsDosage.Total = (int)((double)_freg * (double)_ChartsDrugsDosage.Quantity * _ChartsDrugsDosage.Days);
+            _ChartsDrugsDosage.Total = (double)_freg * (double)_ChartsDrugsDosage.Quantity * _ChartsDrugsDosage.Days;
 
             if (_context.ChartsDrugsDosages.Where(c => c.ChaId == _ChartsDrugsDosage.ChaId && c.DrugId == _ChartsDrugsDosage.DrugId).FirstOrDefault() != null)
             {

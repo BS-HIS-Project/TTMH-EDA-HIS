@@ -19,6 +19,7 @@ namespace ConsumerTerminal.Services.PrintSystem
         private MedicineBagServices MedicineBagSer;
         private PaymentSlipServices PaymentSlipSer;
         private PrescriptionServices PrescriptionSer;
+        private ReceiptServices ReceiptSer;
 
         private readonly string PresNo;
         private readonly string DetId;
@@ -39,6 +40,8 @@ namespace ConsumerTerminal.Services.PrintSystem
 
         public void run()
         {
+            _context.Dispose();
+
             string path = @$".\..\..\..\PDF\{doctorMessage.PatientId}{doctorMessage.ChaId}";
 
             CreateDirectory(path);
@@ -84,8 +87,14 @@ namespace ConsumerTerminal.Services.PrintSystem
             PrescriptionSer.setMatchData();
             PrescriptionSer.ChangeData();
             PrescriptionSer.OutputPDF(@$"{path}\Prescription{PresNo}{DetId}.pdf");
+            PrescriptionSer.close();
 
-            _context.Dispose();
+            ReceiptSer = new ReceiptServices(doctorMessage.ChaId, doctorMessage.PatientId, DetId);
+            ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
+            ReceiptSer.setMatchData();
+            ReceiptSer.ChangeData();
+            ReceiptSer.OutputPDF(@$"{path}\Receipt{PresNo}{DetId}.pdf");
+            ReceiptSer.close();
         }
 
         private void CreateDirectory(string path)
@@ -97,3 +106,4 @@ namespace ConsumerTerminal.Services.PrintSystem
         }
     }
 }
+ 
