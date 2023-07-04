@@ -18,6 +18,7 @@ namespace ConsumerTerminal.Services.PrintSystem
         private DoctorMessage doctorMessage;
         private MedicineBagServices MedicineBagSer;
         private PaymentSlipServices PaymentSlipSer;
+        private PrescriptionServices PrescriptionSer;
 
         private readonly string PresNo;
         private readonly string DetId;
@@ -69,6 +70,20 @@ namespace ConsumerTerminal.Services.PrintSystem
             PaymentSlipSer.ChangeData();
             PaymentSlipSer.OutputPDF(@$"{path}\PaymentSlip{PresNo}{DetId}.pdf");
             PaymentSlipSer.close();
+
+
+            PrescriptionSer = new PrescriptionServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
+            PrescriptionSer.setDrugList();
+
+            foreach (var item in doctorMessage.ChartsDrugsDosages)
+            {
+                PrescriptionSer.AddDrugList(item.DrugId);
+            }
+
+            PrescriptionSer.InputHTML(@".\..\..\..\Forms\Prescription.html");
+            PrescriptionSer.setMatchData();
+            PrescriptionSer.ChangeData();
+            PrescriptionSer.OutputPDF(@$"{path}\Prescription{PresNo}{DetId}.pdf");
 
             _context.Dispose();
         }

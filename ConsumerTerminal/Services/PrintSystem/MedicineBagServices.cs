@@ -37,11 +37,6 @@ namespace ConsumerTerminal.Services.PrintSystem
             DrugId = drugId;
             PatientId = patientId;
             PresNo = presNo;
-
-            //InputHTML(@".\..\..\..\Forms\MedicineBag.html");
-            //setMatchData();
-            //ChangeData();
-            //OutputPDF(@$".\..\..\..\PDF\藥袋\MedicineBag{patientId}{chaId}.pdf");
         }
 
         public void setMatchData()
