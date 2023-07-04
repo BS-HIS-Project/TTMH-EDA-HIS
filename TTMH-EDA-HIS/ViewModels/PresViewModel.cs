@@ -6,20 +6,10 @@ namespace TTMH_EDA_HIS.ViewModels
 {
     public class PresViewModel
     {
-        //[DisplayName("就診號")]
-        //public string ChaId { get; set; } = null!;
         public Patient? Patient { get; set; }
-        public string? content { get; set; }
 
         [DisplayName("領藥號")]
         public string? PresNo { get; set; }
-
-        //[DisplayName("病歷編號")]
-        //public string CaseHistory { get; set; }
-        //[DisplayName("病患姓名")]
-        //public string PatsName { get; set; }
-        //[DisplayName("性別")]
-        //public int gender { get; set; }
         [DisplayName("出生日期")]
         public string? birthday { get; set; }
 
@@ -29,6 +19,9 @@ namespace TTMH_EDA_HIS.ViewModels
         public string? docsName { get; set; }
         [DisplayName("就診日期")]
         public string? Vdate { get; set; }
+
+        //確認id狀態
+        public int StatusCode { get; set; } = 0;
         public List<PresViewModel_Drug> Drugs { get; set; }
 
         //繳費時間
