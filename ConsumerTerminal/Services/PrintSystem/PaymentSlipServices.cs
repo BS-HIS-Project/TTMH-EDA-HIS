@@ -136,6 +136,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sw.Close();
+            sw.Dispose();
 
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.PaperSize = PdfPaperSize.A4;
@@ -218,6 +219,11 @@ namespace ConsumerTerminal.Services.PrintSystem
             public string CDDsQty { get; set; }
             public string CDDsDays { get; set; }
             public string CDDsTotal { get; set; }
+        }
+
+        public void close()
+        {
+            _context.Dispose();
         }
     }
 }

@@ -140,6 +140,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             }
 
             sw.Close();
+            sw.Dispose();
 
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.PaperSize = PdfPaperSize.A4;
@@ -147,6 +148,10 @@ namespace ConsumerTerminal.Services.PrintSystem
             renderer.RenderingOptions.MarginBottom = 35; // millimeters
             var pdf = renderer.RenderUrlAsPdf(path);
             pdf.SaveAs(FileName);
+        }
+        public void close()
+        {
+            _context.Dispose(); 
         }
     }
 }

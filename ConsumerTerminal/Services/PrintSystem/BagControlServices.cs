@@ -49,6 +49,7 @@ namespace ConsumerTerminal.Services.PrintSystem
                 MedicineBagSer.setMatchData();
                 MedicineBagSer.ChangeData();
                 MedicineBagSer.OutputPDF(@$".\..\..\..\PDF\藥袋\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
+                MedicineBagSer.close();
             }
 
             PaymentSlipSer = new PaymentSlipServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
@@ -63,6 +64,9 @@ namespace ConsumerTerminal.Services.PrintSystem
             PaymentSlipSer.setMatchData();
             PaymentSlipSer.ChangeData();
             PaymentSlipSer.OutputPDF(@$".\..\..\..\PDF\藥袋\PaymentSlip{PresNo}{DetId}.pdf");
+            PaymentSlipSer.close();
+
+            _context.Dispose();
         }
     }
 }

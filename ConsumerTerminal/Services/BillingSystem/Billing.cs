@@ -87,5 +87,10 @@ namespace ConsumerTerminal.Services.BillingSystem
                 return true;
             }
         }
+
+        public void close()
+        {
+            _context.Dispose();
+        }
     }
 }
