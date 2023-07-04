@@ -90,7 +90,7 @@ namespace TTMH_EDA_HIS.Controllers
                     birthday = "",
                     docsName = "",
                     Vdate = "",
-                    StatusCode = 0,
+                    StatusCode = 4,
                     PaymentTime = DateTime.Now
                 };
                 switch (DetId)
