@@ -43,12 +43,16 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             } 
             else
             {
+                // 寫入藥袋資料
                 DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
+                // 寫入 CDD 資料
                 CreateCDDs(JsonData);
 
+                // 寫入批價資料
                 PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
 
+                // 如果服務對象是藥局，則執行藥袋控管
                 if (inputGroupId == "G02" || inputGroupId == "888")
                 {
                     var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
