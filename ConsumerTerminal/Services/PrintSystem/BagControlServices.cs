@@ -38,6 +38,10 @@ namespace ConsumerTerminal.Services.PrintSystem
 
         public void run()
         {
+            string path = @$".\..\..\..\PDF\{doctorMessage.PatientId}{doctorMessage.ChaId}";
+
+            CreateDirectory(path);
+
             int k = 0;
             foreach (var item in doctorMessage.ChartsDrugsDosages)
             {
@@ -48,7 +52,7 @@ namespace ConsumerTerminal.Services.PrintSystem
                 MedicineBagSer.InputHTML(@".\..\..\..\Forms\MedicineBag.html");
                 MedicineBagSer.setMatchData();
                 MedicineBagSer.ChangeData();
-                MedicineBagSer.OutputPDF(@$".\..\..\..\PDF\藥袋\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
+                MedicineBagSer.OutputPDF(@$"{path}\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
                 MedicineBagSer.close();
             }
 
@@ -63,10 +67,18 @@ namespace ConsumerTerminal.Services.PrintSystem
             PaymentSlipSer.InputHTML(@".\..\..\..\Forms\PaymentSlip.html");
             PaymentSlipSer.setMatchData();
             PaymentSlipSer.ChangeData();
-            PaymentSlipSer.OutputPDF(@$".\..\..\..\PDF\藥袋\PaymentSlip{PresNo}{DetId}.pdf");
+            PaymentSlipSer.OutputPDF(@$"{path}\PaymentSlip{PresNo}{DetId}.pdf");
             PaymentSlipSer.close();
 
             _context.Dispose();
+        }
+
+        private void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
     }
 }
