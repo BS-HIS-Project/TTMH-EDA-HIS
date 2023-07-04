@@ -216,8 +216,23 @@ string GetGroupId()
     Console.WriteLine("1. 醫囑系統");
     Console.WriteLine("2. 藥局系統");
     Console.WriteLine("3. 批價系統");
+    Console.WriteLine("4. 測試");
 
     var GroupIdList = new List<string>() { "G01", "G02", "G03" };
 
-    return GroupIdList[int.Parse(Console.ReadLine() ?? throw new Exception("GroupId is NULL")) - 1];
+    var input = Console.ReadLine();
+    if (input == null)
+    {
+        new Exception("input is NULL");
+    } else if (input == "4")
+    {
+        Console.WriteLine("請輸入測試用 GroupId");
+        input = Console.ReadLine();
+        return input ?? "GAAA";
+    }
+    else
+    {
+        return GroupIdList[int.Parse(input) - 1];
+    }
+    return "GAAA";
 }
