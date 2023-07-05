@@ -231,6 +231,9 @@
                     });
                     break;
             }
+            if (StatusCode <= 4 && StatusCode > 0) {
+                document.querySelector("form button").setAttribute("disabled", "");
+            }
         }
 
     </script>

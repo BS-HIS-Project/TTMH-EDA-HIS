@@ -12,6 +12,7 @@ namespace TTMH_EDA_HIS.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Doctor")]
     public class CPOEsCommitAPIController : ControllerBase
     {
         private readonly HisdbContext _context;

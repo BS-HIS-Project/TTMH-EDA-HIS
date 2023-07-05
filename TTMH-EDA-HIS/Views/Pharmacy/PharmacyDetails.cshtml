@@ -252,7 +252,7 @@
                         //footer: '<a href="">Why do I have this issue?</a>'
                     });
                     break;
-                case 3:
+                case 3: //Success
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -262,10 +262,12 @@
                     });
                     break;
             }
+            if (StatusCode<=4 && StatusCode>0){
+                document.querySelector("form button").setAttribute("disabled", "");
+            }
             $("#DisplayNotYetPaid").hide();
             if (PaymentTime == ""){
                 $("#DisplayNotYetPaid").slideDown("slow");
-
             }
         }
 

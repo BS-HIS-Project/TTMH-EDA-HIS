@@ -53,15 +53,10 @@ namespace TTMH_EDA_HIS.Controllers
 		{
 			if (ModelState.IsValid)
             {
-				//Employee? user = await _context.Employees.FirstOrDefaultAsync(x =>
-				//	x.Account.ToUpper() == vm.Account.ToUpper()
-				//	&&
-				//	x.Password == _hashService.SHA512Hash(vm.Password)
-				//);
-				HISDB.Models.Employee? user = await _context.Employees.FirstOrDefaultAsync(x =>
+				Employee? user = await _context.Employees.FirstOrDefaultAsync(x =>
 					x.Account.ToUpper() == vm.Account.ToUpper()
 					&&
-					x.Password == vm.Password
+					x.Password == _hashService.SHA512Hash(vm.Password)
 				);
 				if (user==null)
                 {

@@ -239,7 +239,7 @@ public partial class HisdbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.EmployeeName).HasMaxLength(50);
             entity.Property(e => e.Password)
-                .HasMaxLength(100)
+                .HasMaxLength(10000)
                 .IsUnicode(false);
             
         });
@@ -327,12 +327,12 @@ public partial class HisdbContext : DbContext
 
         //員工
         modelBuilder.Entity<Employee>().HasData(
-            new Employee { EmployeeId = "D11201001", EmployeeName = "YuDaLu", Account = "D1001", Password = "D1001" },
-            new Employee { EmployeeId = "P11201001", EmployeeName = "鍾伊惠", Account = "P1002", Password = "P1002" },
-            new Employee { EmployeeId = "D11201002", EmployeeName = "連智健", Account = "D1003", Password = "D1003" },
-            new Employee { EmployeeId = "C11201001", EmployeeName = "盧昱達", Account = "C1004", Password = "C1004" },
-            new Employee { EmployeeId = "P11201002", EmployeeName = "林廣學", Account = "P1005", Password = "P1005" },
-            new Employee { EmployeeId = "C11201002", EmployeeName = "Althea", Account = "C1006", Password = "C1006" }
+            new Employee { EmployeeId = "D11201001", EmployeeName = "YuDaLu", Account = "D1001", Password = "C7E21D81B12CE45023ED244C4E3C8DCF8F15A3A3C12A94E04B5F139A67AEC9A0534FC5A1387A5B5C63956752B6677FCF98B524FA378277BCA2241FC7E7807FA0" },
+            new Employee { EmployeeId = "P11201001", EmployeeName = "鍾伊惠", Account = "P1002", Password = "C620C100EE6E040376B0367514B74660499ECBAB0EFB18DBCA49DFD6A1DC19A41FD6F14AE500F9607BF0F0428412AD18F704B4CEE74B636E42272F6E32CCF449" },
+            new Employee { EmployeeId = "D11201002", EmployeeName = "連智健", Account = "D1003", Password = "894D9AE1387F7FAE80C852727BF4C122E906BC84A00E9F7AA098F81A5114687DE6A1E746A7769B5EA0C5FFF3E14C4D27A562CC2591B8FD811050F6993535F472" },
+            new Employee { EmployeeId = "C11201001", EmployeeName = "盧昱達", Account = "C1004", Password = "55ACA56A258F8CA90B01594BC4C613B5F5B44F5FB6DAAF5C14DF842D851D2E78324FC4BD1883B821E0B5C21358DFBCDBB30905E80239EDE900B9964934199862" },
+            new Employee { EmployeeId = "P11201002", EmployeeName = "林廣學", Account = "P1005", Password = "FB8D1C53588E7E238EC43CEDBFC1387FB8CEF974C3ABE50D10E081E4E8B8D9C214FBD54DDD204CDA87E93D309201B4558DF15FF363970E1AFCD8154571FFF97C" },
+            new Employee { EmployeeId = "C11201002", EmployeeName = "Althea", Account = "C1006", Password = "42F4197EBEF050AD15E15195C53663FCE72C070E069F98F98743D362479618BA5BFB5E10EB72C31DC74AAC003553490D51A6669605520016C81CDD483DA1CD92" }
         );
         //醫生
         modelBuilder.Entity<Doctor>().HasData(

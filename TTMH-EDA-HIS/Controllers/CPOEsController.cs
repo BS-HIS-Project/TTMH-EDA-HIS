@@ -11,6 +11,7 @@ using System.Collections.Immutable;
 
 namespace TTMH_EDA_HIS.Controllers
 {
+    [Authorize(Roles = "Doctor")]
     public class CPOEsController : Controller
     {
         private readonly HisdbContext _context;
