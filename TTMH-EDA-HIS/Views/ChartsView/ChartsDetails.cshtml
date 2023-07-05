@@ -1,6 +1,8 @@
 ﻿@model TTMH_EDA_HIS.ViewModels.ChartsViewModel
 @{
     ViewData["Title"] = " 批價";
+
+    List<string> statusList = new List<string> { "健保", "非健保", "未知"};
 }
 
 @section CSS{
@@ -41,33 +43,26 @@
     </style>
 }
 @*大框架*@
-<div class="container-lg col-11 py-4">
-    <div class="row" style="height: 100%">
+<div class="container p-5">
+    <div class="row" >
         @*病人個資*@
-        <div class="col-3">
-            <div class="ED-media-1 py-3 row me-5 AT-bg-secondary-emphasis AT-rounded-1 rounded-4" style="width:510px;height:620px;">
-                <div class="col-5">
-                    @*<p class="h4 text-white align-content-center SC-btn AT-rounded-1">健保</p>*@
-                    <div class="d-flex justify-content-center badge AT-bg-primary-deep AT-fs-25 text-wrap" style="width: 115px;height: 48px;">
+        <div class="col-4 me-3">
+            <div class="py-3 row AT-bg-secondary-emphasis AT-rounded-1 rounded-4">
+                <div class="col-12">
+                    <div class="col-4 d-flex justify-content-center badge AT-bg-primary-deep AT-fs-25 text-wrap" >
                         @{
                             var status = Model.Patient.Status ?? "";
                         }
-                        @if (status == "HealthInsurance")                        {
-                            <p class="AT-fs-25 text-white lh-lg">
-                                <div class="align-middle">
-                                    健保
-                                </div>
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="AT-fs-25 text-white lh-lg">
-                                <div class="align-middle">
-                                    非健保
-                                </div>
-                            </p>
-                        }
+                        <p class="AT-fs-25 text-white">
+                            <div class="align-middle">
+                                @if (status == "HealthInsurance") { @statusList[0] }
+                                else if (status == "NonHealthInsurance") { @statusList[1] }
+                                else { @statusList[2] }
+                            </div>
+                        </p>  
                     </div>
+                </div>
+                <div class="col-4">
                     <p class="AT-fs-25 text-white lh-lg text-end mt-3">繳費條號</p>
                     <p class="AT-fs-25 text-white lh-lg text-end mt-3">病例編號</p>
                     <p class="AT-fs-25 text-white lh-lg text-end mt-3">病患姓名</p>
@@ -77,47 +72,37 @@
                     <p class="AT-fs-25 text-white lh-lg text-end mt-3">看診醫生</p>
                     <p class="AT-fs-25 text-white lh-lg text-end mt-3">看診日期</p>
                 </div>
-                <div class="col-6">
-                    <p class="AT-fs-25 text-white lh-lg"></p>
-                    <p class="AT-fs-25 text-white lh-lg pt-5">@Model.DetId</p>
-                    <p class="AT-fs-25 text-white lh-lg">@Model.Patient.CaseHistory</p>
-                    <p class="AT-fs-25 text-white lh-lg">@Model.Patient.PatientName</p>
+                <div class="col">
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.DetId</p>
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.Patient.CaseHistory</p>
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.Patient.PatientName</p>
                     @if (Model.Patient.Gender == "1")
                     {
-                        <p class="AT-fs-25 text-white lh-lg">
+                        <p class="AT-fs-25 text-white lh-lg mt-3">
                             男
                         </p>
                     }
                     else if (Model.Patient.Gender == "2")
                     {
-                        <p class="AT-fs-25 text-white lh-lg">
+                        <p class="AT-fs-25 text-white lh-lg mt-3">
                             女
                         </p>
                     }
-                    <p class="AT-fs-25 text-white lh-lg">@Model.birthday</p>
-                    <p class="AT-fs-25 text-white lh-lg">@Model.age</p>
-                    <p class="AT-fs-25 text-white lh-lg">@Model.docsName</p>
-                    <p class="AT-fs-25 text-white lh-lg">@Model.Vdate</p>
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.birthday</p>
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.age </p>
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.docsName</p>
+                    <p class="AT-fs-25 text-white lh-lg mt-3">@Model.Vdate</p>
                 </div>
             </div>
         </div>
 
         @*查詢/批價內容*@
-        <div class="col-9 d-flex justify-content-center row">
+        <div class="col row justify-content-center">
             @*輸入框*@
-            <div class="row ms-3 d-flex justify-content-center">
-                @*第一版*@
-                @*<form class="d-flex row">
-                <div class="form-group col ">
-                <input type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費號/病例編號">
-                </div>
-                </form>*@
-                @*第二版*@
-                <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control m-3 AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入繳費條號" style="width: 90%">
-            </div>
+            <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep " placeholder="請輸入繳費條號">
             @*批價內容*@
-            <!-- 圓角 + background -->
-            <div class="row AT-rounded-1 AT-bg-fourth m-3 ms-5 d-flex justify-content-center" style="width: 85%">
+            <!-- 圓角 + background   AT-rounded-1 AT-bg-fourth -->
+            <div class="row m-3 mx-5 justify-content-center AT-bg-fourth AT-rounded-1">
                 <div class="d-flex flex-row">
                     <!-- 項目 -->
                     <div class="col-6 pt-3">
@@ -158,14 +143,14 @@
                 <hr class="BS-border border-3 opacity-75" />
                 <div class="d-flex flex-row">
                     <!-- 空白 -->
-                    <div class="col-6">
+                    <div class="col">
                         <div class="AT-fs-30 text-secondary">
                         </div>
                     </div>
                     <!-- 應繳金額 -->
-                    <div class="col-6">
+                    <div class="col-6 mb-3">
                         <div class="AT-fs-30 text-secondary">
-                            應繳金額：@Model.Payable
+                            應繳金額：@Model.Payable 
                         </div>
                     </div>
                 </div>
