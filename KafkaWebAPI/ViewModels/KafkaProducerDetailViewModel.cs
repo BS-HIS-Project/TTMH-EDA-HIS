@@ -1,4 +1,6 @@
-﻿namespace KafkaWebAPI.ViewModels
+﻿using System.Drawing;
+
+namespace KafkaWebAPI.ViewModels
 {
     public class KafkaProducerDetailViewModel
     {
@@ -12,5 +14,6 @@
         public string DetId { get; set; } = null!;
         public string? PatientId { get; set; }
         public string? Vdate { get; set; }
+        public string? DoctorName { get; set; }
     }
 }
