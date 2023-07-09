@@ -37,7 +37,7 @@ namespace KafkaWebAPI.Controllers
         public IActionResult KafkaProducerDetail([FromBody] KafkaProducerDetailViewModel value)
         {
             KafkaProducer controller = new KafkaProducer("server.nicklu89.com:9092");
-            controller.Produce(value.Topic ?? "no-topic", value.Key ?? "no-key", System.Text.Json.JsonSerializer.Serialize(value.DetId) ?? "no-message"); // topic, message
+            controller.Produce(value.Topic ?? "no-topic", value.Key ?? "no-key", System.Text.Json.JsonSerializer.Serialize(value.Message) ?? "no-message"); // topic, message
             return Ok();
         }
     }
