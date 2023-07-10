@@ -3,8 +3,11 @@ using HISDB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 using TTMH_EDA_HIS.ViewModels;
 using static TTMH_EDA_HIS.ViewModels.ChartsViewModel;
+using System.Text.Json;
+using NuGet.Protocol;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -59,16 +62,54 @@ namespace TTMH_EDA_HIS.Controllers
             ChartsViewModel vm = new ChartsViewModel()
             {
                 Patient = new Patient(),
-                DetId = "",
+                DetId = chavm.DetId,
                 age = 0,
-                birthday = "",
-                docsName = "",
-                Vdate = "",
+                birthday = chavm.birthday,
+                docsName = chavm.docsName,
+                Vdate = chavm.Vdate,
                 Drugs = new List<ChartsViewModel_Drug>(),
                 StatusCode = 3, //Message Success
                 PaymentTime = DateTime.Now
             };
             await _context.SaveChangesAsync();
+
+            try
+            {
+                DoctorsPatientsChart? dpc = await (
+                    from i in _context.DoctorsPatientsCharts
+                    where i.PatientId == detail.PatientId
+                    orderby i.ChaId descending
+                    select i
+                ).FirstOrDefaultAsync();
+                ChartsViewDetailsPostRequestAPIViewModel postvm = new ChartsViewDetailsPostRequestAPIViewModel()
+                {
+                    key = "string",
+                    topic = "my-topic",
+                    message = new ChartsViewDetailsPostRequestAPIViewModel_message()
+                    {
+                        detId = chavm.DetId,
+                        patientId = _context.Patients.Where(p => p.PatientId==detail.PatientId).FirstOrDefault().PatientId ?? "",
+                        vdate = _context.Charts.FirstOrDefault(c => c.ChaId == dpc.ChaId).Vdate.ToString("yyyy/MM/dd") ?? "",
+                        doctorName  = _context.Employees.FirstOrDefault(e=>e.EmployeeId==dpc.DoctorId).EmployeeName ?? ""
+                    }
+                };
+
+
+                string? responseJsonStr = null;
+                string postJsonStr = JsonSerializer.Serialize(postvm); //Convert vm variable to JsonString Format 
+                StringContent content = new StringContent(postJsonStr, Encoding.UTF8, "application/json");
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.PostAsync("http://server.nicklu89.com/api/KafkaProducerDetail", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    responseJsonStr = await response.Content.ReadAsStringAsync();
+                }
+                //responseJsonStr Variable is the response String
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
 
             return View(vm);
         }
