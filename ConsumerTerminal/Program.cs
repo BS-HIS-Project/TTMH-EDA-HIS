@@ -67,31 +67,37 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             Console.WriteLine(e);
         }
 
-        try
-        {
-            var JsonData = JsonSerializer.Deserialize<DetailIdViewModel>(consumeResult.Message.Value);
 
-            if (JsonData == null || 
-                (JsonData.Vdate == null && JsonData.DoctorName == null))
-            {
-                Console.WriteLine("Msg not DetailIdViewModel or JsonData is NULL");
-            }
-            else
-            {
-                var path = @$".\..\..\..\PDF";
-                // 列印收據
-                ReceiptServices ReceiptSer;
-                ReceiptSer = new ReceiptServices(JsonData);
-                ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
-                ReceiptSer.setMatchData();
-                ReceiptSer.ChangeData();
-                ReceiptSer.OutputPDF(@$"{path}\Receipt{JsonData.DetId}.pdf");
-                ReceiptSer.close();
-            }
-        }
-        catch (Exception e)
+        if (inputGroupId == "G03" || inputGroupId == "888")
         {
-            Console.WriteLine(e);
+            try
+            {
+                var JsonData = JsonSerializer.Deserialize<DetailIdViewModel>(consumeResult.Message.Value);
+
+                if (JsonData == null ||
+                    (JsonData.Vdate == null && JsonData.DoctorName == null))
+                {
+                    Console.WriteLine("Msg not DetailIdViewModel or JsonData is NULL");
+                }
+                else
+                {
+                    var path = @$".\..\..\..\PDF";
+                    // 列印收據
+                    ReceiptServices ReceiptSer;
+                    ReceiptSer = new ReceiptServices(JsonData);
+                    ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
+                    ReceiptSer.setMatchData();
+                    ReceiptSer.ChangeData();
+                    ReceiptSer.OutputPDF(@$"{path}\Receipt{JsonData.DetId}.pdf");
+                    ReceiptSer.close();
+
+                    Console.WriteLine($"Receipt{JsonData.DetId}.pdf 已列印");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         Console.WriteLine($"Received message: {consumeResult.Message.Value}");
