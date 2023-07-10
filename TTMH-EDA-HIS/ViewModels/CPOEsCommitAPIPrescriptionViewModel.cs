@@ -17,19 +17,11 @@
 
     public class CPOEsCommitAPIPrescriptionViewModel_ChartsDrugsDosage
     {
-        //public string ChaId { get; set; } = null!;
-
         public string DrugId { get; set; } = null!;
-
         public string DosId { get; set; } = null!;
-
-        //次量
         public double Quantity { get; set; }
-
         public int Days { get; set; }
-
         public int Total { get; set; }
-
         public string? Remark { get; set; }
     }
 }

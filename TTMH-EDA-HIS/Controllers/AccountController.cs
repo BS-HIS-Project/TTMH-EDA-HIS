@@ -83,8 +83,8 @@ namespace TTMH_EDA_HIS.Controllers
 
 				List<Claim> claims = new List<Claim>()
 				{
+					//new Claim(ClaimTypes.Name,user.Account), AccountName
 					new Claim(ClaimTypes.NameIdentifier,user.EmployeeId),
-					//new Claim(ClaimTypes.Name,user.Account),
 					new Claim(ClaimTypes.GivenName,user.EmployeeName),
 					new Claim(ClaimTypes.Role,role)
 				};
