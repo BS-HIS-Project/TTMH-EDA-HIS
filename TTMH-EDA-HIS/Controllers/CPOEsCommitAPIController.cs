@@ -194,6 +194,82 @@ namespace TTMH_EDA_HIS.Controllers
                 });
             }
         }
+		[Authorize(Roles = "Doctor")]
+		[HttpPut("[action]")]
+		public async Task<IActionResult> ReprintPrescription(string ChaID)
+        {
+            try
+            {
+                Chart? chart = await _context.Charts.FindAsync(ChaID);
+                if(chart == null)
+                {
+                    return BadRequest();
+                }
+                DoctorsPatientsChart? dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
+                ChartsDrugsDosage[] cdds = await (from d in _context.ChartsDrugsDosages where d.ChaId==ChaID select d).ToArrayAsync();
+				CPOEsCommitAPIPrescriptionViewModel pvm = new CPOEsCommitAPIPrescriptionViewModel()
+				{
+					Topic = "my-topic",
+					Key = "string",
+					Message = new CPOEsCommitAPIPrescriptionViewModel_DoctorMessage()
+					{
+						DoctorId = dpc.DoctorId,
+						PatientId = dpc.PatientId,
+						ChaId = chart.ChaId,
+						ChartsDrugsDosages = new List<CPOEsCommitAPIPrescriptionViewModel_ChartsDrugsDosage>()
+					}
+				};
+				foreach (ChartsDrugsDosage i in cdds)
+				{
+					if (i.Remark == "")
+					{
+						i.Remark = "無";
+					}
+					pvm.Message.ChartsDrugsDosages.Add(new CPOEsCommitAPIPrescriptionViewModel_ChartsDrugsDosage()
+					{
+						DrugId = i.DrugId,
+						DosId = i.DosId,
+						Quantity = (double)i.Quantity,
+						Days = (int)i.Days,
+						Total = (int)i.Total,
+						Remark = i.Remark
+					});
+				}
+                string? responseJsonStr = null;
+                string postJsonStr = JsonSerializer.Serialize(pvm);
+                StringContent content = new StringContent(postJsonStr, Encoding.UTF8, "application/json");
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.PostAsync("http://server.nicklu89.com/api/KafkaProducerDoctor", content);
+                if (response.IsSuccessStatusCode)
+                    {responseJsonStr = await response.Content.ReadAsStringAsync();}
+                else
+                    {throw new Exception("No Response");}
+                if (responseJsonStr == null)
+                    {throw new Exception("Connection Failed");}
+                else if (responseJsonStr != "")
+                    {throw new Exception("");}
+                return Ok(new{
+                        Icon = "success",
+                        Title = "列印成功",
+                        Text = "",
+                        Details = ""
+                });
+
+			}
+            catch (Exception ex)
+            {
+				string eex = "";
+				if (ex.Message == "An error occurred while saving the entity changes. See the inner exception for details.")
+				{ eex += ex.InnerException.Message; }
+				return Ok(new
+				{
+					Icon = "error",
+					Title = "列印失敗",
+					Text = $"{ex.Message}\n\n{eex}",
+					Details = eex
+				});
+			}
+        }
         private async Task<string> PrintPrescription(CPOEsCommitAPIPrescriptionViewModel vm)
         {
             try

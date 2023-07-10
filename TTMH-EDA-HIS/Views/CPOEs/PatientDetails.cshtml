@@ -557,15 +557,72 @@
         }
 
         async function ReprintPrescription(){
-            Swal.fire({
-                title: 'Coming Soon',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
+            var ResponseData;
+            var Anwser="";
+            await Swal.fire({
+                icon: 'info',
+                title: "確定列印嗎 ?",
+                showCancelButton: true,
+                confirmButtonText: "確認",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Answer = "confirm";
+                } else {
+                    Answer = "cancel";
                 }
             });
+            while (true) {
+                await sleep(300);
+                if (Answer == "confirm") {
+                    break;
+                } else if (Answer == "cancel") {
+                    console.log("Action Cancelled");
+                    return false;
+                }
+            }
+            console.log("列印要求發送中 ...");
+            Swal.fire({
+                title: '發送中...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false, //Show Loading Message Text
+                timer: 200000
+            });
+            Swal.showLoading(); //Show Loading Message Spin
+            await fetch(`https://${location.hostname}:${location.port}/api/CPOEsCommitAPI/ReprintPrescription?ChaID=${ChaID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                redirect: "follow",
+                credentials: "include",
+                timeout: 5000
+            }).then((response)=>{
+                return response.json();
+            }).then((data)=>{
+                ResponseData=data;
+                console.log(data);
+            });
+            if (ResponseData["icon"] == "success") {
+                Swal.fire({
+                    position: 'center',
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return true;
+            } else {
+                Swal.fire({
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    text: ResponseData["text"]
+                });
+                return false;
+            }
+            
         }
 
         async function SubmitDATA(){
