@@ -89,12 +89,12 @@ namespace ConsumerTerminal.Services.PrintSystem
             PrescriptionSer.OutputPDF(@$"{path}\Prescription{PresNo}{DetId}.pdf");
             PrescriptionSer.close();
 
-            ReceiptSer = new ReceiptServices(doctorMessage.ChaId, doctorMessage.PatientId, DetId);
-            ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
-            ReceiptSer.setMatchData();
-            ReceiptSer.ChangeData();
-            ReceiptSer.OutputPDF(@$"{path}\Receipt{PresNo}{DetId}.pdf");
-            ReceiptSer.close();
+            //ReceiptSer = new ReceiptServices(doctorMessage.ChaId, doctorMessage.PatientId, DetId);
+            //ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
+            //ReceiptSer.setMatchData();
+            //ReceiptSer.ChangeData();
+            //ReceiptSer.OutputPDF(@$"{path}\Receipt{PresNo}{DetId}.pdf");
+            //ReceiptSer.close();
         }
 
         private void CreateDirectory(string path)

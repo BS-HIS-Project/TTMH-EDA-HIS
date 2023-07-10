@@ -6,6 +6,7 @@ using HISDB.Data;
 using HISDB;
 using ConsumerTerminal.Services.BillingSystem;
 using ConsumerTerminal.Services.PrintSystem;
+using System.IO;
 
 //var inputGroupId = "G001";
 var inputGroupId = GetGroupId();
@@ -37,7 +38,8 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
         {
             var JsonData = JsonSerializer.Deserialize<DoctorMessage>(consumeResult.Message.Value);
 
-            if (JsonData == null)
+            if (JsonData == null || 
+                (JsonData.DoctorId == null && JsonData.ChartsDrugsDosages == null))
             {
                 Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
             } 
@@ -58,6 +60,33 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                     var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
                     BagControlSer.run();
                 }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        try
+        {
+            var JsonData = JsonSerializer.Deserialize<DetailIdViewModel>(consumeResult.Message.Value);
+
+            if (JsonData == null || 
+                (JsonData.Vdate == null && JsonData.DoctorName == null))
+            {
+                Console.WriteLine("Msg not DetailIdViewModel or JsonData is NULL");
+            }
+            else
+            {
+                var path = @$".\..\..\..\PDF";
+                // 列印收據
+                ReceiptServices ReceiptSer;
+                ReceiptSer = new ReceiptServices(JsonData);
+                ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
+                ReceiptSer.setMatchData();
+                ReceiptSer.ChangeData();
+                ReceiptSer.OutputPDF(@$"{path}\Receipt{JsonData.DetId}.pdf");
+                ReceiptSer.close();
             }
         }
         catch (Exception e)
@@ -141,55 +170,73 @@ void CreateCDDs(DoctorMessage? JsonData)
 
 int CreateDetall(string CashierId, int ClinicNumber, int PaymentBarcode, DoctorMessage? JsonData, out string detId)
 {
-    var _context = new HisdbContext();
-    ConnectServices connectServices = new ConnectServices();
-
-    var _billing = connectServices.GetBilling(JsonData?.PatientId ?? throw new Exception("PatientId is NULL"));
-    
-    foreach(var data in JsonData.ChartsDrugsDosages)
+    if (JsonData == null)
     {
-        _billing.AddCDDsList(JsonData.ChaId, data.DrugId);
-    }
-
-    Detail _detail = new Detail()
+        throw new Exception("JsonData is NULL");
+    } else if (JsonData.PatientId == null)
     {
-        // DET + NOWDATE + 診間號 + (繳費條碼)序號
-        DetId = $"DET{DateTime.Now.ToString("yyyyMMddHH")}{ClinicNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}",
-        // 掛號費
-        Registration = _billing.RegistrationFee(),
-        // 藥費
-        MedicalCost = _billing.DrugFee(),
-        // 藥品部分負擔
-        DrugPartialPayment = _billing.DrugPartialPayment(),
-        // 部分負擔
-        PartialPayment = _billing.PartialPayment(),
-        // 診察費
-        Diagnostic = _billing.DiagnosticFee(),
-        // 應繳金額
-        Payable = _billing.Total(),
-
-        CasId = CashierId,
-        PatientId = JsonData.PatientId ?? throw new Exception("PatientId is NULL")
-    };
-
-    PaymentBarcode++;
-
-    while (_context.Details.Find(_detail.DetId) != null)
+        throw new Exception("PatientId is NULL");
+    } else if (JsonData.ChaId == null)
     {
-        Console.WriteLine($"Detail: {_detail.DetId} 新增已存在");
-        _detail.DetId = $"DET{DateTime.Now.ToString("yyyyMMddHH")}{ClinicNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}";
+        throw new Exception("ChaId is NULL");
+    } else if (JsonData.ChartsDrugsDosages == null)
+    {
+        throw new Exception("ChartsDrugsDosages is NULL");
+    } else if (JsonData.ChartsDrugsDosages.Count == 0)
+    {
+        throw new Exception("ChartsDrugsDosages is Empty");
+    } else
+    {
+        var _context = new HisdbContext();
+        ConnectServices connectServices = new ConnectServices();
+
+        var _billing = connectServices.GetBilling(JsonData?.PatientId ?? throw new Exception("PatientId is NULL"));
+
+        foreach (var data in JsonData.ChartsDrugsDosages)
+        {
+            _billing.AddCDDsList(JsonData.ChaId, data.DrugId);
+        }
+
+        Detail _detail = new Detail()
+        {
+            // DET + NOWDATE + 診間號 + (繳費條碼)序號
+            DetId = $"DET{DateTime.Now.ToString("yyyyMMddHH")}{ClinicNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}",
+            // 掛號費
+            Registration = _billing.RegistrationFee(),
+            // 藥費
+            MedicalCost = _billing.DrugFee(),
+            // 藥品部分負擔
+            DrugPartialPayment = _billing.DrugPartialPayment(),
+            // 部分負擔
+            PartialPayment = _billing.PartialPayment(),
+            // 診察費
+            Diagnostic = _billing.DiagnosticFee(),
+            // 應繳金額
+            Payable = _billing.Total(),
+
+            CasId = CashierId,
+            PatientId = JsonData.PatientId ?? throw new Exception("PatientId is NULL")
+        };
+
         PaymentBarcode++;
+
+        while (_context.Details.Find(_detail.DetId) != null)
+        {
+            Console.WriteLine($"Detail: {_detail.DetId} 新增已存在");
+            _detail.DetId = $"DET{DateTime.Now.ToString("yyyyMMddHH")}{ClinicNumber.ToString().PadLeft(3, '0')}{PaymentBarcode.ToString().PadLeft(3, '0')}";
+            PaymentBarcode++;
+        }
+
+        _context.Details.Add(_detail);
+        _context.SaveChanges();
+
+        Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
+
+        _billing.close();
+
+        _context.Dispose();
+        detId = _detail.DetId;
     }
-
-    _context.Details.Add(_detail);
-    _context.SaveChanges();
-
-    Console.WriteLine($"Detail: {_detail.DetId} 成功新增");
-
-    _billing.close();
-
-    _context.Dispose();
-    detId = _detail.DetId;
     return PaymentBarcode;
 }
 
