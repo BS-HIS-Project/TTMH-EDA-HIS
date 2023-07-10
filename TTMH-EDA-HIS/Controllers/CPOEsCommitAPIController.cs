@@ -70,10 +70,10 @@ namespace TTMH_EDA_HIS.Controllers
                 }
 
                 string yearStr = DateTime.Now.Year.ToString();
-                string monthStr = FillZeros(DateTime.Now.Month.ToString(),2);
-                string dayStr = FillZeros(DateTime.Now.Day.ToString(),2);
+                string monthStr = DateTime.Now.Month.ToString().PadLeft(2,'0');
+                string dayStr = DateTime.Now.Day.ToString().PadLeft(2,'0');
                 string OPDStr = "13001"; //Out‑Patient Departments (OPD)
-                string currentIndex = FillZeros((++LastIndex).ToString(), 3);
+                string currentIndex = (++LastIndex).ToString().PadLeft(3,'0');
 
                 string cid = $"CHA{yearStr}{monthStr}{dayStr}{OPDStr}{currentIndex}";
                 chart = new Chart()
@@ -216,15 +216,6 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 return ex.Message;
             }
-        }
-
-        private string FillZeros(string value, int unit)
-        {
-            while (value.Length != unit)
-            {
-                value = value.Insert(0, "0");
-            }
-            return value;
         }
     }
 }
