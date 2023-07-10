@@ -7,6 +7,7 @@ using System.Text;
 using TTMH_EDA_HIS.ViewModels;
 using static TTMH_EDA_HIS.ViewModels.ChartsViewModel;
 using System.Text.Json;
+using NuGet.Protocol;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -61,11 +62,11 @@ namespace TTMH_EDA_HIS.Controllers
             ChartsViewModel vm = new ChartsViewModel()
             {
                 Patient = new Patient(),
-                DetId = "",
+                DetId = chavm.DetId,
                 age = 0,
-                birthday = "",
-                docsName = "",
-                Vdate = "",
+                birthday = chavm.birthday,
+                docsName = chavm.docsName,
+                Vdate = chavm.Vdate,
                 Drugs = new List<ChartsViewModel_Drug>(),
                 StatusCode = 3, //Message Success
                 PaymentTime = DateTime.Now
@@ -74,16 +75,22 @@ namespace TTMH_EDA_HIS.Controllers
 
             try
             {
+                DoctorsPatientsChart? dpc = await (
+                    from i in _context.DoctorsPatientsCharts
+                    where i.PatientId == detail.PatientId
+                    orderby i.ChaId descending
+                    select i
+                ).FirstOrDefaultAsync();
                 ChartsViewDetailsPostRequestAPIViewModel postvm = new ChartsViewDetailsPostRequestAPIViewModel()
                 {
                     key = "string",
                     topic = "my-topic",
                     message = new ChartsViewDetailsPostRequestAPIViewModel_message()
                     {
-                        detId = vm.DetId,
-                        patientId = vm.Patient.PatientId,
-                        vdate = vm.Vdate,
-                        doctorName  = vm.docsName
+                        detId = chavm.DetId,
+                        patientId = _context.Patients.Where(p => p.PatientId==detail.PatientId).FirstOrDefault().PatientId ?? "",
+                        vdate = _context.Charts.FirstOrDefault(c => c.ChaId == dpc.ChaId).Vdate.ToString("yyyy/MM/dd") ?? "",
+                        doctorName  = _context.Employees.FirstOrDefault(e=>e.EmployeeId==dpc.DoctorId).EmployeeName ?? ""
                     }
                 };
 
