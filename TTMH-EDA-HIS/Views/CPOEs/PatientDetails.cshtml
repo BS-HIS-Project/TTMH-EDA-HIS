@@ -12,6 +12,9 @@
         input::-webkit-calendar-picker-indicator {
             display: none !important;
         }
+        .dropdown-toggle::after {
+            display: none;
+        }
         /* Overwrite theme.css ************************************/
         .CT-tbody-ColorInterval tr > td:first-child {
             padding: 20px 0px 20px 20px;
@@ -806,8 +809,6 @@
                 }
                 AddInputRow(inputList);
             }
-            AddInputRow();
-
             setInterval(() => {
                 CheckValidField();
             }, 600);
