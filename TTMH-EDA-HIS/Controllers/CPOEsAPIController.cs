@@ -90,10 +90,17 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 results = new string[1] { "No Result" };
             }
+            List<string> relatives = new List<string>();
+            foreach(string f in results)
+            {
+                int? freq = await (from d in _context.Dosages where d.DosId==f select d.Freq).FirstOrDefaultAsync();
+                relatives.Add(freq.ToString());
+            }
             CPOEsAPISearchKeywordsViewModel_Response response = new CPOEsAPISearchKeywordsViewModel_Response()
             {
                 SearchKeyRequested = vm.SearchKey,
-                Results = results
+                Results = results,
+                Relatives = relatives.ToArray()
             };
             return response;
         }

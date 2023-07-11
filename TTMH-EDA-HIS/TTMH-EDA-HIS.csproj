@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Content Include="Controllers\AccountController.cs" />
-    <Content Include="Controllers\ChartsController.cs" />
     <Content Include="Controllers\CPOEsController.cs" />
     <Content Include="Controllers\HomeController.cs" />
     <Content Include="Controllers\PharmacyController.cs" />

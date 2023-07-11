@@ -12,6 +12,9 @@
         input::-webkit-calendar-picker-indicator {
             display: none !important;
         }
+        .dropdown-toggle::after {
+            display: none;
+        }
         /* Overwrite theme.css ************************************/
         .CT-tbody-ColorInterval tr > td:first-child {
             padding: 20px 0px 20px 20px;
@@ -405,12 +408,17 @@
                 entry.setAttribute("style","width:85%;border:none;opacity:0.5;");
                 entry.setAttribute("class","form-control AT-fs-25");
                 entry.setAttribute("placeholder",td_placeholder[i]);
+                entry.setAttribute("min", "0");
                 if (InputList != null) {
                     entry.setAttribute("value", InputList[i]);
                 }
-                if(i>=3 && i<=5){
+                if(i==3 || i==5){
                     entry.setAttribute("type","number");
-                    entry.setAttribute("min","0");
+                    entry.setAttribute("step","0.000001");
+                }
+                if(i==4){
+                    entry.setAttribute("type", "number");
+                    entry.setAttribute("step", "1");
                 }
 
                 let datalist=document.createElement("datalist");
@@ -472,7 +480,60 @@
                         );
                     });
                 }
-
+                if(i>=2 && i<=5){
+                    let current_row = DrugRowIndex;
+                    let current_col = i;
+                    entry.addEventListener("input", async () => {
+                        let dosIDValue = document.getElementById(`input-Drugs-2-${current_row}`).value;
+                        let totalElement = document.getElementById(`input-Drugs-5-${current_row}`);
+                        let qty = 0;
+                        let days = 0;
+                        let freq = 0;
+                        try {
+                            qty = Number(document.getElementById(`input-Drugs-3-${current_row}`).value);
+                            days = Number(document.getElementById(`input-Drugs-4-${current_row}`).value);
+                            if (days % 1 != 0) {
+                                throw "Value not Integer";
+                            }
+                        }
+                        catch (e) {
+                            console.log(`Input Error ! \n ${e}`);
+                            totalElement.value = null;
+                            return false;
+                        }
+                        try {
+                            await fetch(`https://${location.hostname}:${location.port}/api/CPOEsAPI/SearchDosID`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json"
+                                },
+                                redirect: "follow",
+                                credentials: "include",
+                                timeout: 5000,
+                                body: JSON.stringify({
+                                    "SearchKey": dosIDValue
+                                })
+                            }).then(
+                                (response) => {
+                                    return response.json();
+                                }
+                            ).then(
+                                (data) => {
+                                    console.log(data);
+                                    freq = Number(data["relatives"][0]);
+                                }
+                            );
+                            totalElement.value = freq * qty * days; // Total Value
+                            return true;
+                        }
+                        catch (e) {
+                            console.log(e);
+                            totalElement.value = null;
+                            return false;
+                        }
+                    });
+                }
                 if(i==6){
                     td.setAttribute("style", "position:relative;");
                     var CurrentRowIndex = DrugRowIndex;
@@ -557,15 +618,72 @@
         }
 
         async function ReprintPrescription(){
-            Swal.fire({
-                title: 'Coming Soon',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
+            var ResponseData;
+            var Anwser="";
+            await Swal.fire({
+                icon: 'info',
+                title: "確定列印嗎 ?",
+                showCancelButton: true,
+                confirmButtonText: "確認",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Answer = "confirm";
+                } else {
+                    Answer = "cancel";
                 }
             });
+            while (true) {
+                await sleep(300);
+                if (Answer == "confirm") {
+                    break;
+                } else if (Answer == "cancel") {
+                    console.log("Action Cancelled");
+                    return false;
+                }
+            }
+            console.log("列印要求發送中 ...");
+            Swal.fire({
+                title: '發送中...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false, //Show Loading Message Text
+                timer: 200000
+            });
+            Swal.showLoading(); //Show Loading Message Spin
+            await fetch(`https://${location.hostname}:${location.port}/api/CPOEsCommitAPI/ReprintPrescription?ChaID=${ChaID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                redirect: "follow",
+                credentials: "include",
+                timeout: 5000
+            }).then((response)=>{
+                return response.json();
+            }).then((data)=>{
+                ResponseData=data;
+                console.log(data);
+            });
+            if (ResponseData["icon"] == "success") {
+                Swal.fire({
+                    position: 'center',
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return true;
+            } else {
+                Swal.fire({
+                    icon: ResponseData["icon"],
+                    title: ResponseData["title"],
+                    text: ResponseData["text"]
+                });
+                return false;
+            }
+            
         }
 
         async function SubmitDATA(){
@@ -749,8 +867,6 @@
                 }
                 AddInputRow(inputList);
             }
-            AddInputRow();
-
             setInterval(() => {
                 CheckValidField();
             }, 600);

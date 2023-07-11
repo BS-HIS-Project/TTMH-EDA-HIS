@@ -70,10 +70,10 @@ namespace TTMH_EDA_HIS.Controllers
                 }
 
                 string yearStr = DateTime.Now.Year.ToString();
-                string monthStr = FillZeros(DateTime.Now.Month.ToString(),2);
-                string dayStr = FillZeros(DateTime.Now.Day.ToString(),2);
+                string monthStr = DateTime.Now.Month.ToString().PadLeft(2,'0');
+                string dayStr = DateTime.Now.Day.ToString().PadLeft(2,'0');
                 string OPDStr = "13001"; //Out‑Patient Departments (OPD)
-                string currentIndex = FillZeros((++LastIndex).ToString(), 3);
+                string currentIndex = (++LastIndex).ToString().PadLeft(3,'0');
 
                 string cid = $"CHA{yearStr}{monthStr}{dayStr}{OPDStr}{currentIndex}";
                 chart = new Chart()
@@ -194,6 +194,85 @@ namespace TTMH_EDA_HIS.Controllers
                 });
             }
         }
+		[Authorize(Roles = "Doctor")]
+		[HttpPut("[action]")]
+		public async Task<IActionResult> ReprintPrescription(string ChaID)
+        {
+            try
+            {
+                Chart? chart = await _context.Charts.FindAsync(ChaID);
+                if(chart == null)
+                {
+                    return BadRequest();
+                }
+                DoctorsPatientsChart? dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
+                ChartsDrugsDosage[]? cdds = await (from d in _context.ChartsDrugsDosages where d.ChaId==ChaID select d).ToArrayAsync();
+				if(dpc ==null || cdds == null)
+                {
+                    throw new Exception("cdds or dpc not found");
+                }
+                CPOEsCommitAPIPrescriptionViewModel pvm = new CPOEsCommitAPIPrescriptionViewModel()
+				{
+					Topic = "my-topic",
+					Key = "string",
+					Message = new CPOEsCommitAPIPrescriptionViewModel_DoctorMessage()
+					{
+						DoctorId = dpc.DoctorId,
+						PatientId = dpc.PatientId,
+						ChaId = chart.ChaId,
+						ChartsDrugsDosages = new List<CPOEsCommitAPIPrescriptionViewModel_ChartsDrugsDosage>()
+					}
+				};
+				foreach (ChartsDrugsDosage i in cdds)
+				{
+					if (i.Remark == "")
+					{
+						i.Remark = "無";
+					}
+					pvm.Message.ChartsDrugsDosages.Add(new CPOEsCommitAPIPrescriptionViewModel_ChartsDrugsDosage()
+					{
+						DrugId = i.DrugId,
+						DosId = i.DosId,
+						Quantity = (double)i.Quantity,
+						Days = (int)i.Days,
+						Total = (int)i.Total,
+						Remark = i.Remark
+					});
+				}
+                string? response = await PrintPrescription(pvm);
+
+                if (response == null)
+                {
+                    throw new Exception("Connection Failed");
+                }
+                else if (response != "")
+                {
+                    throw new Exception("");
+                }
+
+                return Ok(new
+                {
+                    Icon = "success",
+                    Title = "成功上存",
+                    Text = response,
+                    Details = ""
+                });
+
+			}
+            catch (Exception ex)
+            {
+				string eex = "";
+				if (ex.Message == "An error occurred while saving the entity changes. See the inner exception for details.")
+				{ eex += ex.InnerException.Message; }
+				return Ok(new
+				{
+					Icon = "error",
+					Title = "列印失敗",
+					Text = $"{ex.Message}\n\n{eex}",
+					Details = eex
+				});
+			}
+        }
         private async Task<string> PrintPrescription(CPOEsCommitAPIPrescriptionViewModel vm)
         {
             try
@@ -209,6 +288,10 @@ namespace TTMH_EDA_HIS.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     responseJsonStr = await response.Content.ReadAsStringAsync();
+                } 
+                else
+                {
+                    throw new Exception("Connection Failed");
                 }
                 return responseJsonStr;
             }
@@ -216,15 +299,6 @@ namespace TTMH_EDA_HIS.Controllers
             {
                 return ex.Message;
             }
-        }
-
-        private string FillZeros(string value, int unit)
-        {
-            while (value.Length != unit)
-            {
-                value = value.Insert(0, "0");
-            }
-            return value;
         }
     }
 }
