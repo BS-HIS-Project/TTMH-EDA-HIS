@@ -414,6 +414,10 @@
                 if(i>=3 && i<=5){
                     entry.setAttribute("type","number");
                     entry.setAttribute("min","0");
+                    entry.setAttribute("step","0.000001");
+                }
+                if(i==4){
+                    entry.setAttribute("step", "1");
                 }
 
                 let datalist=document.createElement("datalist");
