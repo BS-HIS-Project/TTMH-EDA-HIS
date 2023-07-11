@@ -281,7 +281,7 @@ string GetGroupId()
     Console.WriteLine("請選擇服務");
     Console.WriteLine("1. 醫囑系統");
     Console.WriteLine("2. 藥局系統");
-    Console.WriteLine("3. 批價系統");
+    Console.WriteLine("3. 收據列印");
     Console.WriteLine("4. 測試");
 
     var GroupIdList = new List<string>() { "G01", "G02", "G03" };

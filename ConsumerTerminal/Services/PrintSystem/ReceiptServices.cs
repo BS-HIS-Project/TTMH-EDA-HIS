@@ -71,6 +71,8 @@ namespace ConsumerTerminal.Services.PrintSystem
             _match.Add(new MatchData { htmlStr = "#CashierName", pdfStr = cashierName.ToString() });
             _match.Add(new MatchData { htmlStr = "#PaymentTime", pdfStr = detail.PaymentTime.ToString() ?? "".ToString() });
 
+            _match.Add(new MatchData { htmlStr = "#ReceiptType", pdfStr = PatSer.IsHealthInsurance() == true ? "健保" : "非健保" });
+
         }
 
         private static string DateTimeToYMD(DateTime dateTime)

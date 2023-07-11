@@ -34,5 +34,11 @@ namespace ConsumerTerminal.Services
             if (_patient.Gender == "1") return "男";
             else return "女";
         }
+
+        public bool IsHealthInsurance()
+        {
+            if (_patient.Status == "HealthInsurance") return true;
+            else return false;
+        }
     }
 }
