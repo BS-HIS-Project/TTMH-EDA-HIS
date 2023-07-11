@@ -164,9 +164,9 @@ namespace TTMH_EDA_HIS.Controllers
         {
             CPOEsPatientDetailsViewModel vm = new CPOEsPatientDetailsViewModel();
 			Patient? patient = null;
-            IEnumerable<string>? ChaIDs = null;
             Chart[]? charts = null;
             DoctorsPatientsChart? dpc = null;
+            IEnumerable<string>? ChaIDs = null;
             bool isLatest = false;
 			if (CaseHistory == null && ChaID == null)
             {
@@ -175,13 +175,12 @@ namespace TTMH_EDA_HIS.Controllers
             else if (CaseHistory == null && ChaID != null)
             {
                 vm.chart = await _context.Charts.FindAsync(ChaID);
-                if (vm.chart == null)
-                {
-                    return NotFound();
-                }
+                if (vm.chart == null) {return NotFound();}
 				dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
-				patient = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == dpc.PatientId);
-			}
+                if (dpc == null) { return Content("Chart is found but DoctorsPatientsCharts not found"); }
+                patient = await _context.Patients.FirstOrDefaultAsync(x => x.PatientId == dpc.PatientId);
+                if (patient == null) { return Content("Chart and DoctorsPatientsCharts are found but Patient not found"); }
+            }
 			else
 			{
 				patient = await _context.Patients.FirstOrDefaultAsync(x => x.CaseHistory == CaseHistory);
@@ -201,19 +200,28 @@ namespace TTMH_EDA_HIS.Controllers
 						return NotFound();
 					}
 					dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
-				}
+                    if (dpc == null) { return Content("Chart and Patient are found but DoctorsPatientsCharts not found"); }
+                }
 			}
 			ChaIDs = (
 					from i in _context.DoctorsPatientsCharts
 					where i.PatientId == patient.PatientId
 					select i.ChaId
 				);
-			charts = await (
-				from i in _context.Charts
-				join j in ChaIDs on i.ChaId equals j
-				orderby i.Vdate descending
-				select i
-			).ToArrayAsync();
+            if (ChaIDs != null) 
+            {
+                charts = await (
+                    from i in _context.Charts
+                    join j in ChaIDs on i.ChaId equals j
+                    orderby i.Vdate descending
+                    select i
+                ).ToArrayAsync();
+            }
+            else
+            {
+                ChaIDs = new List<string>();
+                charts = Array.Empty<Chart>();
+            }
             if (isLatest) { 
                 vm.chart = charts[0];
 				dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == charts[0].ChaId);
