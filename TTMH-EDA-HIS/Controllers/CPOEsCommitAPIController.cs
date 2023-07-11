@@ -206,8 +206,12 @@ namespace TTMH_EDA_HIS.Controllers
                     return BadRequest();
                 }
                 DoctorsPatientsChart? dpc = await _context.DoctorsPatientsCharts.FirstOrDefaultAsync(x => x.ChaId == ChaID);
-                ChartsDrugsDosage[] cdds = await (from d in _context.ChartsDrugsDosages where d.ChaId==ChaID select d).ToArrayAsync();
-				CPOEsCommitAPIPrescriptionViewModel pvm = new CPOEsCommitAPIPrescriptionViewModel()
+                ChartsDrugsDosage[]? cdds = await (from d in _context.ChartsDrugsDosages where d.ChaId==ChaID select d).ToArrayAsync();
+				if(dpc ==null || cdds == null)
+                {
+                    throw new Exception("cdds or dpc not found");
+                }
+                CPOEsCommitAPIPrescriptionViewModel pvm = new CPOEsCommitAPIPrescriptionViewModel()
 				{
 					Topic = "my-topic",
 					Key = "string",
@@ -284,6 +288,10 @@ namespace TTMH_EDA_HIS.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     responseJsonStr = await response.Content.ReadAsStringAsync();
+                } 
+                else
+                {
+                    throw new Exception("Connection Failed");
                 }
                 return responseJsonStr;
             }
