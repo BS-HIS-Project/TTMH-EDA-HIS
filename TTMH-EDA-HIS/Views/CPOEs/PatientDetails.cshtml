@@ -412,11 +412,12 @@
                 if (InputList != null) {
                     entry.setAttribute("value", InputList[i]);
                 }
-                if(i==3 && i==5){
+                if(i==3 || i==5){
                     entry.setAttribute("type","number");
                     entry.setAttribute("step","0.000001");
                 }
                 if(i==4){
+                    entry.setAttribute("type", "number");
                     entry.setAttribute("step", "1");
                 }
 
