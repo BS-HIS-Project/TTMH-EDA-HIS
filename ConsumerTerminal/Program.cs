@@ -33,65 +33,33 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
     while (true)
     {
         var consumeResult = consumer.Consume();
-
-        try
-        {
-            var JsonData = JsonSerializer.Deserialize<DoctorMessage>(consumeResult.Message.Value);
-
-            if (JsonData == null || 
-                (JsonData.DoctorId == null && JsonData.ChartsDrugsDosages == null))
-            {
-                Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
-            } 
-            else
-            {
-                // 寫入藥袋資料
-                DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
-
-                // 寫入 CDD 資料
-                CreateCDDs(JsonData);
-
-                // 寫入批價資料
-                PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
-
-                // 如果服務對象是藥局，則執行藥袋控管
-                if (inputGroupId == "G02" || inputGroupId == "888")
-                {
-                    var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
-                    BagControlSer.run();
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-
-
-        if (inputGroupId == "G03" || inputGroupId == "888")
-        {
+        if (inputGroupId == "G02" || inputGroupId == "888") { 
             try
             {
-                var JsonData = JsonSerializer.Deserialize<DetailIdViewModel>(consumeResult.Message.Value);
+                var JsonData = JsonSerializer.Deserialize<DoctorMessage>(consumeResult.Message.Value);
 
-                if (JsonData == null ||
-                    (JsonData.Vdate == null && JsonData.DoctorName == null))
+                if (JsonData == null || 
+                    (JsonData.DoctorId == null && JsonData.ChartsDrugsDosages == null))
                 {
-                    Console.WriteLine("Msg not DetailIdViewModel or JsonData is NULL");
-                }
+                    Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
+                } 
                 else
                 {
-                    var path = @$".\..\..\..\PDF";
-                    // 列印收據
-                    ReceiptServices ReceiptSer;
-                    ReceiptSer = new ReceiptServices(JsonData);
-                    ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
-                    ReceiptSer.setMatchData();
-                    ReceiptSer.ChangeData();
-                    ReceiptSer.OutputPDF(@$"{path}\Receipt{JsonData.DetId}.pdf");
-                    ReceiptSer.close();
+                    // 寫入藥袋資料
+                    DrugNumber = CreatePrescription(PhamacistId, DrugNumber, PaymentBarcode, JsonData, out PresNo);
 
-                    Console.WriteLine($"Receipt{JsonData.DetId}.pdf 已列印");
+                    // 寫入 CDD 資料
+                    CreateCDDs(JsonData);
+
+                    // 寫入批價資料
+                    PaymentBarcode = CreateDetall(CashierId, ClinicNumber, PaymentBarcode, JsonData, out detId);
+
+                    // 如果服務對象是藥局，則執行藥袋控管
+                    if (inputGroupId == "G02" || inputGroupId == "888")
+                    {
+                        var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
+                        BagControlSer.run();
+                    }
                 }
             }
             catch (Exception e)
@@ -99,6 +67,10 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                 Console.WriteLine(e);
             }
         }
+
+
+        if (inputGroupId == "G03" || inputGroupId == "888")
+            PrintReceipt(consumeResult);
 
         Console.WriteLine($"Received message: {consumeResult.Message.Value}");
     }
@@ -279,7 +251,7 @@ int CreatePrescription( string PhamacistId, int DrugNumber, int PaymentBarcode, 
 string GetGroupId()
 {
     Console.WriteLine("請選擇服務");
-    Console.WriteLine("1. 醫囑系統");
+    Console.WriteLine("1. 醫囑系統 (無作用)");
     Console.WriteLine("2. 藥局系統");
     Console.WriteLine("3. 收據列印");
     Console.WriteLine("4. 測試");
@@ -301,4 +273,36 @@ string GetGroupId()
         return GroupIdList[int.Parse(input) - 1];
     }
     return "GAAA";
+}
+
+static void PrintReceipt(ConsumeResult<Ignore, string> consumeResult)
+{
+    try
+    {
+        var JsonData = JsonSerializer.Deserialize<DetailIdViewModel>(consumeResult.Message.Value);
+
+        if (JsonData == null ||
+            (JsonData.Vdate == null && JsonData.DoctorName == null))
+        {
+            Console.WriteLine("Msg not DetailIdViewModel or JsonData is NULL");
+        }
+        else
+        {
+            var path = @$".\..\..\..\PDF";
+            // 列印收據
+            ReceiptServices ReceiptSer;
+            ReceiptSer = new ReceiptServices(JsonData);
+            ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
+            ReceiptSer.setMatchData();
+            ReceiptSer.ChangeData();
+            ReceiptSer.OutputPDF(@$"{path}\Receipt{JsonData.DetId}.pdf");
+            ReceiptSer.close();
+
+            Console.WriteLine($"Receipt{JsonData.DetId}.pdf 已列印");
+        }
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 }

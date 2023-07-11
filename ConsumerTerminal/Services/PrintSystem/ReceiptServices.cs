@@ -47,8 +47,8 @@ namespace ConsumerTerminal.Services.PrintSystem
             //var chart = _context.Charts.Where(c => c.ChaId == ChaId).FirstOrDefault();
             //var dosage = _context.Dosages.Where(d => d.DosId == CDDs.DosId).FirstOrDefault();
             var detail = _context.Details.Where(d => d.DetId == detailIdViewModel.DetId).FirstOrDefault();
-            //var cashierName = _context.Employees.Where(e => e.EmployeeId == detail.CashierId).FirstOrDefault().EmployeeName;
-            var cashierName = "";
+            var cashierName = _context.Employees.Where(e => e.EmployeeId == detail.CasId).FirstOrDefault().EmployeeName;
+            //var cashierName = "";
 
 
             var PatSer = new PartialServices(detailIdViewModel.PatientId);
