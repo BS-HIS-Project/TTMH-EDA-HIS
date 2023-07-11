@@ -235,24 +235,23 @@ namespace TTMH_EDA_HIS.Controllers
 						Remark = i.Remark
 					});
 				}
-                string? responseJsonStr = null;
-                string postJsonStr = JsonSerializer.Serialize(pvm);
-                StringContent content = new StringContent(postJsonStr, Encoding.UTF8, "application/json");
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PostAsync("http://server.nicklu89.com/api/KafkaProducerDoctor", content);
-                if (response.IsSuccessStatusCode)
-                    {responseJsonStr = await response.Content.ReadAsStringAsync();}
-                else
-                    {throw new Exception("No Response");}
-                if (responseJsonStr == null)
-                    {throw new Exception("Connection Failed");}
-                else if (responseJsonStr != "")
-                    {throw new Exception("");}
-                return Ok(new{
-                        Icon = "success",
-                        Title = "列印成功",
-                        Text = "",
-                        Details = ""
+                string? response = await PrintPrescription(pvm);
+
+                if (response == null)
+                {
+                    throw new Exception("Connection Failed");
+                }
+                else if (response != "")
+                {
+                    throw new Exception("");
+                }
+
+                return Ok(new
+                {
+                    Icon = "success",
+                    Title = "成功上存",
+                    Text = response,
+                    Details = ""
                 });
 
 			}
