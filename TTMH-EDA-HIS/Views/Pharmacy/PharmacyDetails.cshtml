@@ -48,99 +48,85 @@
             /*width: 85%;*/
         }
 
-            .SC-input-button-form_submit:hover {
-                background-color: #5554b4;
-            }
+        .SC-input-button-form_submit:hover {
+            background-color: #5554b4;
+        }
 
-            .SC-input-button-form_submit:focus {
-                background-color: #5554b4;
-            }
+        .SC-input-button-form_submit:focus {
+            background-color: #5554b4;
+        }
+        .sticky{            
+            position: sticky;
+            top: 0px;
+        }
+
 
     </style>
 }
-@*大框架*@
-<div class="container" id="DisplayNotYetPaid">
-    <div class="alert alert-danger text-center AT-fs-25" role="alert">
-        此病患尚未繳費!!
-    </div>
-</div>
 
-<div class="container-lg">
-    <!-- 搜尋 -->
-    <div class="row my-3 mx-5 d-flex justify-content-center">
-        @*第一版*@
-        @*<form asp-action="PharmacyDetails" asp-route-id="" method="post" class="d-flex justify-content-center row">
-        <div class="form-group col m-3">
-        <input asp-for="content" type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入領藥號/病例編號">
-        </div>
-        </form>*@
-        @*第二版*@
-        <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control m-3 AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入領藥號">
-    </div>
-    <!-- 病人資訊 -->
-    <div class="row d-flex justify-content-center">
-        <div class="container-lg  col-11 mx-5 my-3 py-3 row ED-media-1  AT-bg-secondary-emphasis  AT-rounded-1 d-flex justify-content-center">
-            <div class="row d-flex justify-content-center">
-                <div class="MD-adjust-3 col-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">領藥號：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.PresNo</p>
-                </div>
-                <div class="MD-adjust-3 col-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">病例編號：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.Patient.CaseHistory</p>
-                </div>
-                <div class="MD-adjust-3 col-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">病患姓名：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.Patient.PatientName</p>
-                </div>
-            </div>
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">性別：</p>&nbsp;
-                    @if (Model.Patient.Gender == "1")
-                    {
-                        <p class="AT-fs-25 text-white lh-lg text-end">
-                            男
-                        </p>
-                    }
-                    else if (Model.Patient.Gender == "2")
-                    {
-                        <p class="AT-fs-25 text-white lh-lg text-end">
-                            女
-                        </p>
-                    }
-                </div>
-                <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">出生年月日：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.birthday</p>
-                </div>
-                <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">年齡：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.age</p>
-                </div>
-            </div>
-
-            <div class="row d-flex justify-content-center">
-                <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">看診醫生：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.docsName</p>
-                </div>
-                <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end">看診日期：</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end">@Model.Vdate</p>
-                </div>
-                <div class="col-3 MD-adjust-3 d-flex mx-3">
-                    <p class="AT-fs-25 text-white lh-lg text-end" style="display: none">領藥時間</p>&nbsp;
-                    <p class="AT-fs-25 text-white lh-lg text-end" style="display: none">@Model.DrugDate</p>
-                </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="sticky w-100" id="DisplayNotYetPaid">
+            <div class="alert alert-danger text-center AT-fs-25" role="alert">
+                此病患尚未繳費!!
             </div>
         </div>
-    </div>
+        <div class="col-12 m-1 p-4">
+            <input onkeypress="SearchKey(event)" id="search" type="text" class="form-control AT-fs-25 border-4 border-AT-fg-primary-deep" placeholder="請輸入領藥號">
+        </div>
+        <div class="col-12 row justify-content-center py-3 text-white">
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">領藥號：</div>
+                <div class="col">@Model.PresNo</div>
+            </div>
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">病例編號：</div>
+                <div class="col">@Model.Patient.CaseHistory</div>
+            </div>
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">病患姓名：</div>
+                <div class="col">@Model.Patient.PatientName</div>
+            </div>
 
-    <!-- 開藥內容 -->
-    <div class="row">
-        <div class="container-lg col-11 py-4 ED-BadgeTablePosition-2">
+            <div class="col-12 row" style="height: 10px;"></div>
+
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">性別：</div>
+                @if (Model.Patient.Gender == "1")
+                {
+                    <div class="col">男</div>
+                }
+                else if (Model.Patient.Gender == "2")
+                {
+                    <div class="col">女</div>
+                }
+            </div>
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">出生日期：</div>
+                <div class="col">@Model.birthday</div>
+            </div>
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">年齡：</div>
+                <div class="col">@Model.age</div>
+            </div>
+
+            <div class="col-12 row" style="height: 10px;"></div>
+
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">看診醫生：</div>
+                <div class="col">@Model.docsName</div>
+            </div>
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end">看診日期：</div>
+                <div class="col">@Model.Vdate</div>
+            </div>
+            <div class="col-4 row AT-fs-25">
+                <div class="col-5 text-end" style="display: none">領藥時間：</div>
+                <div class="col" style="display: none">@Model.DrugDate</div>
+            </div>
+        </div>
+        <div class="col-12 m-1 p-4">
             <table class="ED-BadgesTable-2 w-100">
                 <thead>
                     <tr>
@@ -203,23 +189,21 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <!-- 領藥按鈕 -->
-    <div class="row d-flex flex-row mx-3">
-        @*空白*@
-        <div class="col-8"></div>
-        @*按鈕*@
-        <div class="col-4 d-flex justify-content-center">
-            <form asp-action="PharmacyDetails" method="post">
-                <input type="text" asp-for="PresNo"  value="@Model.PresNo" style="display:none;">
-                <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
-                    @*id="Post"*@
-                    完成領藥
-                </button>
-            </form>
+        <div class="col-11 row">
+            <div class="col-8"></div>
+            <div class="col">
+                <form asp-action="PharmacyDetails" method="post">
+                    <input type="text" asp-for="PresNo" value="@Model.PresNo" style="display:none;">
+                    <button type="submit" class="BS-btn SC-input-button-form_submit btn m-4 p-2" style="width:220px;height:60px;">
+                        @*id="Post"*@
+                        完成領藥
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 @section Script{
     <script src="~/lib/sweetalert2/sweetalert2.all.js"></script>
     <script>
@@ -262,11 +246,11 @@
                     });
                     break;
             }
-            if (StatusCode<=4 && StatusCode>0){
+            if (StatusCode <= 4 && StatusCode > 0) {
                 document.querySelector("form button").setAttribute("disabled", "");
             }
             $("#DisplayNotYetPaid").hide();
-            if (PaymentTime == ""){
+            if (PaymentTime == "") {
                 $("#DisplayNotYetPaid").slideDown("slow");
             }
         }
