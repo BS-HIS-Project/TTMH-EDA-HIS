@@ -8,6 +8,7 @@ using TTMH_EDA_HIS.ViewModels;
 using static TTMH_EDA_HIS.ViewModels.ChartsViewModel;
 using System.Text.Json;
 using NuGet.Protocol;
+using System.Security.Claims;
 
 namespace TTMH_EDA_HIS.Controllers
 {
@@ -59,6 +60,7 @@ namespace TTMH_EDA_HIS.Controllers
                 return NotFound();
             }
             detail.PaymentTime = DateTime.Now;
+            detail.CasId = User.Claims.FirstOrDefault(s => s.Type == ClaimTypes.NameIdentifier).Value.ToString();
             ChartsViewModel vm = new ChartsViewModel()
             {
                 Patient = new Patient(),
