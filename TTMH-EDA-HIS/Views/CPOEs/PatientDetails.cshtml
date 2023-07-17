@@ -408,7 +408,6 @@
                 entry.setAttribute("style","width:85%;border:none;opacity:0.5;");
                 entry.setAttribute("class","form-control AT-fs-25");
                 entry.setAttribute("placeholder",td_placeholder[i]);
-                entry.setAttribute("min", "0");
                 if (InputList != null) {
                     entry.setAttribute("value", InputList[i]);
                 }
@@ -419,6 +418,7 @@
                 if(i==4){
                     entry.setAttribute("type", "number");
                     entry.setAttribute("step", "1");
+                    entry.setAttribute("min","1")
                 }
 
                 let datalist=document.createElement("datalist");
@@ -825,6 +825,7 @@
                         isRowFieldNullOrDuplicated = true;
                         tempCode = 1;
                         c = 0;
+                        continue;
                     }
                     var drugs = GetCurrentDrugs();
                     var countDuplicated = 0;
@@ -837,6 +838,7 @@
                         isRowFieldNullOrDuplicated = true;
                         tempCode = 2;
                         c = 0;
+                        continue;
                     }
                     if (c == 3) {
                         var RowIDsplit = d.id.split("-");
@@ -846,6 +848,7 @@
                                 isRowFieldNullOrDuplicated = true;
                                 tempCode = 3;
                                 c = 0;
+                                continue;
                             }
                         }   
                     }
