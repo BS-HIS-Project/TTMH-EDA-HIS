@@ -38,11 +38,13 @@ namespace ConsumerTerminal.Services.BillingSystem
         {
             var cost = DrugFee();
 
+            if (cost == 0)
+            {
+                return 0;
+            }
 
             switch((int)((cost + 1) / 100))
             {
-                case 0:
-                    return 0;
                 case 1:
                     return 20;
                 case 2:

@@ -25,4 +25,6 @@ services:
     ports:
       - "9095:80"
       - "9096:443"
+    volumes: 
+      - "C:/Users/NickLu/AppData/Roaming/Microsoft/UserSecrets/37fb17ff-be5f-4a15-b4bb-cde312f1e4b1/secrets.json:/root/.aspnet/DataProtection-Keys"
 
