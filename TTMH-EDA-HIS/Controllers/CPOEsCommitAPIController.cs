@@ -175,7 +175,7 @@ namespace TTMH_EDA_HIS.Controllers
                 return Ok(new
                 {
                     Icon = "success",
-                    Title = "成功上存",
+                    Title = "儲存醫囑成功",
                     Text = response,
                     Details = ""
                 });
@@ -189,7 +189,7 @@ namespace TTMH_EDA_HIS.Controllers
                 {
                     Icon = "warning",
                     Title = "警告",
-                    Text = "成功上存 , 但列印失敗\n\n" + ex.Message,
+                    Text = "儲存醫囑成功 , 但列印失敗\n\n" + ex.Message,
                     Details = eex
                 });
             }
@@ -253,7 +253,7 @@ namespace TTMH_EDA_HIS.Controllers
                 return Ok(new
                 {
                     Icon = "success",
-                    Title = "成功上存",
+                    Title = "列印成功",
                     Text = response,
                     Details = ""
                 });
