@@ -418,7 +418,7 @@
                 if(i==4){
                     entry.setAttribute("type", "number");
                     entry.setAttribute("step", "1");
-                    entry.setAttribute("min","1")
+                    entry.setAttribute("min","1");
                 }
 
                 let datalist=document.createElement("datalist");
@@ -457,7 +457,8 @@
                                 }
                                 for(var j in data["results"]) {
                                     var option=document.createElement("option");
-                                    option.innerHTML=data["results"][j];
+                                    option.innerHTML = data["relatives"][j];
+                                    option.value = data["results"][j];
                                     option.setAttribute("id", `option-${id}-${j}`);
                                     datalist.appendChild(option);
                                 }
@@ -493,7 +494,13 @@
                             qty = Number(document.getElementById(`input-Drugs-3-${current_row}`).value);
                             days = Number(document.getElementById(`input-Drugs-4-${current_row}`).value);
                             if (days % 1 != 0) {
-                                throw "Value not Integer";
+                                throw "Days not Integer";
+                            }
+                            if (days < 1){
+                                throw "Days must be at least one";
+                            }
+                            if (qty <= 0){
+                                throw "Quantity cannot less than 0";
                             }
                         }
                         catch (e) {
@@ -844,7 +851,7 @@
                         var RowIDsplit = d.id.split("-");
                         var optionFirst = document.getElementById(`option-Drugs-2-${RowIDsplit[RowIDsplit.length - 1]}-0`);
                         if (optionFirst != null) {
-                            if(optionFirst.innerHTML!=dd){
+                            if(optionFirst.value!=dd){
                                 isRowFieldNullOrDuplicated = true;
                                 tempCode = 3;
                                 c = 0;
