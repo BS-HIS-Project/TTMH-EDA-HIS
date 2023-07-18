@@ -157,7 +157,7 @@ namespace TTMH_EDA_HIS.Controllers
                         DosId = i.DosID,
                         Quantity = double.Parse(i.Quantity),
                         Days = int.Parse(i.Days),
-                        Total = int.Parse(i.Total),
+                        Total = 0,
                         Remark = i.Remark
                     });
                 }
