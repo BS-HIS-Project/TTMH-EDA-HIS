@@ -7,6 +7,7 @@ using HISDB;
 using ConsumerTerminal.Services.BillingSystem;
 using ConsumerTerminal.Services.PrintSystem;
 using System.IO;
+using ConsumerTerminal.Services;
 
 //var inputGroupId = "G001";
 var inputGroupId = GetGroupId();
@@ -30,19 +31,22 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
     string PresNo;
     string detId;
 
+    int k = 0;
     while (true)
     {
         var consumeResult = consumer.Consume();
-        if (inputGroupId == "G02" || inputGroupId == "888") { 
+
+        if (inputGroupId == "G02" || inputGroupId == "888")
+        {
             try
             {
                 var JsonData = JsonSerializer.Deserialize<DoctorMessage>(consumeResult.Message.Value);
 
-                if (JsonData == null || 
+                if (JsonData == null ||
                     (JsonData.DoctorId == null && JsonData.ChartsDrugsDosages == null))
                 {
                     Console.WriteLine("Msg not DoctorMessage or JsonData is NULL");
-                } 
+                }
                 else
                 {
                     // 寫入藥袋資料
@@ -58,7 +62,16 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                     if (inputGroupId == "G02" || inputGroupId == "888")
                     {
                         var BagControlSer = new BagControlServices(JsonData, PresNo, detId);
-                        BagControlSer.run();
+                        BagControlSer.run(2);
+                        var BagControlVM = new BagControlMsg()
+                        {
+                            DoctorMessage = JsonData,
+                            PresNo = PresNo,
+                            DetId = detId
+                        };
+                        var msg = JsonSerializer.Serialize(BagControlVM);
+                        KafkaProducer producer = new KafkaProducer("server.nicklu89.com:9092");
+                        producer.Produce("my-topic", msg);
                     }
                 }
             }
@@ -67,12 +80,26 @@ using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
                 Console.WriteLine(e);
             }
         }
-
-
         if (inputGroupId == "G03" || inputGroupId == "888")
             PrintReceipt(consumeResult);
 
-        Console.WriteLine($"Received message: {consumeResult.Message.Value}");
+        if (inputGroupId == "G04" || inputGroupId == "888")
+        {
+            var JsonData = JsonSerializer.Deserialize<BagControlMsg>(consumeResult.Message.Value);
+
+            if (JsonData == null ||
+                (JsonData.PresNo == null && JsonData.DoctorMessage == null))
+            {
+                Console.WriteLine("Msg not BagControlMsg or JsonData is NULL");
+            }
+            else
+            {
+                var BagControlSer = new BagControlServices(JsonData.DoctorMessage, JsonData.PresNo, JsonData.DetId);
+                BagControlSer.run(1);
+            }
+        }
+
+        Console.WriteLine($"{k++} Received message: {consumeResult.Message.Value}");
     }
 }
 
@@ -254,15 +281,16 @@ string GetGroupId()
     Console.WriteLine("1. 醫囑系統 (無作用)");
     Console.WriteLine("2. 藥局系統");
     Console.WriteLine("3. 收據列印");
-    Console.WriteLine("4. 測試");
+    Console.WriteLine("4. 藥袋列印");
+    Console.WriteLine("5. 測試");
 
-    var GroupIdList = new List<string>() { "G01", "G02", "G03" };
+    var GroupIdList = new List<string>() { "G01", "G02", "G03", "G04"};
 
     var input = Console.ReadLine();
     if (input == null)
     {
         new Exception("input is NULL");
-    } else if (input == "4")
+    } else if (input == "5")
     {
         Console.WriteLine("請輸入測試用 GroupId");
         input = Console.ReadLine();

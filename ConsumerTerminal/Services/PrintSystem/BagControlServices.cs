@@ -38,7 +38,7 @@ namespace ConsumerTerminal.Services.PrintSystem
             doctorMessage = null;
         }
 
-        public void run()
+        public void run(int PrintType)
         {
             _context.Dispose();
 
@@ -46,48 +46,55 @@ namespace ConsumerTerminal.Services.PrintSystem
 
             CreateDirectory(path);
 
-            int k = 0;
-            foreach (var item in doctorMessage.ChartsDrugsDosages)
+            if (PrintType == 1)
             {
-                MedicineBagSer = new MedicineBagServices(doctorMessage.ChaId,
-                                                        item.DrugId, 
-                                                        doctorMessage.PatientId, 
-                                                        PresNo);
-                MedicineBagSer.InputHTML(@".\..\..\..\Forms\MedicineBag.html");
-                MedicineBagSer.setMatchData();
-                MedicineBagSer.ChangeData();
-                MedicineBagSer.OutputPDF(@$"{path}\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
-                MedicineBagSer.close();
+                int k = 0;
+                foreach (var item in doctorMessage.ChartsDrugsDosages)
+                {
+                    MedicineBagSer = new MedicineBagServices(doctorMessage.ChaId,
+                                                            item.DrugId,
+                                                            doctorMessage.PatientId,
+                                                            PresNo);
+                    MedicineBagSer.InputHTML(@".\..\..\..\Forms\MedicineBag.html");
+                    MedicineBagSer.setMatchData();
+                    MedicineBagSer.ChangeData();
+                    MedicineBagSer.OutputPDF(@$"{path}\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
+                    MedicineBagSer.close();
+                }
+
+                PrescriptionSer = new PrescriptionServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
+                PrescriptionSer.setDrugList();
+
+                foreach (var item in doctorMessage.ChartsDrugsDosages)
+                {
+                    PrescriptionSer.AddDrugList(item.DrugId);
+                }
+
+                PrescriptionSer.InputHTML(@".\..\..\..\Forms\Prescription.html");
+                PrescriptionSer.setMatchData();
+                PrescriptionSer.ChangeData();
+                PrescriptionSer.OutputPDF(@$"{path}\Prescription{PresNo}{DetId}.pdf");
+                PrescriptionSer.close();
+            }
+            else if (PrintType == 2)
+            {
+                PaymentSlipSer = new PaymentSlipServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
+                PaymentSlipSer.setDrugList();
+
+                foreach (var item in doctorMessage.ChartsDrugsDosages)
+                {
+                    PaymentSlipSer.AddDrugList(item.DrugId);
+                }
+
+                PaymentSlipSer.InputHTML(@".\..\..\..\Forms\PaymentSlip.html");
+                PaymentSlipSer.setMatchData();
+                PaymentSlipSer.ChangeData();
+                PaymentSlipSer.OutputPDF(@$"{path}\PaymentSlip{PresNo}{DetId}.pdf");
+                PaymentSlipSer.close();
             }
 
-            PaymentSlipSer = new PaymentSlipServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
-            PaymentSlipSer.setDrugList();
 
-            foreach(var item in doctorMessage.ChartsDrugsDosages)
-            {
-                PaymentSlipSer.AddDrugList(item.DrugId);
-            }
-
-            PaymentSlipSer.InputHTML(@".\..\..\..\Forms\PaymentSlip.html");
-            PaymentSlipSer.setMatchData();
-            PaymentSlipSer.ChangeData();
-            PaymentSlipSer.OutputPDF(@$"{path}\PaymentSlip{PresNo}{DetId}.pdf");
-            PaymentSlipSer.close();
-
-
-            PrescriptionSer = new PrescriptionServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
-            PrescriptionSer.setDrugList();
-
-            foreach (var item in doctorMessage.ChartsDrugsDosages)
-            {
-                PrescriptionSer.AddDrugList(item.DrugId);
-            }
-
-            PrescriptionSer.InputHTML(@".\..\..\..\Forms\Prescription.html");
-            PrescriptionSer.setMatchData();
-            PrescriptionSer.ChangeData();
-            PrescriptionSer.OutputPDF(@$"{path}\Prescription{PresNo}{DetId}.pdf");
-            PrescriptionSer.close();
+            
 
             //ReceiptSer = new ReceiptServices(doctorMessage.ChaId, doctorMessage.PatientId, DetId);
             //ReceiptSer.InputHTML(@".\..\..\..\Forms\Receipt.html");
