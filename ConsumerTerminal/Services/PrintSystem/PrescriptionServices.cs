@@ -55,8 +55,8 @@ namespace ConsumerTerminal.Services.PrintSystem
 
             var PatSer = new PartialServices(PatientId);
 
-            _match.Add(new MatchData { htmlStr = "#PresNo", pdfStr = pres.PresNo.Substring(length - 3) });
-            _match.Add(new MatchData { htmlStr = "#CaseHistory", pdfStr = pat.CaseHistory});
+            _match.Add(new MatchData { htmlStr = "#PresNo", pdfStr = pres.PresNo });
+            _match.Add(new MatchData { htmlStr = "#CaseHistory", pdfStr = PatientId});
             _match.Add(new MatchData { htmlStr = "#PatientName", pdfStr = pat.PatientName});
             _match.Add(new MatchData { htmlStr = "#Gender", pdfStr = PatSer.GetGender()});
             _match.Add(new MatchData { htmlStr = "#BirthDate", pdfStr = pat.BirthDate.ToString("yyyy/MM/dd")});
