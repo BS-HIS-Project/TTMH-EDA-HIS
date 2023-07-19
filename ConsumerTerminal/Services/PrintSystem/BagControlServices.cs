@@ -60,6 +60,8 @@ namespace ConsumerTerminal.Services.PrintSystem
                     MedicineBagSer.ChangeData();
                     MedicineBagSer.OutputPDF(@$"{path}\MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k++}.pdf");
                     MedicineBagSer.close();
+
+                    Console.WriteLine(@$"MedicineBag{doctorMessage.PatientId}{doctorMessage.PatientId}-{k-1}.pdf 已列印");
                 }
 
                 PrescriptionSer = new PrescriptionServices(doctorMessage.ChaId, doctorMessage.PatientId, PresNo, DetId);
@@ -75,6 +77,8 @@ namespace ConsumerTerminal.Services.PrintSystem
                 PrescriptionSer.ChangeData();
                 PrescriptionSer.OutputPDF(@$"{path}\Prescription{PresNo}{DetId}.pdf");
                 PrescriptionSer.close();
+
+                Console.WriteLine(@$"Prescription{PresNo}{DetId}.pdf 已列印");
             }
             else if (PrintType == 2)
             {
@@ -91,6 +95,8 @@ namespace ConsumerTerminal.Services.PrintSystem
                 PaymentSlipSer.ChangeData();
                 PaymentSlipSer.OutputPDF(@$"{path}\PaymentSlip{PresNo}{DetId}.pdf");
                 PaymentSlipSer.close();
+
+                Console.WriteLine(@$"PaymentSlip{PresNo}{DetId}.pdf 已列印");
             }
 
 
