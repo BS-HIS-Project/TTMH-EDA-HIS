@@ -69,14 +69,15 @@ namespace TTMH_EDA_HIS.Controllers
                     LastIndex = int.Parse(LastChaID.Substring(LastChaID.Length - 3));
                 }
 
-                string yearStr = DateTime.Now.Year.ToString();
-                string monthStr = DateTime.Now.Month.ToString().PadLeft(2,'0');
-                string dayStr = DateTime.Now.Day.ToString().PadLeft(2,'0');
-                string hourStr = DateTime.Now.Hour.ToString().PadLeft(2,'0');
+                //string yearStr = DateTime.Now.Year.ToString();
+                //string monthStr = DateTime.Now.Month.ToString().PadLeft(2,'0');
+                //string dayStr = DateTime.Now.Day.ToString().PadLeft(2,'0');
+                //string hourStr = DateTime.Now.Hour.ToString().PadLeft(2,'0');
+                string dateStr = $"{DateTime.Now.ToString("yyyyMMddHH")}";
                 string OPDStr = "001"; //Out‑Patient Departments (OPD)
                 string currentIndex = (++LastIndex).ToString().PadLeft(3,'0');
 
-                string cid = $"CHA{yearStr}{monthStr}{dayStr}{hourStr}{OPDStr}{currentIndex}";
+                string cid = $"CHA{dateStr}{OPDStr}{currentIndex}";
                 chart = new Chart()
                 {
                     ChaId = cid,
