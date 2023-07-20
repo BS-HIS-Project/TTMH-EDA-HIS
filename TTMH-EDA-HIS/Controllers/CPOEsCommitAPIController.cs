@@ -72,10 +72,11 @@ namespace TTMH_EDA_HIS.Controllers
                 string yearStr = DateTime.Now.Year.ToString();
                 string monthStr = DateTime.Now.Month.ToString().PadLeft(2,'0');
                 string dayStr = DateTime.Now.Day.ToString().PadLeft(2,'0');
-                string OPDStr = "13001"; //Out‑Patient Departments (OPD)
+                string hourStr = DateTime.Now.Hour.ToString().PadLeft(2,'0');
+                string OPDStr = "001"; //Out‑Patient Departments (OPD)
                 string currentIndex = (++LastIndex).ToString().PadLeft(3,'0');
 
-                string cid = $"CHA{yearStr}{monthStr}{dayStr}{OPDStr}{currentIndex}";
+                string cid = $"CHA{yearStr}{monthStr}{dayStr}{hourStr}{OPDStr}{currentIndex}";
                 chart = new Chart()
                 {
                     ChaId = cid,
